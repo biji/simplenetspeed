@@ -12,6 +12,7 @@ let button, timeout;
 let cur;
 let ioSpeed;
 let lastCount, lastSpeed;
+let mode = 0;
 
 const refreshTime = 3.0;
 
@@ -39,10 +40,20 @@ function init() {
     });
 
     button.set_child(ioSpeed);
-    //button.connect('button-press-event', _showHello);
+    button.connect('button-press-event', changeMode);
 
     cur = 0;
     lastCount = 0;
+}
+
+function changeMode() {
+    if (mode == 0) {
+        mode = 1;
+    }
+    else if (mode == 1) {
+        mode = 0;
+    }
+    ioSpeed.set_text('---');
 }
 
 function parseStat() {
@@ -73,7 +84,12 @@ function parseStat() {
             dot = "⇅ ";
         }
 
-        ioSpeed.set_text(dot + speedToString(speed));
+        if (mode == 0) {
+            ioSpeed.set_text(dot + speedToString(speed));
+        } 
+        else if (mode == 1) {
+            ioSpeed.set_text(speedToString(count));
+        }
 
         lastCount = count;
         lastSpeed = speed;
@@ -115,7 +131,14 @@ function speedToString(amount) {
         digits -= 2;
     else if (amount >= 10)
         digits -= 1;
-    let speed_map = [" B/s", " K/s", " M/s", " G/s"];
+
+    let speed_map;
+    if (mode == 0) {
+        speed_map = [" B/s", " K/s", " M/s", " G/s"];
+    }
+    else if (mode == 1) {
+        speed_map = [" B", " KB", " MB", " GB"];
+    }
     return String(amount.toFixed(digits - 1)) + speed_map[unit];
 }
 
