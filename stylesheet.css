@@ -1,5 +1,20 @@
-.iospeed-label {
+.simplenetspeed-label {
     font-size: 12px;
-    width: 80px;
+    width: 70px;
     text-align: right;
+    margin-left: 5px;
+    margin-right: 5px;
 }
+
+/*.simplenetspeed-static-icon {
+    font-size: 14px;
+    width: 15px;
+    text-align: left;
+}
+
+.simplenetspeed-icon {
+    font-size: 12px;
+    width: 14px;
+    text-align: center;
+    color: lime;
+}*/

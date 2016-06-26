@@ -36,8 +36,13 @@ function init() {
 
     ioSpeed = new St.Label({
         text: '---',
-        style_class: 'iospeed-label'
+        style_class: 'simplenetspeed-label'
     });
+
+    // ioSpeedStaticIcon = new St.Label({
+    //     text: '💾',
+    //     style_class: 'simplenetspeed-static-icon'
+    // });
 
     button.set_child(ioSpeed);
     button.connect('button-press-event', changeMode);
@@ -47,13 +52,11 @@ function init() {
 }
 
 function changeMode() {
-    if (mode == 0) {
-        mode = 1;
-    }
-    else if (mode == 1) {
+    mode++;
+    if (mode > 2) {
         mode = 0;
     }
-    ioSpeed.set_text('---');
+    parseStat();
 }
 
 function parseStat() {
@@ -81,14 +84,14 @@ function parseStat() {
 
         let dot = "";
         if (speed > lastSpeed) {
-            dot = "⇅ ";
+            dot = "⧎ ";
         }
 
-        if (mode == 0) {
+        if (mode == 0 || mode == 2) {
             ioSpeed.set_text(dot + speedToString(speed));
-        } 
+        }
         else if (mode == 1) {
-            ioSpeed.set_text(speedToString(count));
+            ioSpeed.set_text("∑ " + speedToString(count));
         }
 
         lastCount = count;
@@ -118,8 +121,21 @@ function parseStat() {
 
 function speedToString(amount) {
     let digits = 3;
+    let speed_map;
+    if (mode == 0) {
+        speed_map = ["B/s", "K/s", "M/s", "G/s"];
+    }
+    else if (mode == 1) {
+        speed_map = ["B", "KB", "MB", "GB"];
+    }
+    else if (mode == 2) {
+        speed_map = ["bps", "kbps", "mbps", "gbps"];
+    }
+
     if (amount === 0)
-        return "0 B/s";
+        return "0"  + speed_map[0];
+
+    if (mode==2) amount = amount * 8;
 
     let unit = 0;
     while (amount >= 1000) { // 1M=1024K, 1MB/s=1000MB/s
@@ -127,18 +143,12 @@ function speedToString(amount) {
         ++unit;
     }
 
-    if (amount >= 100)
+    if (amount > 100)
+        digits -= 3;
+    else if (amount >= 100)
         digits -= 2;
     else if (amount >= 10)
         digits -= 1;
-
-    let speed_map;
-    if (mode == 0) {
-        speed_map = [" B/s", " K/s", " M/s", " G/s"];
-    }
-    else if (mode == 1) {
-        speed_map = [" B", " KB", " MB", " GB"];
-    }
     return String(amount.toFixed(digits - 1)) + speed_map[unit];
 }
 
