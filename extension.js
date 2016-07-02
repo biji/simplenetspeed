@@ -129,7 +129,7 @@ function speedToString(amount) {
         speed_map = ["B", "KB", "MB", "GB"];
     }
     else if (mode == 2) {
-        speed_map = ["bps", "kbps", "mbps", "gbps"];
+        speed_map = ["bps", "Kbps", "Mbps", "Gbps"];
     }
 
     if (amount === 0)
