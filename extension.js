@@ -12,7 +12,7 @@ let button, timeout;
 let cur;
 let ioSpeed;
 let lastCount, lastSpeed;
-let mode = 0;
+let mode = 2; // default mode using bit (bps, kbps)
 
 const refreshTime = 3.0;
 
