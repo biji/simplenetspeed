@@ -15,10 +15,11 @@ const refreshTime = 3.0;
 let settings;
 let button, timeout;
 // let icon, iconDark;
-let cur;
 let ioSpeed;
-let lastCount, lastSpeed;
-let mode;
+let ioSpeedW;
+let lbl;
+let lastCount = 0, lastSpeed = 0, lastCountUp = 0;
+let mode; // 0: kbps 1: K/s 2: U:kbps D:kbps 3: U:K/s D:K/s 4: Total KB
 
 function init() {
 
@@ -48,25 +49,38 @@ function init() {
         style_class: 'simplenetspeed-label'
     });
 
+    ioSpeedW = new St.Label({
+        text: '---',
+        style_class: 'simplenetspeed-label-w'
+    });
+
     // ioSpeedStaticIcon = new St.Label({
     //     text: '💾',
     //     style_class: 'simplenetspeed-static-icon'
     // });
 
-    button.set_child(ioSpeed);
+    button.set_child(chooseLabel());
     button.connect('button-press-event', changeMode);
-
-    cur = 0;
-    lastCount = 0;
 }
 
 function changeMode() {
     mode++;
-    if (mode > 2) {
+    if (mode > 4) {
         mode = 0;
     }
     settings.set_int('mode', mode);
+    button.set_child(chooseLabel());
     parseStat();
+}
+
+function chooseLabel() {
+    if (mode == 0 || mode == 1 || mode == 4) {
+        lbl=ioSpeed;
+    }
+    else {
+        lbl=ioSpeedW;
+    }
+    return lbl;
 }
 
 function parseStat() {
@@ -76,6 +90,7 @@ function parseStat() {
         let dstream = Gio.DataInputStream.new(fstream);
 
         let count = 0;
+        let countUp = 0;
         let line;
         while (line = dstream.read_line(null)) {
             line = String(line);
@@ -84,30 +99,40 @@ function parseStat() {
 
             if (fields[0] != "lo" && !isNaN(parseInt(fields[1]))) {
                 count = count + parseInt(fields[1]) + parseInt(fields[9]);
+                countUp = countUp + parseInt(fields[9]);
             }
         }
         fstream.close(null);
 
         if (lastCount === 0) lastCount = count;
+        if (lastCountUp === 0) lastCountUp = countUp;
 
         let speed = (count - lastCount) / refreshTime;
+        let speedUp = (countUp - lastCountUp) / refreshTime;
+
+        // speed= 1998999999;
+        // speedUp= 998999999;
 
         let dot = "";
         if (speed > lastSpeed) {
-            dot = "⧎ ";
+            dot = "⮁";
         }
 
-        if (mode == 0 || mode == 2) {
-            ioSpeed.set_text(dot + speedToString(speed));
+        if (mode >= 0 && mode <= 1) {
+            lbl.set_text(dot + speedToString(speed));
         }
-        else if (mode == 1) {
-            ioSpeed.set_text("∑ " + speedToString(count));
+        else if (mode >= 2 && mode <= 3) {
+            lbl.set_text("⭡" + speedToString(speedUp) + " ⭣" + speedToString(speed - speedUp));
+        }
+        else if (mode == 4) {
+            lbl.set_text("∑ " + speedToString(count));
         }
 
         lastCount = count;
+        lastCountUp = countUp;
         lastSpeed = speed;
     } catch (e) {
-        ioSpeed.set_text(e.message);
+        lbl.set_text(e.message);
     }
 
     /*
@@ -132,20 +157,20 @@ function parseStat() {
 function speedToString(amount) {
     let digits = 3;
     let speed_map;
-    if (mode == 0) {
+    if (mode == 0 || mode == 2) {
+        speed_map = ["bps", "Kbps", "Mbps", "Gbps"];
+    }
+    else if (mode == 1 || mode == 3) {
         speed_map = ["B/s", "K/s", "M/s", "G/s"];
     }
-    else if (mode == 1) {
+    else if (mode == 4) {
         speed_map = ["B", "KB", "MB", "GB"];
-    }
-    else if (mode == 2) {
-        speed_map = ["bps", "Kbps", "Mbps", "Gbps"];
     }
 
     if (amount === 0)
         return "0"  + speed_map[0];
 
-    if (mode==2) amount = amount * 8;
+    if (mode==0 || mode==2) amount = amount * 8;
 
     let unit = 0;
     while (amount >= 1000) { // 1M=1024K, 1MB/s=1000MB/s
