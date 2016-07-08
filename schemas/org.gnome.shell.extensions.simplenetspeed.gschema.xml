@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<schemalist gettext-domain="simplenetspeed@biji.extension">
+  <schema path="/org/gnome/shell/extensions/simplenetspeed/" id="org.gnome.shell.extensions.simplenetspeed">
+      <key name="mode" type="i">
+        <range min="0" max="2" />
+        <default>2</default>
+      </key>
+  </schema>
+</schemalist>

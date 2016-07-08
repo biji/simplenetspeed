@@ -1,22 +1,31 @@
 const St = imports.gi.St;
 const Main = imports.ui.main;
 // const Tweener = imports.ui.tweener;
-// const Me = imports.misc.extensionUtils.getCurrentExtension();
 const Gio = imports.gi.Gio;
 const Mainloop = imports.mainloop;
 // const GLib = imports.gi.GLib;
 
+const ExtensionUtils = imports.misc.extensionUtils;
+const Me = ExtensionUtils.getCurrentExtension();
+const Convenience = Me.imports.convenience;
 
+const PREFS_SCHEMA = 'org.gnome.shell.extensions.simplenetspeed';
+const refreshTime = 3.0;
+
+let settings;
 let button, timeout;
 // let icon, iconDark;
 let cur;
 let ioSpeed;
 let lastCount, lastSpeed;
-let mode = 2; // default mode using bit (bps, kbps)
-
-const refreshTime = 3.0;
+let mode;
 
 function init() {
+
+    settings = Convenience.getSettings(PREFS_SCHEMA);
+
+    mode = settings.get_int('mode'); // default mode using bit (bps, kbps)
+
     button = new St.Bin({
         style_class: 'panel-button',
         reactive: true,
@@ -56,6 +65,7 @@ function changeMode() {
     if (mode > 2) {
         mode = 0;
     }
+    settings.set_int('mode', mode);
     parseStat();
 }
 
