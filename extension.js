@@ -122,7 +122,7 @@ function parseStat() {
             lbl.set_text(dot + speedToString(speed));
         }
         else if (mode >= 2 && mode <= 3) {
-            lbl.set_text("↑" + speedToString(speedUp) + " ↓" + speedToString(speed - speedUp));
+            lbl.set_text("↓" + speedToString(speed - speedUp) + " ↑" + speedToString(speedUp));
         }
         else if (mode == 4) {
             lbl.set_text("∑ " + speedToString(count));
