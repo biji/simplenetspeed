@@ -115,7 +115,7 @@ function parseStat() {
 
         let dot = "";
         if (speed > lastSpeed) {
-            dot = "⮁";
+            dot = "⇅";
         }
 
         if (mode >= 0 && mode <= 1) {
