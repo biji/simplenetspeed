@@ -94,6 +94,7 @@ function parseStat() {
         let line;
         while (line = dstream.read_line(null)) {
             line = String(line);
+            line = line.trim();
             let fields = line.split(/\W+/);
             if (fields.length<=2) break;
 
