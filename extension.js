@@ -156,7 +156,7 @@ function parseStat() {
 }
 
 function speedToString(amount) {
-    let digits = 3;
+    let digits;
     let speed_map;
     if (mode == 0 || mode == 2) {
         speed_map = ["bps", "Kbps", "Mbps", "Gbps"];
@@ -179,13 +179,13 @@ function speedToString(amount) {
         ++unit;
     }
 
-    if (amount > 100)
-        digits -= 3;
-    else if (amount >= 100)
-        digits -= 2;
-    else if (amount >= 10)
-        digits -= 1;
-    return String(amount.toFixed(digits - 1)) + speed_map[unit];
+    if (amount >= 100) // 100MB 100KB 200KB
+        digits = 0;
+    else if (amount >= 10) // 10MB 10.2
+        digits = 1;
+    else 
+        digits = 2;
+    return String(amount.toFixed(digits)) + speed_map[unit];
 }
 
 function enable() {
