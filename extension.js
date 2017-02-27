@@ -10,7 +10,7 @@ const Me = ExtensionUtils.getCurrentExtension();
 const Convenience = Me.imports.convenience;
 
 const PREFS_SCHEMA = 'org.gnome.shell.extensions.simplenetspeed';
-const refreshTime = 3.0;
+const refreshTime = 1.0;
 
 let settings;
 let button, timeout;
@@ -65,7 +65,7 @@ function init() {
 
 function changeMode() {
     mode++;
-    if (mode > 4) {
+    if (mode > 2) {
         mode = 0;
     }
     settings.set_int('mode', mode);
@@ -74,7 +74,7 @@ function changeMode() {
 }
 
 function chooseLabel() {
-    if (mode == 0 || mode == 1 || mode == 4) {
+    if (mode == 0) {
         lbl=ioSpeed;
     }
     else {
@@ -113,20 +113,11 @@ function parseStat() {
 
         // speed= 1998999999;
         // speedUp= 998999999;
-
-        let dot = "";
-        if (speed > lastSpeed) {
-            dot = "⇅";
-        }
-
-        if (mode >= 0 && mode <= 1) {
-            lbl.set_text(dot + speedToString(speed));
-        }
-        else if (mode >= 2 && mode <= 3) {
-            lbl.set_text("↓" + speedToString(speed - speedUp) + " ↑" + speedToString(speedUp));
-        }
-        else if (mode == 4) {
-            lbl.set_text("∑ " + speedToString(count));
+        
+        if (mode == 0) {
+            lbl.set_text("⇅" + speedToString(speed));
+        } else {
+            lbl.set_text("↓" + speedToString(speed) + " ↑" + speedToString(speedUp));
         }
 
         lastCount = count;
@@ -136,42 +127,22 @@ function parseStat() {
         lbl.set_text(e.message);
     }
 
-    /*
-    let curDiskstats = GLib.file_get_contents('/proc/diskstats');
-
-    if (diskstats == curDiskstats) {
-        if (cur !== 0) {
-            button.set_child(iconDark);
-            cur = 0;
-        }
-    } else {
-        if (cur != 1) {
-            button.set_child(icon);
-            cur = 1;
-        }
-        diskstats = curDiskstats;
-    }*/
-
     return true;
 }
 
 function speedToString(amount) {
+    amount = parseInt(amount)
     let digits;
-    let speed_map;
-    if (mode == 0 || mode == 2) {
-        speed_map = ["bps", "Kbps", "Mbps", "Gbps"];
-    }
-    else if (mode == 1 || mode == 3) {
-        speed_map = ["B/s", "K/s", "M/s", "G/s"];
-    }
-    else if (mode == 4) {
-        speed_map = ["B", "KB", "MB", "GB"];
-    }
+    let speed_map = ["B", "KB", "MB", "GB"];
 
     if (amount === 0)
         return "0"  + speed_map[0];
 
-    if (mode==0 || mode==2) amount = amount * 8;
+    if (amount <= 1000) {
+        return (amount / 1000).toFixed(1) +  speed_map[1];
+    }
+
+    // if (mode==0 || mode==2) amount = amount * 8;
 
     let unit = 0;
     while (amount >= 1000) { // 1M=1024K, 1MB/s=1000MB/s
@@ -179,13 +150,7 @@ function speedToString(amount) {
         ++unit;
     }
 
-    if (amount >= 100) // 100MB 100KB 200KB
-        digits = 0;
-    else if (amount >= 10) // 10MB 10.2
-        digits = 1;
-    else 
-        digits = 2;
-    return String(amount.toFixed(digits)) + speed_map[unit];
+    return amount + speed_map[unit];
 }
 
 function enable() {
