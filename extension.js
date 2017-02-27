@@ -150,7 +150,7 @@ function speedToString(amount) {
         ++unit;
     }
 
-    return amount + speed_map[unit];
+    return amount.toFixed(1) + speed_map[unit];
 }
 
 function enable() {
