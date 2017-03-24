@@ -20,6 +20,7 @@ let ioSpeedW;
 let lbl;
 let lastCount = 0, lastSpeed = 0, lastCountUp = 0;
 let mode; // 0: kbps 1: K/s 2: U:kbps D:kbps 3: U:K/s D:K/s 4: Total KB
+let resetNextCount = false, resetCount = 0;
 
 function init() {
 
@@ -63,14 +64,22 @@ function init() {
     button.connect('button-press-event', changeMode);
 }
 
-function changeMode() {
-    mode++;
-    if (mode > 4) {
-        mode = 0;
+function changeMode(widget, event) {
+    // log(event.get_button());
+    if (event.get_button() == 3 && mode == 4) { // right click: reset downloaded sum
+        resetNextCount = true;
+        parseStat();
     }
-    settings.set_int('mode', mode);
-    button.set_child(chooseLabel());
-    parseStat();
+    else if (event.get_button() == 1)
+    {
+        mode++;
+        if (mode > 4) {
+            mode = 0;
+        }
+        settings.set_int('mode', mode);
+        button.set_child(chooseLabel());
+        parseStat();
+    }
 }
 
 function chooseLabel() {
@@ -126,7 +135,11 @@ function parseStat() {
             lbl.set_text("↓" + speedToString(speed - speedUp) + " ↑" + speedToString(speedUp));
         }
         else if (mode == 4) {
-            lbl.set_text("∑ " + speedToString(count));
+            if (resetNextCount == true) {
+                resetNextCount = false;
+                resetCount = count;
+            }
+            lbl.set_text("∑ " + speedToString(count - resetCount));
         }
 
         lastCount = count;
