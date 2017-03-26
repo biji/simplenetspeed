@@ -107,9 +107,15 @@ function parseStat() {
             let fields = line.split(/\W+/);
             if (fields.length<=2) break;
 
-            if (fields[0] != "lo" && !isNaN(parseInt(fields[1]))) {
-                count = count + parseInt(fields[1]) + parseInt(fields[9]);
-                countUp = countUp + parseInt(fields[9]);
+            if (fields[0] != "lo" && 
+                !fields[0].match(/^virbr[0-9]+/) &&
+                !fields[0].match(/^br[0-9]+/) &&
+                !fields[0].match(/^vnet[0-9]+/) &&
+                !fields[0].match(/^tun[0-9]+/) &&
+                !fields[0].match(/^tap[0-9]+/) &&
+                !isNaN(parseInt(fields[1]))) {
+                    count = count + parseInt(fields[1]) + parseInt(fields[9]);
+                    countUp = countUp + parseInt(fields[9]);
             }
         }
         fstream.close(null);
