@@ -1,17 +1,15 @@
 .simplenetspeed-label {
-    font-size: 12px;
     width: 70px;
     text-align: right;
-    margin-left: 5px;
-    margin-right: 5px;
+    margin-left: 2px;
+    margin-right: 2px;
 }
 
 .simplenetspeed-label-w {
-    font-size: 11px;
     width: 120px;
     text-align: right;
-    margin-left: 5px;
-    margin-right: 5px;
+    margin-left: 2px;
+    margin-right: 2px;
 }
 
 /*.simplenetspeed-static-icon {
