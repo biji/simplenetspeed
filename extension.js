@@ -16,10 +16,9 @@ let settings;
 let button, timeout;
 // let icon, iconDark;
 let ioSpeed;
-let ioSpeedW;
-let lbl;
 let lastCount = 0, lastSpeed = 0, lastCountUp = 0;
 let mode; // 0: kbps 1: K/s 2: U:kbps D:kbps 3: U:K/s D:K/s 4: Total KB
+let fontmode;
 let resetNextCount = false, resetCount = 0;
 
 function init() {
@@ -27,6 +26,7 @@ function init() {
     settings = Convenience.getSettings(PREFS_SCHEMA);
 
     mode = settings.get_int('mode'); // default mode using bit (bps, kbps)
+    fontmode = settings.get_int('fontmode'); 
 
     button = new St.Bin({
         style_class: 'panel-button',
@@ -50,11 +50,6 @@ function init() {
         style_class: 'simplenetspeed-label'
     });
 
-    ioSpeedW = new St.Label({
-        text: '---',
-        style_class: 'simplenetspeed-label-w'
-    });
-
     // ioSpeedStaticIcon = new St.Label({
     //     text: '💾',
     //     style_class: 'simplenetspeed-static-icon'
@@ -70,8 +65,16 @@ function changeMode(widget, event) {
         resetNextCount = true;
         parseStat();
     }
-    else if (event.get_button() == 1)
-    {
+    else if (event.get_button() == 2) { // change font
+        fontmode++;
+        if (fontmode > 3) {
+            fontmode=0;
+        }
+        settings.set_int('fontmode', fontmode);
+        button.set_child(chooseLabel());
+        parseStat();
+    }
+    else if (event.get_button() == 1) {
         mode++;
         if (mode > 4) {
             mode = 0;
@@ -80,16 +83,23 @@ function changeMode(widget, event) {
         button.set_child(chooseLabel());
         parseStat();
     }
+    log('mode:' + mode + ' font:' + fontmode);
 }
 
 function chooseLabel() {
     if (mode == 0 || mode == 1 || mode == 4) {
-        lbl=ioSpeed;
+        styleName = 'simplenetspeed-label';
     }
     else {
-        lbl=ioSpeedW;
+        styleName = 'simplenetspeed-label-w';
     }
-    return lbl;
+    
+    if (fontmode > 0) {
+        styleName = styleName + '-' + fontmode;
+    } 
+    
+    ioSpeed.set_style_class_name(styleName);
+    return ioSpeed;
 }
 
 function parseStat() {
@@ -135,24 +145,24 @@ function parseStat() {
         }
 
         if (mode >= 0 && mode <= 1) {
-            lbl.set_text(dot + speedToString(speed));
+            ioSpeed.set_text(dot + speedToString(speed));
         }
         else if (mode >= 2 && mode <= 3) {
-            lbl.set_text("↓" + speedToString(speed - speedUp) + " ↑" + speedToString(speedUp));
+            ioSpeed.set_text("↓" + speedToString(speed - speedUp) + " ↑" + speedToString(speedUp));
         }
         else if (mode == 4) {
             if (resetNextCount == true) {
                 resetNextCount = false;
                 resetCount = count;
             }
-            lbl.set_text("∑ " + speedToString(count - resetCount));
+            ioSpeed.set_text("∑ " + speedToString(count - resetCount));
         }
 
         lastCount = count;
         lastCountUp = countUp;
         lastSpeed = speed;
     } catch (e) {
-        lbl.set_text(e.message);
+        ioSpeed.set_text(e.message);
     }
 
     /*
