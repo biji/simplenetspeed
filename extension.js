@@ -67,7 +67,7 @@ function changeMode(widget, event) {
     }
     else if (event.get_button() == 2) { // change font
         fontmode++;
-        if (fontmode > 3) {
+        if (fontmode > 4) {
             fontmode=0;
         }
         settings.set_int('fontmode', fontmode);
@@ -136,8 +136,10 @@ function parseStat() {
         let speed = (count - lastCount) / refreshTime;
         let speedUp = (countUp - lastCountUp) / refreshTime;
 
+        // TEST
+        // lastSpeed = 199899999;
         // speed= 1998999999;
-        // speedUp= 998999999;
+        // speedUp= 99899999;
 
         let dot = "";
         if (speed > lastSpeed) {
