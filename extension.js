@@ -16,17 +16,20 @@ let settings;
 let button, timeout;
 // let icon, iconDark;
 let ioSpeed;
-let lastCount = 0, lastSpeed = 0, lastCountUp = 0;
+let lastCount = 0,
+    lastSpeed = 0,
+    lastCountUp = 0;
 let mode; // 0: kbps 1: K/s 2: U:kbps D:kbps 3: U:K/s D:K/s 4: Total KB
 let fontmode;
-let resetNextCount = false, resetCount = 0;
+let resetNextCount = false,
+    resetCount = 0;
 
 function init() {
 
     settings = Convenience.getSettings(PREFS_SCHEMA);
 
     mode = settings.get_int('mode'); // default mode using bit (bps, kbps)
-    fontmode = settings.get_int('fontmode'); 
+    fontmode = settings.get_int('fontmode');
 
     button = new St.Bin({
         style_class: 'panel-button',
@@ -64,17 +67,7 @@ function changeMode(widget, event) {
     if (event.get_button() == 3 && mode == 4) { // right click: reset downloaded sum
         resetNextCount = true;
         parseStat();
-    }
-    else if (event.get_button() == 2) { // change font
-        fontmode++;
-        if (fontmode > 4) {
-            fontmode=0;
-        }
-        settings.set_int('fontmode', fontmode);
-        button.set_child(chooseLabel());
-        parseStat();
-    }
-    else if (event.get_button() == 1) {
+    } else if (event.get_button() == 1) {
         mode++;
         if (mode > 4) {
             mode = 0;
@@ -83,21 +76,12 @@ function changeMode(widget, event) {
         button.set_child(chooseLabel());
         parseStat();
     }
-    log('mode:' + mode + ' font:' + fontmode);
+    log('mode:' + mode);
 }
 
 function chooseLabel() {
-    if (mode == 0 || mode == 1 || mode == 4) {
-        styleName = 'simplenetspeed-label';
-    }
-    else {
-        styleName = 'simplenetspeed-label-w';
-    }
-    
-    if (fontmode > 0) {
-        styleName = styleName + '-' + fontmode;
-    } 
-    
+    styleName = 'simplenetspeed-label simplenetspeed-mode-' + mode;
+
     ioSpeed.set_style_class_name(styleName);
     return ioSpeed;
 }
@@ -115,9 +99,9 @@ function parseStat() {
             line = String(line);
             line = line.trim();
             let fields = line.split(/\W+/);
-            if (fields.length<=2) break;
+            if (fields.length <= 2) break;
 
-            if (fields[0] != "lo" && 
+            if (fields[0] != "lo" &&
                 !fields[0].match(/^virbr[0-9]+/) &&
                 !fields[0].match(/^br[0-9]+/) &&
                 !fields[0].match(/^vnet[0-9]+/) &&
@@ -148,11 +132,9 @@ function parseStat() {
 
         if (mode >= 0 && mode <= 1) {
             ioSpeed.set_text(dot + speedToString(speed));
-        }
-        else if (mode >= 2 && mode <= 3) {
+        } else if (mode >= 2 && mode <= 3) {
             ioSpeed.set_text("↓" + speedToString(speed - speedUp) + " ↑" + speedToString(speedUp));
-        }
-        else if (mode == 4) {
+        } else if (mode == 4) {
             if (resetNextCount == true) {
                 resetNextCount = false;
                 resetCount = count;
@@ -191,18 +173,16 @@ function speedToString(amount) {
     let speed_map;
     if (mode == 0 || mode == 2) {
         speed_map = ["bps", "Kbps", "Mbps", "Gbps"];
-    }
-    else if (mode == 1 || mode == 3) {
+    } else if (mode == 1 || mode == 3) {
         speed_map = ["B/s", "K/s", "M/s", "G/s"];
-    }
-    else if (mode == 4) {
+    } else if (mode == 4) {
         speed_map = ["B", "KB", "MB", "GB"];
     }
 
     if (amount === 0)
-        return "0"  + speed_map[0];
+        return "0" + speed_map[0];
 
-    if (mode==0 || mode==2) amount = amount * 8;
+    if (mode == 0 || mode == 2) amount = amount * 8;
 
     let unit = 0;
     while (amount >= 1000) { // 1M=1024K, 1MB/s=1000MB/s
@@ -214,7 +194,7 @@ function speedToString(amount) {
         digits = 0;
     else if (amount >= 10) // 10MB 10.2
         digits = 1;
-    else 
+    else
         digits = 2;
     return String(amount.toFixed(digits)) + speed_map[unit];
 }
