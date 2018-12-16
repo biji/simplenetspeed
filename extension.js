@@ -71,8 +71,14 @@ function updateSpeedMap(){
 
 function changeMode(widget, event) {
     // log(event.get_button());
-    if (event.get_button() == 3 && mode >= 4 && mode <= 6) { // right click: reset downloaded sum
-        resetNextCount = true;
+    if (event.get_button() == 3) { // right click: reset downloaded sum
+        if (mode < 4){
+            mode = 6;
+            updateSpeedMap();
+            settings.set_int('mode', mode);
+        } else {
+            resetNextCount = true;
+        }
         parseStat();
     }
     else if (event.get_button() == 2) { // change font
