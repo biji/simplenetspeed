@@ -1,5 +1,5 @@
 .simplenetspeed-label {
-    width: 70px;
+    width: 7em;
     text-align: right;
     margin-left: 1px;
     margin-right: 2px;
@@ -7,7 +7,7 @@
 }
 
 .simplenetspeed-label-w {
-    width: 120px;
+    width: 10em;
     text-align: right;
     margin-left: 1px;
     margin-right: 1px;
@@ -15,7 +15,7 @@
 }
 
 .simplenetspeed-label-1 {
-    width: 70px;
+    width: 7em;
     text-align: right;
     margin-left: 1px;
     margin-right: 2px;
@@ -23,7 +23,7 @@
 }
 
 .simplenetspeed-label-w-1 {
-    width: 120px;
+    width: 10em;
     text-align: right;
     margin-left: 1px;
     margin-right: 1px;
@@ -31,23 +31,23 @@
 }
 
 .simplenetspeed-label-2 {
-    width: 70px;
+    width: 7em;
     text-align: right;
     margin-left: 1px;
     margin-right: 2px;
-    font-size: .8em;
+    font-size: .7em;
 }
 
 .simplenetspeed-label-w-2 {
-    width: 120px;
+    width: 10em;
     text-align: right;
     margin-left: 1px;
     margin-right: 1px;
-    font-size: .8em;
+    font-size: .7em;
 }
 
 .simplenetspeed-label-3 {
-    width: 70px;
+    width: 7em;
     text-align: right;
     margin-left: 1px;
     margin-right: 2px;
@@ -55,7 +55,7 @@
 }
 
 .simplenetspeed-label-w-3 {
-    width: 120px;
+    width: 10em;
     text-align: right;
     margin-left: 1px;
     margin-right: 1px;
@@ -63,7 +63,7 @@
 }
 
 .simplenetspeed-label-4 {
-    width: 85px;
+    width: 7em;
     text-align: right;
     margin-left: 1px;
     margin-right: 2px;
@@ -71,7 +71,7 @@
 }
 
 .simplenetspeed-label-w-4 {
-    width: 160px;
+    width: 10em;
     text-align: right;
     margin-left: 1px;
     margin-right: 1px;
