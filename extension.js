@@ -90,7 +90,7 @@ function chooseLabel() {
     if (mode == 0 || mode == 1 || mode == 4) {
         styleName = 'simplenetspeed-label';
     }
-    else {
+    else { // 2 , 3
         styleName = 'simplenetspeed-label-w';
     }
     
