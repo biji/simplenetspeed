@@ -1,4 +1,4 @@
-# Simplified net speed 
+# Net speed Simplified
 Gnome extension to show network speed
 
 Forked from : https://github.com/biji/simplenetspeed
