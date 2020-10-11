@@ -21,9 +21,11 @@
     "3.29",
     "3.30",
     "3.32",
-    "3.34"
+    "3.34",
+    "3.36",
+    "3.38"
   ],
-  "url": "https://github.com/biji/simplenetspeed",
-  "uuid": "simplenetspeed@biji.extension",
-  "version": 16
+  "url": "https://github.com/prateekmedia/simplenetspeed/",
+  "uuid": "simplenetspeed@prateekmedia.extension",
+  "version": 18
 }
