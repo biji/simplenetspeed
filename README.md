@@ -17,7 +17,7 @@ Simply showing network speed. Left click to change modes:
 
 * If you are getting it from source:
     - to install  
-    ```mkdir ~/.local/share/gnome-shell/extensions/simplenetspeed@biji.extension /tmp/biji || mv ~/.local/share/gnome-shell/extensions/simplenetspeed@biji.extension /tmp/biji && git clone https://github.com/prateekmedia/netspeedsimplified ~/.local/share/gnome-shell/extensions/simplenetspeed@biji.extension```
+    ```git clone https://github.com/prateekmedia/netspeedsimplified ~/.local/share/gnome-shell/extensions/netspeedsimplified@prateekmedia.extension```
     - to load extension  
        Press ```Alt+F2``` then type ```r``` and ```hit enter```.
     - to enable  
