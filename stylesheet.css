@@ -6,12 +6,12 @@
 
 /* For elements without w */
 .simplenetspeed-label, .simplenetspeed-label-1, .simplenetspeed-label-2, .simplenetspeed-label-3, .simplenetspeed-label-4  {
-    /*width: 7em; */
+    width: 3em;
     margin-right: 2px;}
 
 /* For elements without w */
 .simplenetspeed-label-w, .simplenetspeed-label-w-1, .simplenetspeed-label-w-2, .simplenetspeed-label-w-3, .simplenetspeed-label-w-4 {
-    /* width: 11em; */
+    width: 6em;
     margin-right: 1px;}
 
 
