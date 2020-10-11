@@ -38,24 +38,11 @@ function init() {
         track_hover: true
     });
 
-    /*
-    icon = new St.Icon({
-        gicon: Gio.icon_new_for_string(Me.path + "/icons/harddisk.svg")
-    });
-    iconDark = new St.Icon({
-        gicon: Gio.icon_new_for_string(Me.path + "/icons/harddisk-dark.svg")
-    });*/
-
     ioSpeed = new St.Label({
         text: '---',
         y_align: Clutter.ActorAlign.CENTER,
         style_class: 'simplenetspeed-label'
     });
-
-    // ioSpeedStaticIcon = new St.Label({
-    //     text: '💾',
-    //     style_class: 'simplenetspeed-static-icon'
-    // });
 
     button.set_child(chooseLabel());
     button.connect('button-press-event', changeMode);
@@ -138,11 +125,6 @@ function parseStat() {
         let speed = (count - lastCount) / refreshTime;
         let speedUp = (countUp - lastCountUp) / refreshTime;
 
-        // TEST
-        // lastSpeed = 199899999;
-        // speed= 1998999999;
-        // speedUp= 99899999;
-
         let dot = "";
         if (speed > lastSpeed) {
             dot = "⇅";
@@ -168,23 +150,6 @@ function parseStat() {
     } catch (e) {
         ioSpeed.set_text(e.message);
     }
-
-    /*
-    let curDiskstats = GLib.file_get_contents('/proc/diskstats');
-
-    if (diskstats == curDiskstats) {
-        if (cur !== 0) {
-            button.set_child(iconDark);
-            cur = 0;
-        }
-    } else {
-        if (cur != 1) {
-            button.set_child(icon);
-            cur = 1;
-        }
-        diskstats = curDiskstats;
-    }*/
-
     return true;
 }
 
@@ -214,21 +179,17 @@ function speedToString(amount) {
 
     if (amount >= 100) // 100MB 100KB 200KB
         digits = 0;
-    else if (amount >= 10) // 10MB 10.2
+    else // <100MB 1.2MB
         digits = 1;
-    else 
-        digits = 2;
     return String(amount.toFixed(digits)) + speed_map[unit];
 }
 
 function enable() {
     Main.panel._rightBox.insert_child_at_index(button, 0);
-    //Main.panel.addToStatusArea('netspeedsimplified', button, 0);
     timeout = Mainloop.timeout_add_seconds(refreshTime, parseStat);
 }
 
 function disable() {
     Mainloop.source_remove(timeout);
     Main.panel._rightBox.remove_child(button);
-    //button.destroy();
 }
