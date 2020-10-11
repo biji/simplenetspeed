@@ -21,10 +21,12 @@ Simply showing network speed. Left click to change modes:
     - to load extension  
        Press ```Alt+F2``` then type ```r``` and ```hit enter```.
     - to enable  
-    ```You Can enable maually using extensions app```
+    ```Enable manually using extensions app```
     - to disable  
-    ```You Can disable maually using extensions app```
+    ```Disable manually using extensions app```
     - to reinstall  
     ```rm -rf ~/.local/share/gnome-shell/extensions/netspeedsimplified@prateekmedia.extension && git clone https://github.com/prateekmedia/netspeedsimplified ~/.local/share/gnome-shell/extensions/netspeedsimplified@prateekmedia.extension```
     - to remove  
-    ```rm -rf ~/.local/share/gnome-shell/extensions/netspeedsimplified@prateekmedia.extension```
+    ```Remove manually using extensions app```  
+    or
+    ```rm -rf ~/.local/share/gnome-shell/extensions/netspeedsimplified@prateekmedia.extension```  
