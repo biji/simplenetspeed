@@ -1,12 +1,12 @@
 /* For all elements */
 .simplenetspeed-label, .simplenetspeed-label-1, .simplenetspeed-label-2, .simplenetspeed-label-3, .simplenetspeed-label-4, .simplenetspeed-label-w, .simplenetspeed-label-w-1, .simplenetspeed-label-w-2, .simplenetspeed-label-w-3, .simplenetspeed-label-w-4{
-    text-align: right;
+    text-align: center;
     margin-left: 1px;
 }
 
 /* For elements without w */
 .simplenetspeed-label, .simplenetspeed-label-1, .simplenetspeed-label-2, .simplenetspeed-label-3, .simplenetspeed-label-4  {
-    width: 3em;
+    width: 5em;
     margin-right: 2px;}
 
 /* For elements without w */
