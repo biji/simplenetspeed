@@ -24,7 +24,7 @@ Simply showing network speed. Left click to change modes:
     ```Enable manually using extensions app```
     - to disable  
     ```Disable manually using extensions app```
-    - to reinstall  
+    - to reinstall or update this extension  
     ```rm -rf ~/.local/share/gnome-shell/extensions/netspeedsimplified@prateekmedia.extension && git clone https://github.com/prateekmedia/netspeedsimplified ~/.local/share/gnome-shell/extensions/netspeedsimplified@prateekmedia.extension```
     - to remove  
     ```Remove manually using extensions app```  
