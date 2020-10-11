@@ -10,7 +10,7 @@ const ExtensionUtils = imports.misc.extensionUtils;
 const Me = ExtensionUtils.getCurrentExtension();
 const Convenience = Me.imports.convenience;
 
-const PREFS_SCHEMA = 'org.gnome.shell.extensions.simplenetspeed';
+const PREFS_SCHEMA = 'org.gnome.shell.extensions.netspeedsimplified';
 const refreshTime = 1.0;
 
 let settings;
