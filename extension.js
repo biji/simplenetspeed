@@ -222,14 +222,13 @@ function speedToString(amount) {
 }
 
 function enable() {
-    //Main.panel._rightBox.insert_child_at_index(button, -1);
-    
-    Main.panel.addToStatusArea('netspeedsimplified', button, 0);
+    Main.panel._centerBox.insert_child_at_index(button, -1);
+    //Main.panel.addToStatusArea('netspeedsimplified', button, 0);
     timeout = Mainloop.timeout_add_seconds(refreshTime, parseStat);
 }
 
 function disable() {
     Mainloop.source_remove(timeout);
-    //Main.panel._rightBox.remove_child(button);
-    button.destroy();
+    Main.panel._centerBox.remove_child(button);
+    //button.destroy();
 }
