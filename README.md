@@ -24,5 +24,7 @@ Simply showing network speed. Left click to change modes:
     ```You Can enable maually using extensions app```
     - to disable  
     ```You Can disable maually using extensions app```
+    - to reinstall  
+    ```rm -rf ~/.local/share/gnome-shell/extensions/netspeedsimplified@prateekmedia.extension && git clone https://github.com/prateekmedia/netspeedsimplified ~/.local/share/gnome-shell/extensions/netspeedsimplified@prateekmedia.extension```
     - to remove  
     ```rm -rf ~/.local/share/gnome-shell/extensions/netspeedsimplified@prateekmedia.extension```
