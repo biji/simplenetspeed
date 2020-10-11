@@ -33,8 +33,8 @@ function init() {
         style_class: 'panel-button',
         reactive: true,
         can_focus: true,
-        x_fill: true,
-        y_fill: false,
+        x_expand: true,
+        y_expand: false,
         track_hover: true
     });
 
