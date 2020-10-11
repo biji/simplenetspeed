@@ -1,7 +1,9 @@
 # Simple net speed 
 Gnome extension to show network speed
 
-https://extensions.gnome.org/extension/1085/simple-net-speed/
+Forked from : https://github.com/biji/simplenetspeed
+
+Added : Refresh time is 1 second, supports GNOME SHELL 3.38
 
 Simply showing network speed. Left click to change modes:
 
@@ -11,4 +13,17 @@ Simply showing network speed. Left click to change modes:
 1. Up & down speed in Bytes per second
 1. Total of downloaded in Bytes (Right click to reset counter)
 
-Middle click to change font size
+* Middle click to change font size
+
+* If you are getting it from source:
+    - to install
+    ```make install```
+
+    - to enable
+    ```make enable```
+
+    - to disable
+    ```make disable```
+
+    - to reload
+    ```make reload```
