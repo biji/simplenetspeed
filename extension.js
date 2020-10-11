@@ -157,7 +157,7 @@ function speedToString(amount) {
     let digits;
     let speed_map;
     if (mode == 0 || mode == 2) {
-        speed_map = ["bps", "Kbps", "Mbps", "Gbps"];
+        speed_map = ["b/s", "kb/s", "mb/s", "gb/s"];
     }
     else if (mode == 1 || mode == 3) {
         speed_map = ["B/s", "K/s", "M/s", "G/s"];
