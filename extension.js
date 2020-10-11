@@ -222,7 +222,7 @@ function speedToString(amount) {
 }
 
 function enable() {
-    Main.panel._rightBox.insert_child_at_index(button, -100);
+    Main.panel._rightBox.insert_child_at_index(button, -1);
     timeout = Mainloop.timeout_add_seconds(refreshTime, parseStat);
 }
 
