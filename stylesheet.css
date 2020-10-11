@@ -11,7 +11,7 @@
 
 /* For elements without w */
 .simplenetspeed-label-w, .simplenetspeed-label-w-1, .simplenetspeed-label-w-2, .simplenetspeed-label-w-3, .simplenetspeed-label-w-4 {
-    min-width: 9.8em;
+    min-width: 9.6em;
     margin-right: 1px;}
 
 
@@ -34,17 +34,3 @@
 .simplenetspeed-label-4, .simplenetspeed-label-w-4 {
     font-size: 1.1em;
 }
-
-/*.simplenetspeed-static-icon {
-    font-size: 14px;
-    width: 15px;
-    text-align: left;
-}
-
-.simplenetspeed-icon {
-    font-size: 12px;
-    width: 14px;
-    text-align: center;
-    color: lime;
-}*/
-
