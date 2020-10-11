@@ -14,3 +14,13 @@ Simply showing network speed. Left click to change modes:
 1. Total of downloaded in Bytes (Right click to reset counter)
 
 * Middle click to change font size
+
+* If you are getting it from source:
+    - to install
+    ```mv /home/prateeksu/.local/share/gnome-shell/extensions/simplenetspeed@biji.extension /tmp/biji && git clone https://github.com/prateekmedia/simplenetspeed/edit/master/README.md /home/prateeksu/.local/share/gnome-shell/extensions/simplenetspeed@biji.extension```
+    - to load extension
+    ```Press Alt+F2 then type 'r' and hit enter.```
+    - to enable
+    ```You Can enable maually using extensions app```
+    - to disable
+    ```You Can disable maually using extensions app```
