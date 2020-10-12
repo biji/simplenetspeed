@@ -21,6 +21,10 @@ let lastCount = 0, lastSpeed = 0, lastCountUp = 0;
 let mode; // 0: kbps 1: K/s 2: U:kbps D:kbps 3: U:K/s D:K/s 4: Total KB
 let fontmode;
 let resetNextCount = false, resetCount = 0;
+let toggle_bool = false;
+let new_addon;
+let new_addobit;
+let reuseable_text;
 
 function init() {
 
@@ -50,9 +54,15 @@ function init() {
 
 function changeMode(widget, event) {
     // log(event.get_button());
-    if (event.get_button() == 3 && mode == 4) { // right click: reset downloaded sum
+    if (event.get_button() == 3) {
+        if (mode ==4 ){// right click: reset downloaded sum
         resetNextCount = true;
-        parseStat();
+        parseStat();}
+        else {//right click on other modes; brings total downloaded sum
+          toggle_bool = !toggle_bool;
+          ioSpeed.set_text(" Hello");
+          parseStat();
+        }
     }
     else if (event.get_button() == 2) { // change font
         fontmode++;
@@ -129,21 +139,37 @@ function parseStat() {
         if (speed > lastSpeed) {
             dot = "⇅";
         }
-
+        function commonSigma(fi, se) {
+          if (resetNextCount == true) {
+              resetNextCount = false;
+              resetCount = count;
+            }
+          return "Σ " + speedToString(count - resetCount, fi, se);
+        }
+        if (toggle_bool){
+          new_addon = "  |  "+commonSigma(true)
+          new_addobit = "  |  "+commonSigma(false, true)
+        }
+        else{
+          new_addon = "";
+          new_addobit = "";
+        }
         if (mode >= 0 && mode <= 1) {
-            ioSpeed.set_text(dot + speedToString(speed));
+            reuseable_text = dot + speedToString(speed);
         }
         else if (mode >= 2 && mode <= 3) {
-            ioSpeed.set_text("↓" + speedToString(speed - speedUp) + " ↑" + speedToString(speedUp));
+            reuseable_text = "↓" + speedToString(speed - speedUp) + " ↑" + speedToString(speedUp);
         }
         else if (mode == 4) {
-            if (resetNextCount == true) {
-                resetNextCount = false;
-                resetCount = count;
-            }
-            ioSpeed.set_text("Σ " + speedToString(count - resetCount));
+            reuseable_text = commonSigma()
         }
-
+        if (mode == 0 || mode == 2) {
+            reuseable_text = reuseable_text + new_addobit;
+        }
+        else if (mode == 1 || mode == 3) {
+            reuseable_text = reuseable_text + new_addon;
+        }
+        ioSpeed.set_text(reuseable_text);
         lastCount = count;
         lastCountUp = countUp;
         lastSpeed = speed;
@@ -153,17 +179,24 @@ function parseStat() {
     return true;
 }
 
-function speedToString(amount) {
+function speedToString(amount, rMode = false /* Default value of Right click mode for Bytes */, rMbit = false /* Same as previous but for bits */) {
     let digits;
-    let speed_map;
-    if (mode == 0 || mode == 2) {
+    let speed_map, sp1;
+    sp1 = ["B", "KB", "MB", "GB"];
+    if (rMode) {//Right click on Bytes
+        speed_map = sp1;
+    }
+    else if (rMbit) {//For bits
+        speed_map = ["b", "kb", "mb", "gb"];
+    }
+    else if (mode == 0 || mode == 2) {
         speed_map = ["b/s", "kb/s", "mb/s", "gb/s"];
     }
     else if (mode == 1 || mode == 3) {
         speed_map = ["B/s", "K/s", "M/s", "G/s"];
     }
     else if (mode == 4) {
-        speed_map = ["B", "KB", "MB", "GB"];
+        speed_map = sp1;
     }
 
     if (amount === 0)
