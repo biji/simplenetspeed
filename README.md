@@ -6,6 +6,7 @@
 #### Changelog for v18 : 
 - [x] Reduce Refresh time to 1 second
 - [x] Supports GNOME SHELL 3.38
+- [x] Changes width accordingly / dynamic width
 - [x] Centred and more cleaner ui
 - [x] Changed <del>Kbps</del> to kbp/s
 - [x] New sigma sign that respects vertical alignment(old: ∑ , new: Σ)
