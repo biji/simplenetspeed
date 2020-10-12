@@ -24,7 +24,7 @@
 1. Up & down speed in Bytes per second
 1. Total of downloaded in Bytes (Right click to reset counter)
 
-**Middle click to change font size **
+**Middle click to change font size**
 
 * Installation using terminal:
     - to install  
