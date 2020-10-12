@@ -61,6 +61,7 @@ function changeMode(widget, event) {
         else {//right click on other modes; brings total downloaded sum
           toggle_bool = !toggle_bool;
           ioSpeed.set_text(" Hello");
+          button.set_child(chooseLabel());
           parseStat();
         }
     }
@@ -79,20 +80,37 @@ function changeMode(widget, event) {
             mode = 0;
         }
         settings.set_int('mode', mode);
-        button.set_child(chooseLabel());
+        if (mode ==4) {
+            button.set_child(chooseLabel(true));
+        }
+        else{
+            button.set_child(chooseLabel());
+        }
         parseStat();
     }
     log('mode:' + mode + ' font:' + fontmode);
 }
 
-function chooseLabel() {
+function chooseLabel(addArg = false) {
     if (mode == 0 || mode == 1 || mode == 4) {
         styleName = 'sumall';
     }
     else { // 2 , 3
         styleName = 'upanddown';
     }
-    styleName = 'forall ' + styleName + ' size'
+    let extraw;
+    if (addArg){
+        extraw = ""
+    }
+    else{
+      if (toggle_bool){
+        extraw = ' iwidth'
+      }
+      else {
+        extraw = ""
+        }
+    }
+    styleName = 'forall ' + styleName + extraw + ' size'
     if (fontmode > 0) {
         styleName = styleName + '-' + fontmode;
     } 
@@ -137,7 +155,7 @@ function parseStat() {
 
         let dot = "";
         if (speed > lastSpeed) {
-            dot = "⇅";
+            dot = "⇅ ";
         }
         function commonSigma(fi, se) {
           if (resetNextCount == true) {
@@ -158,7 +176,7 @@ function parseStat() {
             reuseable_text = dot + speedToString(speed);
         }
         else if (mode >= 2 && mode <= 3) {
-            reuseable_text = "↓" + speedToString(speed - speedUp) + " ↑" + speedToString(speedUp);
+            reuseable_text = "↓ " + speedToString(speed - speedUp) + " ↑ " + speedToString(speedUp);
         }
         else if (mode == 4) {
             reuseable_text = commonSigma()
@@ -179,14 +197,13 @@ function parseStat() {
     return true;
 }
 
-function speedToString(amount, rMode = false /* Default value of Right click mode for Bytes */, rMbit = false /* Same as previous but for bits */) {
+function speedToString(amount, rMode = false, rMbit = false) {
     let digits;
-    let speed_map, sp1;
-    sp1 = ["B", "KB", "MB", "GB"];
-    if (rMode) {//Right click on Bytes
-        speed_map = sp1;
+    let speed_map;
+    if (rMode) {
+        speed_map = ["B", "KB", "MB", "GB"];
     }
-    else if (rMbit) {//For bits
+    else if (rMbit) {
         speed_map = ["b", "kb", "mb", "gb"];
     }
     else if (mode == 0 || mode == 2) {
@@ -196,7 +213,7 @@ function speedToString(amount, rMode = false /* Default value of Right click mod
         speed_map = ["B/s", "K/s", "M/s", "G/s"];
     }
     else if (mode == 4) {
-        speed_map = sp1;
+        speed_map = ["B", "KB", "MB", "GB"];
     }
 
     if (amount === 0)
