@@ -18,17 +18,18 @@
 
 if you face any issues you can open pull request and can type your issue with images or error codes
 
-**Left click to change modes:**
+> **Left click to change modes**
 
+*Modes available:*
 1. Total net speed in bits per second
 1. Total net speed in Bytes per second
 1. Up & down speed in bits per second
 1. Up & down speed in Bytes per second
 1. Total of downloaded in Bytes (Right click to reset counter)
 
-**Right click to toggle total data usage, Right click on total data usage mode to reset counter**
+> **Right click to toggle total data usage, Right click on total data usage mode to reset counter**
 
-**Middle click to change font size**
+> **Middle click to change font size**
 
 * Installation using terminal:
     - to install  
