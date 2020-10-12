@@ -29,7 +29,7 @@ if you face any issues you can open pull request and can type your issue with im
 1. Total of downloaded in Bytes (Right click to reset counter)
 
 > **Right click to toggle total data usage visiblity, Right click on total data usage mode to reset counter**  
- ![Before](https://user-images.githubusercontent.com/41370460/95724032-78b84480-0c93-11eb-9a2f-07976cb99e19.png)  
+ ![Before](https://user-images.githubusercontent.com/41370460/95724032-78b84480-0c93-11eb-9a2f-07976cb99e19.png) =====
 ![After Right Click](https://user-images.githubusercontent.com/41370460/95724072-8968ba80-0c93-11eb-98c9-e5651167760d.png)
 
  
