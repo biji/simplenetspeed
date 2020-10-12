@@ -1,20 +1,17 @@
 /* For all elements */
 .simplenetspeed-label, .simplenetspeed-label-1, .simplenetspeed-label-2, .simplenetspeed-label-3, .simplenetspeed-label-4, .simplenetspeed-label-w, .simplenetspeed-label-w-1, .simplenetspeed-label-w-2, .simplenetspeed-label-w-3, .simplenetspeed-label-w-4{
     text-align: center;
-    margin-left: 1px;
+    margin: 0px 1px;
+    min-width: 4.4em;
 }
 
-/* For elements without w */
-.simplenetspeed-label, .simplenetspeed-label-1, .simplenetspeed-label-2, .simplenetspeed-label-3, .simplenetspeed-label-4  {
-    min-width: 4.4em;
-    margin-right: 2px;}
-
-/* For elements without w */
+/* For elements with seperate upload and download speed */
 .simplenetspeed-label-w, .simplenetspeed-label-w-1, .simplenetspeed-label-w-2, .simplenetspeed-label-w-3, .simplenetspeed-label-w-4 {
-    min-width: 9.6em;
-    margin-right: 1px;}
+    min-width: 9.6em; 
+ /* To override previous min-width */
+}
 
-
+/* Font change on middle click*/
 .simplenetspeed-label, .simplenetspeed-label-w {
     font-size: 1em;
 }
