@@ -218,7 +218,7 @@ function speedToString(amount) {
         digits = 1;
     else 
         digits = 2;
-    return String(amount.toFixed(digits)) + speed_map[unit];
+    return String(amount.toFixed(digits)) + " " + speed_map[unit];
 }
 
 function enable() {
