@@ -3,7 +3,7 @@ Gnome extension to show network speed
 
 Forked from : https://github.com/biji/simplenetspeed
 
-Added : Refresh time is 1 second, supports GNOME SHELL 3.38, centred and more cleaner ui, added kbp/s instead of Kbps, New sigma sign that respects vertical alignment and more.  
+Added : Refresh time is 1 second, supports GNOME SHELL 3.38, centred and more cleaner ui, added kbp/s instead of Kbps, New sigma sign that respects vertical alignment, added space b/w speed and the units and more.  
 
 Todo : hover to show total data used and double right click to reset total data counter instead of single right click
 
