@@ -13,8 +13,7 @@
 - [x] Human readable stylesheet following [KISS](https://en.wikipedia.org/wiki/KISS_principle) principle and [DRY](https://en.wikipedia.org/wiki/Don%27t_repeat_yourself)
 
 #### Todo : 
-- [ ] hover to show total data used
-- [ ] double right click to reset total data counter instead of single right click
+- [x] Right Click to show total data used
 
 **Left click to change modes:**
 
@@ -23,6 +22,8 @@
 1. Up & down speed in bits per second
 1. Up & down speed in Bytes per second
 1. Total of downloaded in Bytes (Right click to reset counter)
+
+**Right click to toggle total data usage, Right click on total data usage mode to reset counter**
 
 **Middle click to change font size**
 
