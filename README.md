@@ -11,9 +11,12 @@
 - [x] New sigma sign that respects vertical alignment(old: ∑ , new: Σ)
 - [x] Added space b/w speed and their units
 - [x] Human readable stylesheet following [KISS](https://en.wikipedia.org/wiki/KISS_principle) principle and [DRY](https://en.wikipedia.org/wiki/Don%27t_repeat_yourself)
+- [x] Right Click to show total data used
 
 #### Todo : 
-- [x] Right Click to show total data used
+- [ ] Add vertical alignment for Dash to panel users as a 6th mode  
+
+if you face any issues you can open pull request and can type your issue with images or error codes
 
 **Left click to change modes:**
 
