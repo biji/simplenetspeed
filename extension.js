@@ -177,9 +177,9 @@ function speedToString(amount) {
         ++unit;
     }
 
-    if (amount >= 100) // 100MB 100KB 200KB
+    if (Number.isInteger(amount.toFixed(1))) // 100.0 => 100
         digits = 0;
-    else // <100MB 1.2MB
+    else // 100.9 => 100.9
         digits = 1;
     return String(amount.toFixed(digits)) + " " + speed_map[unit];
 }
