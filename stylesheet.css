@@ -1,8 +1,13 @@
 /* For all elements */
 .forall{
-    text-align: center;
+    text-align: center !important;
     margin: 0px 2px;
     min-width: 4.4em;
+}
+
+.iwidth{
+/*Increase width if total data usage is visible with speed*/
+  min-width: 11.3em;
 }
 
 /* For elements with seperate upload and download speed */
