@@ -3,7 +3,7 @@
 
 > Forked from : [Simple Net speed](https://github.com/biji/simplenetspeed)
 
-Added : 
+#### Changelog for v18 : 
 - [x] Reduce Refresh time to 1 second
 - [x] Supports GNOME SHELL 3.38
 - [x] Centred and more cleaner ui
@@ -12,11 +12,11 @@ Added :
 - [x] Added space b/w speed and their units
 - [x] Human readable stylesheet following [KISS](https://en.wikipedia.org/wiki/KISS_principle) principle and [DRY](https://en.wikipedia.org/wiki/Don%27t_repeat_yourself)
 
-Todo : 
+#### Todo : 
 - [ ] hover to show total data used
 - [ ] double right click to reset total data counter instead of single right click
 
-Simply showing network speed. Left click to change modes:
+**Left click to change modes:**
 
 1. Total net speed in bits per second
 1. Total net speed in Bytes per second
@@ -24,7 +24,7 @@ Simply showing network speed. Left click to change modes:
 1. Up & down speed in Bytes per second
 1. Total of downloaded in Bytes (Right click to reset counter)
 
-* Middle click to change font size
+**Middle click to change font size **
 
 * Installation using terminal:
     - to install  
