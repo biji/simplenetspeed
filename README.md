@@ -1,11 +1,20 @@
 # Net speed Simplified
-Gnome extension to show network speed
+*Gnome extension to show network speed*
 
-Forked from : [Simple Net speed](https://github.com/biji/simplenetspeed)
+> Forked from : [Simple Net speed](https://github.com/biji/simplenetspeed)
 
-Added : Refresh time is 1 second, supports GNOME SHELL 3.38, centred and more cleaner ui, added kbp/s instead of Kbps, New sigma sign that respects vertical alignment, added space b/w speed and the units, Human readable stylesheet so that anyone with basic knowledge of css can modify it easily following [KISS](https://en.wikipedia.org/wiki/KISS_principle) principle and [DRY](https://en.wikipedia.org/wiki/Don%27t_repeat_yourself) principle
+Added : 
+- [x] Reduce Refresh time to 1 second
+- [x] Supports GNOME SHELL 3.38
+- [x] Centred and more cleaner ui
+- [x] Changed <del>Kbps</del> to kbp/s
+- [x] New sigma sign that respects vertical alignment(old: ∑ , new: Σ)
+- [x] Added space b/w speed and their units
+- [x] Human readable stylesheet following [KISS](https://en.wikipedia.org/wiki/KISS_principle) principle and [DRY](https://en.wikipedia.org/wiki/Don%27t_repeat_yourself)
 
-Todo : hover to show total data used and double right click to reset total data counter instead of single right click
+Todo : 
+- [ ] hover to show total data used
+- [ ] double right click to reset total data counter instead of single right click
 
 Simply showing network speed. Left click to change modes:
 
@@ -17,7 +26,7 @@ Simply showing network speed. Left click to change modes:
 
 * Middle click to change font size
 
-* If you are getting it from source:
+* Installation using terminal:
     - to install  
     ```git clone https://github.com/prateekmedia/netspeedsimplified ~/.local/share/gnome-shell/extensions/netspeedsimplified@prateekmedia.extension```
     - to load extension  
