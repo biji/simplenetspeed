@@ -77,12 +77,12 @@ function changeMode(widget, event) {
 
 function chooseLabel() {
     if (mode == 0 || mode == 1 || mode == 4) {
-        styleName = 'simplenetspeed-label';
+        styleName = 'sumall';
     }
     else { // 2 , 3
-        styleName = 'simplenetspeed-label-w';
+        styleName = 'upanddown';
     }
-    
+    styleName = 'forall ' + styleName + ' size'
     if (fontmode > 0) {
         styleName = styleName + '-' + fontmode;
     } 
