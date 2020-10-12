@@ -141,7 +141,7 @@ function parseStat() {
                 resetNextCount = false;
                 resetCount = count;
             }
-            ioSpeed.set_text("∑ " + speedToString(count - resetCount));
+            ioSpeed.set_text("Σ " + speedToString(count - resetCount));
         }
 
         lastCount = count;
