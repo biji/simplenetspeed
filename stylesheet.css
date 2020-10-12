@@ -1,33 +1,35 @@
 /* For all elements */
-.simplenetspeed-label, .simplenetspeed-label-1, .simplenetspeed-label-2, .simplenetspeed-label-3, .simplenetspeed-label-4, .simplenetspeed-label-w, .simplenetspeed-label-w-1, .simplenetspeed-label-w-2, .simplenetspeed-label-w-3, .simplenetspeed-label-w-4{
+.forall{
     text-align: center;
-    margin: 0px 1px;
+    margin: 0px 2px;
     min-width: 4.4em;
 }
 
 /* For elements with seperate upload and download speed */
-.simplenetspeed-label-w, .simplenetspeed-label-w-1, .simplenetspeed-label-w-2, .simplenetspeed-label-w-3, .simplenetspeed-label-w-4 {
-    min-width: 9.6em; 
+.upanddown {
+    min-width: 9.6em;
  /* To override previous min-width */
 }
 
+.sumall{/* Will contain styling for sum of speeds */}
+
 /* Font change on middle click*/
-.simplenetspeed-label, .simplenetspeed-label-w {
+.size {
     font-size: 1em;
 }
 
-.simplenetspeed-label-1, .simplenetspeed-label-w-1 {
+.size-1 {
     font-size: .65em;
 }
 
-.simplenetspeed-label-2, .simplenetspeed-label-w-2 {
+.size-2 {
     font-size: .7em;
 }
 
-.simplenetspeed-label-3, .simplenetspeed-label-w-3 {
+.size-3 {
     font-size: .9em;
 }
 
-.simplenetspeed-label-4, .simplenetspeed-label-w-4 {
+.size-4 {
     font-size: 1.1em;
 }
