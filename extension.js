@@ -177,7 +177,7 @@ function speedToString(amount) {
         ++unit;
     }
 
-    if (Number.isInteger(amount.toFixed(1))) // 100.0 => 100
+    if (Number.isInteger(parseFloat(amount.toFixed(1)))) // 100.0 => 100
         digits = 0;
     else // 100.9 => 100.9
         digits = 1;
