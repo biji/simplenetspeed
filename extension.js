@@ -167,7 +167,7 @@ function speedToString(amount) {
     }
 
     if (amount === 0)
-        return "0"  + speed_map[0];
+        return "0 "  + speed_map[0];
 
     if (mode==0 || mode==2) amount = amount * 8;
 
@@ -181,7 +181,7 @@ function speedToString(amount) {
         digits = 0;
     else // <100MB 1.2MB
         digits = 1;
-    return String(amount.toFixed(digits)) + speed_map[unit];
+    return String(amount.toFixed(digits)) + " " + speed_map[unit];
 }
 
 function enable() {
