@@ -22,8 +22,6 @@ let mode; // 0: kbps 1: K/s 2: U:kbps D:kbps 3: U:K/s D:K/s 4: Total KB
 let fontmode;
 let resetNextCount = false, resetCount = 0;
 let toggle_bool = false;
-let new_addon;
-let new_addobit;
 let reuseable_text;
 
 function init() {
@@ -157,21 +155,25 @@ function parseStat() {
         if (speed > lastSpeed) {
             dot = "⇅ ";
         }
-        function commonSigma(fi, se) {
-          if (resetNextCount == true) {
-              resetNextCount = false;
-              resetCount = count;
-            }
-          return "Σ " + speedToString(count - resetCount, fi, se);
-        }
-        if (toggle_bool){
-          new_addon = "  |  "+commonSigma(true)
-          new_addobit = "  |  "+commonSigma(false, true)
-        }
-        else{
-          new_addon = "";
-          new_addobit = "";
-        }
+        if (resetNextCount == true) {
+             resetNextCount = false;
+             resetCount = count;
+           }
+        function commonSigma(fi=0,
+        	             se=false /*This default value is for 4th mode*/, 
+        	             thr = true /*If true will return a result else will return empty string*/ 
+       	){
+        	if(thr){
+			if(se){ //This is for Right Click event on mode!=4
+				return "  |  Σ " + speedToString(count - resetCount, fi);}
+			else{ //This is for mode 4 sigma
+				return "Σ " + speedToString(count - resetCount, fi);
+				}
+			}
+		else{
+			return "";}        		
+
+        	}
         if (mode >= 0 && mode <= 1) {
             reuseable_text = dot + speedToString(speed);
         }
@@ -182,10 +184,10 @@ function parseStat() {
             reuseable_text = commonSigma()
         }
         if (mode == 0 || mode == 2) {
-            reuseable_text = reuseable_text + new_addobit;
+            reuseable_text = reuseable_text + commonSigma(2, true, toggle_bool);;
         }
         else if (mode == 1 || mode == 3) {
-            reuseable_text = reuseable_text + new_addon;
+            reuseable_text = reuseable_text + commonSigma(1, true, toggle_bool);;
         }
         ioSpeed.set_text(reuseable_text);
         lastCount = count;
@@ -197,13 +199,13 @@ function parseStat() {
     return true;
 }
 
-function speedToString(amount, rMode = false, rMbit = false) {
+function speedToString(amount, rMode = 0) {
     let digits;
     let speed_map;
-    if (rMode) {
+    if (rMode==1) {
         speed_map = ["B", "KB", "MB", "GB"];
     }
-    else if (rMbit) {
+    else if (rMode == 2) {
         speed_map = ["b", "kb", "mb", "gb"];
     }
     else if (mode == 0 || mode == 2) {
@@ -229,7 +231,7 @@ function speedToString(amount, rMode = false, rMbit = false) {
 
     if (Number.isInteger(parseFloat(amount.toFixed(1)))) // 100.0 => 100
         digits = 0;
-    else if ((mode==4 || rMode || rMbit) && !Number.isInteger(parseFloat((amount*10).toFixed(1))))
+    else if ((mode==4 || rMode !=0) && !Number.isInteger(parseFloat((amount*10).toFixed(1))))
         digits = 2;
     else // 100.9 => 100.9
         digits = 1;
