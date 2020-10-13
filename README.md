@@ -4,7 +4,7 @@
 > Forked from : [Simple Net speed](https://github.com/biji/simplenetspeed)
 
 #### Changelog : 
-- [x] Reduce Refresh time to 1 second
+- [x] Reduce Refresh time
 - [x] Supports GNOME SHELL 3.38
 - [x] Changes width accordingly / dynamic width
 - [x] Centred and more cleaner ui
