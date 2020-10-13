@@ -11,7 +11,7 @@ const Me = ExtensionUtils.getCurrentExtension();
 const Convenience = Me.imports.convenience;
 
 const PREFS_SCHEMA = 'org.gnome.shell.extensions.netspeedsimplified';
-const refreshTime = 1.0;
+const refreshTime = 1.6;
 
 let settings;
 let button, timeout;
