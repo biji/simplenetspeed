@@ -229,7 +229,7 @@ function speedToString(amount, rMode = false, rMbit = false) {
 
     if (Number.isInteger(parseFloat(amount.toFixed(1)))) // 100.0 => 100
         digits = 0;
-    else if (mode==4 || rMode || rMbit)
+    else if (mode==4 || rMode || rMbit && !Number.isInteger(parseFloat((amount*10).toFixed(1))))
         digits = 2;
     else // 100.9 => 100.9
         digits = 1;
