@@ -17,6 +17,7 @@
 
 #### Todo : 
 - [ ] Add vertical alignment for Dash to panel users as a 6th mode  
+- [ ] Middle click to show popup menu with font sizes, Change colours based on data usage, change refreshRate by your own [Impossible right now]  
 
 if you face any issues you can open pull request and can type your issue with images or error codes
 
