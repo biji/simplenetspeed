@@ -175,8 +175,8 @@ function parseStat() {
         if (mode >= 0 && mode <= 1) {
             reuseable_text = dot + speedToString(speed);
         }
-        else if (mode >= 2 && mode <= 3) {
-            reuseable_text = "⬇ " + speedToString(speed - speedUp) + " ⬆ " + speedToString(speedUp);
+        else if (mode >= 2 && mode <= 3) {            
+            reuseable_text = " 🡳   " + speedToString(speed - speedUp) + "  🡱 " + speedToString(speedUp);
         }
         else if (mode == 4) {
             reuseable_text = commonSigma()
@@ -192,7 +192,7 @@ function parseStat() {
         lastCountUp = countUp;
         lastSpeed = speed;
     } catch (e) {
-        ioSpeed.set_text(e.message)
+        ioSpeed.set_text(e.message);
     }
     return true;
 }
