@@ -229,6 +229,8 @@ function speedToString(amount, rMode = false, rMbit = false) {
 
     if (Number.isInteger(parseFloat(amount.toFixed(1)))) // 100.0 => 100
         digits = 0;
+    else if (mode==4 || rMode || rMbit)
+        digits = 2;
     else // 100.9 => 100.9
         digits = 1;
     return String(amount.toFixed(digits)) + " " + speed_map[unit];
