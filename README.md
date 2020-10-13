@@ -9,10 +9,11 @@
 - [x] Changes width accordingly / dynamic width
 - [x] Centred and more cleaner ui
 - [x] Changed <del>Kbps</del> to kbp/s
-- [x] New sigma sign that respects vertical alignment(old: ∑ , new: Σ)
+- [x] New sigma icon that respects vertical alignment(old: ∑ , new: Σ)
+- [x] New Speed up and down icons for mode 2 & 3. (old: ↓ and ↑ , new: 🡳 and 🡱)
 - [x] Added space b/w speed and their units
-- [x] Human readable stylesheet following [KISS](https://en.wikipedia.org/wiki/KISS_principle) principle and [DRY](https://en.wikipedia.org/wiki/Don%27t_repeat_yourself)
-- [x] Right Click to show total data used
+- [x] Human readable stylesheet
+- [x] Right Click to toggle visibility of total data used //If you will Right click on 4th mode i.e. total speed mode then total speed counter will reset to 0 MB. 
 
 #### Todo : 
 - [ ] Add vertical alignment for Dash to panel users as a 6th mode  
