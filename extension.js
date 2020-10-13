@@ -192,7 +192,7 @@ function parseStat() {
         lastCountUp = countUp;
         lastSpeed = speed;
     } catch (e) {
-        ioSpeed.set_text(e.message);
+        ioSpeed.set_text(e.message)
     }
     return true;
 }
