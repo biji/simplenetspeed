@@ -176,7 +176,7 @@ function parseStat() {
             reuseable_text = dot + speedToString(speed);
         }
         else if (mode >= 2 && mode <= 3) {            
-            reuseable_text = " 🡳   " + speedToString(speed - speedUp) + "  🡱 " + speedToString(speedUp);
+            reuseable_text = " 🡳   " + speedToString(speed - speedUp) + "  🡱   " + speedToString(speedUp);
         }
         else if (mode == 4) {
             reuseable_text = commonSigma()
