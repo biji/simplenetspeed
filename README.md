@@ -37,7 +37,7 @@ if you face any issues you can open pull request and can type your issue with im
 
 * Installation using terminal:
     - to install  
-    ```mkdir ~/.local/share/gnome-shell/extensions/netspeedsimplified@prateekmedia.extension && git clone https://github.com/prateekmedia/netspeedsimplified ~/.local/share/gnome-shell/extensions/netspeedsimplified@prateekmedia.extension```
+    ```mkdir ~/.local/share/gnome-shell/extensions/netspeedsimplified@prateekmedia.extension && git clone --single-branch --branch master https://github.com/prateekmedia/netspeedsimplified ~/.local/share/gnome-shell/extensions/netspeedsimplified@prateekmedia.extension```
     - to load/reload extension  
        Press ```Alt+F2``` then type ```r``` and ```hit enter```.
     - to enable  
@@ -45,7 +45,7 @@ if you face any issues you can open pull request and can type your issue with im
     - to disable  
     ```Disable manually using extensions app/ Using Gnome tweaks extension tab```
     - to reinstall or update this extension  
-    ```rm -rf ~/.local/share/gnome-shell/extensions/netspeedsimplified@prateekmedia.extension && git clone https://github.com/prateekmedia/netspeedsimplified ~/.local/share/gnome-shell/extensions/netspeedsimplified@prateekmedia.extension```
+    ```rm -rf ~/.local/share/gnome-shell/extensions/netspeedsimplified@prateekmedia.extension && git clone --single-branch --branch master https://github.com/prateekmedia/netspeedsimplified ~/.local/share/gnome-shell/extensions/netspeedsimplified@prateekmedia.extension```
     - to remove  
     ```Remove manually using extensions app```  
     or  
