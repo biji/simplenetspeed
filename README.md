@@ -1,7 +1,9 @@
 # Net speed Simplified
-*Gnome extension to show network speed*
+*Gnome extension to show network speed*  
 
-> Forked from : [Simple Net speed](https://github.com/biji/simplenetspeed)
+**This branch uses orignal extension's UUID i.e. it will override [simplenetspeed@biji.extension](https://github.com/biji/simplenetspeed)...**  
+  
+> Master Branch : [Net Speed Simplified](https://github.com/prateekmedia/netspeedsimplified)
 
 #### Changelog : 
 - [x] Reduce Refresh time
@@ -35,6 +37,20 @@ if you face any issues you can open pull request and can type your issue with im
   
 > **Middle click to change font size**
 
-Download the zip and paster all it contents manually to ~/.local/share/gnome-shell/extensions/simplenetspeed@biji.extension/
-OR
-Checkout master branch for direct install insturction : https://github.com/prateekmedia/netspeedsimplified
+* Installation using terminal:
+    - to install  
+    ```rm -rf ~/.local/share/gnome-shell/extensions/simplenetspeed@biji.extension && git clone --single-branch --branch simplenetspeed-simplified https://github.com/prateekmedia/netspeedsimplified ~/.local/share/gnome-shell/extensions/simplenetspeed@biji.extension```
+    - to load/reload extension  
+       Press ```Alt+F2``` then type ```r``` and ```hit enter```.
+    - to enable  
+    ```Enable manually using extensions app/ Using Gnome tweaks extension tab```
+    - to disable  
+    ```Disable manually using extensions app/ Using Gnome tweaks extension tab```
+    - to reinstall or update this extension  
+    ```rm -rf ~/.local/share/gnome-shell/extensions/simplenetspeed@biji.extension && git clone --single-branch --branch simplenetspeed-simplified https://github.com/prateekmedia/netspeedsimplified ~/.local/share/gnome-shell/extensions/simplenetspeed@biji.extension```
+    - to remove  
+    ```Remove manually using extensions app```  
+    or  
+    ```rm -rf ~/.local/share/gnome-shell/extensions/simplenetspeed@biji.extension```  
+
+Checkout master branch for more frequent updates and direct install instruction : https://github.com/prateekmedia/netspeedsimplified
