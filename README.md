@@ -35,18 +35,4 @@ if you face any issues you can open pull request and can type your issue with im
   
 > **Middle click to change font size**
 
-* Installation using terminal:
-    - to install  
-    ```mkdir ~/.local/share/gnome-shell/extensions/simplenetspeed@biji.extension && git clone https://github.com/prateekmedia/netspeedsimplified ~/.local/share/gnome-shell/extensions/simplenetspeed@biji.extension```
-    - to load/reload extension  
-       Press ```Alt+F2``` then type ```r``` and ```hit enter```.
-    - to enable  
-    ```Enable manually using extensions app/ Using Gnome tweaks extension tab```
-    - to disable  
-    ```Disable manually using extensions app/ Using Gnome tweaks extension tab```
-    - to reinstall or update this extension  
-    ```rm -rf ~/.local/share/gnome-shell/extensions/simplenetspeed@biji.extension && git clone https://github.com/prateekmedia/netspeedsimplified ~/.local/share/gnome-shell/extensions/simplenetspeed@biji.extension```
-    - to remove  
-    ```Remove manually using extensions app```  
-    or  
-    ```rm -rf ~/.local/share/gnome-shell/extensions/simplenetspeed@biji.extension```  
+Download the zip and paster all it contents manually to ~/.local/share/gnome-shell/extensions/simplenetspeed@biji.extension/
