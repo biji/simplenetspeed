@@ -10,7 +10,7 @@ const ExtensionUtils = imports.misc.extensionUtils;
 const Me = ExtensionUtils.getCurrentExtension();
 const Convenience = Me.imports.convenience;
 
-const PREFS_SCHEMA = 'org.gnome.shell.extensions.netspeedsimplified';
+const PREFS_SCHEMA = 'simplenetspeed@biji.extension';
 const refreshTime = 1.6;
 
 let settings;
