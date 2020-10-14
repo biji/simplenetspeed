@@ -36,3 +36,5 @@ if you face any issues you can open pull request and can type your issue with im
 > **Middle click to change font size**
 
 Download the zip and paster all it contents manually to ~/.local/share/gnome-shell/extensions/simplenetspeed@biji.extension/
+OR
+Checkout master branch for direct install insturction : https://github.com/prateekmedia/netspeedsimplified
