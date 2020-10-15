@@ -12,12 +12,12 @@
 - [x] New sigma icon that respects vertical alignment(old: ∑ , new: Σ)
 - [x] New Speed up and down icons for mode 2 & 3. (old: ↓ and ↑ , new: 🡳 and 🡱)
 - [x] Added space b/w speed and their units
-- [x] Human readable stylesheet
+- [x] Human readable stylesheet // used minimum width and removed repetitive codes
+- [x] Used ES6 classes for less code and more efficent javascript
 - [x] Right Click to toggle visibility of total data used //If you will Right click on 4th mode i.e. total speed mode then total speed counter will reset to 0 MB. 
 
 #### Todo : 
-- [ ] Add vertical alignment for Dash to panel users as a 6th mode  
-- [ ] Middle click to show popup menu with font sizes, Change colours based on data usage, change refreshRate by your own [Impossible right now]  
+- [ ] If network is not connected, then after 15 sec display text "---" instead of 0 b/s   
 
 if you face any issues you can open pull request and can type your issue with images or error codes
 
