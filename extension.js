@@ -45,6 +45,7 @@ function init() {
         y_align: Clutter.ActorAlign.CENTER,
         style_class: 'forall'
     });
+    button.set_child(chooseLabel());
 }
 
 function changeMode(widget, event) {
@@ -124,7 +125,6 @@ function parseStat() {
         let speed = (count - lastCount) / refreshTime;
         let speedUp = (countUp - lastCountUp) / refreshTime;
         let dot;
-        let dash;
         dot = (speed > lastSpeed) ? "⇅ " : ""
         if (resetNextCount == true) {
              resetNextCount = false;
@@ -191,7 +191,6 @@ function speedToString(amount, rMode = 0) {
 
 function enable() {
     Main.panel._rightBox.insert_child_at_index(button, 0);
-    button.set_child(chooseLabel());
     button.connect('button-press-event', changeMode);
     timeout = Mainloop.timeout_add_seconds(refreshTime, parseStat);
 }
