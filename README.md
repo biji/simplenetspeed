@@ -20,7 +20,7 @@
 - [x] If network is not connected, then after 12 sec display text "--" for 1st mode, "----" for 2nd mode, "------" for 3rd mode, "--------" for 4th mode, for fifth mode it will display total data used(MB), Normal Right click functionality will show total data used except in 5th mode    
 
 #### Todo : 
-   *Nothing Todo*
+- [ ] Vertical Aligment for mode 3,4 for Dash to panel or Big Screen users.
 
 if you face any **issues** you can **open pull request** and can type your issue with images or error codes
 
