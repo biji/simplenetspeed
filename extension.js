@@ -9,7 +9,7 @@ const Me = ExtensionUtils.getCurrentExtension();
 const Convenience = Me.imports.convenience;
 
 const PREFS_SCHEMA = 'org.gnome.shell.extensions.netspeedsimplified';
-const refreshTime = 1.5;
+const refreshTime = 1.5; 
 
 let settings;
 let button, timeout;
@@ -20,6 +20,7 @@ let fontmode;
 let resetNextCount = false, resetCount = 0;
 let toggle_bool = false;
 let reuseable_text;
+let h =0;
 
 function init() {
 
@@ -32,6 +33,8 @@ function init() {
         style_class: 'panel-button',
         reactive: true,
         can_focus: true,
+        x_fill: true,
+        y_fill: false,
         x_expand: true,
         y_expand: false,
         track_hover: true
@@ -42,9 +45,6 @@ function init() {
         y_align: Clutter.ActorAlign.CENTER,
         style_class: 'forall'
     });
-
-    button.set_child(chooseLabel());
-    button.connect('button-press-event', changeMode);
 }
 
 function changeMode(widget, event) {
@@ -55,7 +55,7 @@ function changeMode(widget, event) {
         parseStat();}
         else {//right click on other modes; brings total downloaded sum
           toggle_bool = !toggle_bool;
-          ioSpeed.set_text(" Hello");
+          ioSpeed.set_text("Loading Info...");
           button.set_child(chooseLabel());
           parseStat();
         }
@@ -78,11 +78,11 @@ function changeMode(widget, event) {
     log('mode:' + mode + ' font:' + fontmode);
 }
 
-function chooseLabel(addArg = false) {
+function chooseLabel(addArg = false /*for mode 4*/) {
     styleName = (mode == 0 || mode == 1 || mode == 4) ? 'sumall' : 'upanddown'
 
     let extraw = '';
-    (!addArg) ? (extraw = toggle_bool ? ' iwidth' : '') : null // Doesnt increase width width on right click if mode==4
+    (!addArg) ? (extraw = toggle_bool ? ' iwidth' : '') : null // Doesnt increase width on right click if mode==4
     styleName = 'forall ' + styleName + extraw + ' size'
     styleName = fontmode > 0 ? styleName + '-' + fontmode : styleName  
     
@@ -124,27 +124,37 @@ function parseStat() {
         let speed = (count - lastCount) / refreshTime;
         let speedUp = (countUp - lastCountUp) / refreshTime;
         let dot;
+        let dash;
         dot = (speed > lastSpeed) ? "⇅ " : ""
         if (resetNextCount == true) {
              resetNextCount = false;
              resetCount = count;
            }
-        function commonSigma(fi=0,
-        	             se=false /*This default value is for 4th mode*/, 
-        	             thr = true /*If true will return a result else will return empty string*/ 
-       	){
-       		let otu = (se) ? "  |  " : ""
-        	return (thr) ? otu + "Σ " + speedToString(count - resetCount, fi) : ""
+        function commonSigma(thr = true /*If true will return a result else will return empty string*/){
+		let sigma = "Σ ";
+		let extRaw = "  |  " + sigma;
+		let speedy = speedToString(count - resetCount, 1);
+		if (thr && mode !=4){
+			if (mode == 0 || mode == 2) return extRaw + speedy.toLowerCase();
+			else if (mode == 1 || mode == 3) return extRaw + speedy;
 		}
-
-        reuseable_text = (mode >= 0 && mode <= 1) ? dot + speedToString(speed) :
-        (mode >= 2 && mode <= 3) ? " 🡳   " + speedToString(speed - speedUp) + "  🡱   " + speedToString(speedUp) :
-        (mode == 4) ? commonSigma(): "Mode Unavailable"
-
-        reuseable_text += (mode == 0 || mode == 2) ? commonSigma(2, true, toggle_bool) :
-        (mode == 1 || mode == 3) ? commonSigma(1, true, toggle_bool) : ""
-        
-        ioSpeed.set_text(reuseable_text);
+		else if (mode == 4)  return sigma + speedy;
+		else return "";
+	}
+	
+	(speed || speedUp) ? h = 0 : h++
+		
+	if(h<=8){
+		reuseable_text = (mode >= 0 && mode <= 1) ? dot + speedToString(speed) + commonSigma(toggle_bool) :
+		(mode >= 2 && mode <= 3) ? " 🡳   " + speedToString(speed - speedUp) + "  🡱   " + speedToString(speedUp) +commonSigma(toggle_bool) :
+		(mode == 4) ? commonSigma(): "Mode Unavailable"
+	}
+	else{
+    	  	ioSpeed.set_style_class_name("forall");
+		if (mode !=4) reuseable_text = "--".repeat(mode+1) + commonSigma(toggle_bool);
+		else reuseable_text =  commonSigma(toggle_bool);
+    	}
+	ioSpeed.set_text(reuseable_text);
         lastCount = count;
         lastCountUp = countUp;
         lastSpeed = speed;
@@ -157,13 +167,12 @@ function parseStat() {
 function speedToString(amount, rMode = 0) {
     let digits;
     let speed_map;
-	speed_map = ["B", "KB", "MB", "GB"].map(
-		(rMode==1) ? v => v : //KB
-    	(rMode == 2) ? v => v.toLowerCase() : //kb
+    speed_map = ["B", "KB", "MB", "GB"].map(
+	(rMode==1) ? v => v : //KB
     	(mode == 0 || mode == 2) ? v => v.toLowerCase() + "/s" : //kb/s
     	(mode == 1 || mode == 3) ? v => v + "/s" : v=>v) //KB/s
+	
     if (amount === 0) return "0 "  + speed_map[0];
-
     if (mode==0 || mode==2) amount = amount * 8;
 
     let unit = 0;
@@ -182,6 +191,8 @@ function speedToString(amount, rMode = 0) {
 
 function enable() {
     Main.panel._rightBox.insert_child_at_index(button, 0);
+    button.set_child(chooseLabel());
+    button.connect('button-press-event', changeMode);
     timeout = Mainloop.timeout_add_seconds(refreshTime, parseStat);
 }
 
