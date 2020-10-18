@@ -12,7 +12,7 @@
 - [x] Centred and more cleaner ui
 - [x] Changed <del>Kbps</del> to kbp/s
 - [x] New sigma icon that respects vertical alignment(old: ∑ , new: Σ)
-- [x] New Speed up and down icons for mode 2 & 3. (old: ↓ and ↑ , new: 🡳 and 🡱)
+- [x] New Speed up and down icons for mode 3 & 4. (old: ↓ and ↑ , new: 🡳 and 🡱)
 - [x] Added space b/w speed and their units
 - [x] Human readable stylesheet // used minimum width and removed repetitive codes
 - [x] Used ES6 classes for less code and more efficent javascript
