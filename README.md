@@ -24,7 +24,7 @@
 #### Todo : 
 - [ ] Vertical Aligment for mode 3,4 for Dash to panel or Big Screen users.
 
-if you face any **issues** you can **open pull request** and can type your issue with images or error codes
+if you face any **issues** you can **[open pull request](https://github.com/prateekmedia/netspeedsimplified/pulls)** and can type your issue with images or error codes
 
 > **Left click to change modes**
   
