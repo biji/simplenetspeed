@@ -3,6 +3,8 @@
 
 > Forked from : [Simple Net speed](https://github.com/biji/simplenetspeed)
 
+***Tested on GNOME 3.36 and 3.38***
+
 #### Changelog : 
 - [x] Reduce Refresh time
 - [x] Supports GNOME SHELL 3.38
@@ -15,11 +17,12 @@
 - [x] Human readable stylesheet // used minimum width and removed repetitive codes
 - [x] Used ES6 classes for less code and more efficent javascript
 - [x] Right Click to toggle visibility of total data used //If you will Right click on 4th mode i.e. total speed mode then total speed counter will reset to 0 MB. 
+- [x] If network is not connected, then after 12 sec display text "--" for 1st mode, "----" for 2nd mode, "------" for 3rd mode, "--------" for 4th mode, for fifth mode it will display total data used(MB), Normal Right click functionality will show total data used except in 5th mode    
 
 #### Todo : 
-- [ ] If network is not connected, then after 15 sec display text "---" instead of 0 b/s   
+   *Nothing Todo*
 
-if you face any issues you can open pull request and can type your issue with images or error codes
+if you face any **issues** you can **open pull request** and can type your issue with images or error codes
 
 > **Left click to change modes**
   
@@ -35,18 +38,20 @@ if you face any issues you can open pull request and can type your issue with im
   
 > **Middle click to change font size**
 
-* Installation using terminal:
-    - to install  
+* Installing the extension using terminal:  
+    ...**Requirements : git**
+    
+    - ***to install***    
     ```git clone --single-branch --branch master https://github.com/prateekmedia/netspeedsimplified ~/.local/share/gnome-shell/extensions/netspeedsimplified@prateekmedia.extension```
-    - to load/reload extension  
+    
+    - ***to load/reload extension***    
        Press ```Alt+F2``` then type ```r``` and ```hit enter```.
-    - to enable  
-    ```Enable manually using extensions app/ Using Gnome tweaks extension tab```
-    - to disable  
-    ```Disable manually using extensions app/ Using Gnome tweaks extension tab```
-    - to reinstall or update this extension  
+       
+    - ***to enable/disable/remove***    
+      You can do that manually using extensions app or [website](https://extensions.gnome.org/local) or Using Gnome tweaks tool's extension tab  
+      
+    - ***to reinstall or update***   
     ```rm -rf ~/.local/share/gnome-shell/extensions/netspeedsimplified@prateekmedia.extension && git clone --single-branch --branch master https://github.com/prateekmedia/netspeedsimplified ~/.local/share/gnome-shell/extensions/netspeedsimplified@prateekmedia.extension```
-    - to remove  
-    ```Remove manually using extensions app```  
-    or  
+    
+    - ***to remove( using Terminal )***   
     ```rm -rf ~/.local/share/gnome-shell/extensions/netspeedsimplified@prateekmedia.extension```  
