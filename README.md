@@ -1,6 +1,8 @@
 # Net speed Simplified
 *Gnome extension to show network speed*
 
+> Website Link : [prateekmedia.io/netspeedsimplified](https://prateekmedia.github.io/netspeedsimplified/)
+
 > Forked from : [Simple Net speed](https://github.com/biji/simplenetspeed)
 
 ***Tested on GNOME 3.36 and 3.38***
