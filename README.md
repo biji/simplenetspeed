@@ -37,7 +37,7 @@ if you face any issues you can open pull request and can type your issue with im
 
 * Installation using terminal:
     - to install  
-    ```mkdir ~/.local/share/gnome-shell/extensions/netspeedsimplified@prateekmedia.extension && git clone --single-branch --branch master https://github.com/prateekmedia/netspeedsimplified ~/.local/share/gnome-shell/extensions/netspeedsimplified@prateekmedia.extension```
+    ```git clone --single-branch --branch master https://github.com/prateekmedia/netspeedsimplified ~/.local/share/gnome-shell/extensions/netspeedsimplified@prateekmedia.extension```
     - to load/reload extension  
        Press ```Alt+F2``` then type ```r``` and ```hit enter```.
     - to enable  
