@@ -9,5 +9,8 @@
         <range min="0" max="4" />
         <default>0</default>
       </key>
+      <key name="toggle_bool" type="b">
+        <default>false</default>
+      </key>
   </schema>
 </schemalist>
