@@ -46,7 +46,6 @@ function init() {
         y_align: Clutter.ActorAlign.CENTER,
         style_class: 'forall'
     });
-    //Refrence for Below Code : https://wiki.gnome.org/Projects/GnomeShell/Extensions/StepByStepTutorial#knowingClutter-someExamples-signals
     button.set_child(chooseLabel());
     button.connect('button-press-event', changeMode);
 }
