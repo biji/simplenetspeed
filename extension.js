@@ -18,7 +18,7 @@ let lastCount = 0, lastSpeed = 0, lastCountUp = 0;
 let mode; // 0: kb/s 1: KB/s 2: U:kb/s D:kb/s 3: U:KB/s D:KB/s 4: Total KB
 let fontmode;
 let resetNextCount = false, resetCount = 0;
-let toggle_bool;
+let togglebool;
 let reuseable_text;
 let h =0;
 
@@ -28,7 +28,7 @@ function init() {
 
     mode = settings.get_int('mode'); // default mode using bit (b/s, kb/s)
     fontmode = settings.get_int('fontmode');
-    toggle_bool = settings.get_boolean('toggle_bool');
+    togglebool = settings.get_boolean('togglebool');
 
     button = new St.Bin({
         style_class: 'panel-button',
@@ -58,7 +58,7 @@ function changeMode(widget, event) {
         resetNextCount = true;
         parseStat();}
         else {//right click on other modes; brings total downloaded sum
-          toggle_bool = !toggle_bool;
+          togglebool = !togglebool;
           ioSpeed.set_text("Loading Info...");
           button.set_child(chooseLabel());
           parseStat();
@@ -86,7 +86,7 @@ function chooseLabel(addArg = false /*for mode 4*/) {
     styleName = (mode == 0 || mode == 1 || mode == 4) ? 'sumall' : 'upanddown'
 
     let extraw = '';
-    (!addArg) ? (extraw = toggle_bool ? ' iwidth' : '') : null // Doesnt increase width on right click if mode==4
+    (!addArg) ? (extraw = togglebool ? ' iwidth' : '') : null // Doesnt increase width on right click if mode==4
     styleName = 'forall ' + styleName + extraw + ' size'
     styleName = fontmode > 0 ? styleName + '-' + fontmode : styleName  
     
@@ -148,14 +148,14 @@ function parseStat() {
 	(speed || speedUp) ? h = 0 : h++
 		
 	if(h<=8){
-		reuseable_text = (mode >= 0 && mode <= 1) ? dot + speedToString(speed) + commonSigma(toggle_bool) :
-		(mode >= 2 && mode <= 3) ? " 🡳   " + speedToString(speed - speedUp) + "  🡱   " + speedToString(speedUp) +commonSigma(toggle_bool) :
+		reuseable_text = (mode >= 0 && mode <= 1) ? dot + speedToString(speed) + commonSigma(togglebool) :
+		(mode >= 2 && mode <= 3) ? " 🡳   " + speedToString(speed - speedUp) + "  🡱   " + speedToString(speedUp) +commonSigma(togglebool) :
 		(mode == 4) ? commonSigma(): "Mode Unavailable"
 	}
 	else{
     	  	ioSpeed.set_style_class_name("forall");
-		if (mode !=4) reuseable_text = "--".repeat(mode+1) + commonSigma(toggle_bool);
-		else reuseable_text =  commonSigma(toggle_bool);
+		if (mode !=4) reuseable_text = "--".repeat(mode+1) + commonSigma(togglebool);
+		else reuseable_text =  commonSigma(togglebool);
     	}
 	ioSpeed.set_text(reuseable_text);
         lastCount = count;
