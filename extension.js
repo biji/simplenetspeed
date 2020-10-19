@@ -18,7 +18,7 @@ let lastCount = 0, lastSpeed = 0, lastCountUp = 0;
 let mode; // 0: kb/s 1: KB/s 2: U:kb/s D:kb/s 3: U:KB/s D:KB/s 4: Total KB
 let fontmode;
 let resetNextCount = false, resetCount = 0;
-let toggle_bool = false;
+let toggle_bool;
 let reuseable_text;
 let h =0;
 
@@ -27,7 +27,8 @@ function init() {
     settings = Convenience.getSettings(PREFS_SCHEMA);
 
     mode = settings.get_int('mode'); // default mode using bit (b/s, kb/s)
-    fontmode = settings.get_int('fontmode'); 
+    fontmode = settings.get_int('fontmode');
+    toggle_bool = settings.get_boolean('toggle_bool');
 
     button = new St.Bin({
         style_class: 'panel-button',
@@ -45,7 +46,9 @@ function init() {
         y_align: Clutter.ActorAlign.CENTER,
         style_class: 'forall'
     });
+    //Refrence for Below Code : https://wiki.gnome.org/Projects/GnomeShell/Extensions/StepByStepTutorial#knowingClutter-someExamples-signals
     button.set_child(chooseLabel());
+    button.connect('button-press-event', changeMode);
 }
 
 function changeMode(widget, event) {
@@ -191,7 +194,6 @@ function speedToString(amount, rMode = 0) {
 
 function enable() {
     Main.panel._rightBox.insert_child_at_index(button, 0);
-    button.connect('button-press-event', changeMode);
     timeout = Mainloop.timeout_add_seconds(refreshTime, parseStat);
 }
 
