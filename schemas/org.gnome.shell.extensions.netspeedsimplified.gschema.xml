@@ -9,7 +9,7 @@
         <range min="0" max="4" />
         <default>0</default>
       </key>
-      <key name="toggle-bool" type="b">
+      <key name="togglebool" type="b">
         <default>false</default>
       </key>
   </schema>
