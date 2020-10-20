@@ -12,5 +12,8 @@
       <key name="togglebool" type="b">
         <default>false</default>
       </key>
+      <key name="isvertical" type="b">
+        <default>false</default>
+      </key>
   </schema>
 </schemalist>
