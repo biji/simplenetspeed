@@ -24,7 +24,7 @@
 - [x] Used ES6 classes for less code and more efficent javascript
 - [x] Right Click to toggle visibility of total data used //If you will Right click on 4th mode i.e. total speed mode then total speed counter will reset to 0 MB. 
 - [x] If network is not connected, then after 12 sec display text "--" for 1st mode, "----" for 2nd mode, "------" for 3rd mode, "--------" for 4th mode, for fifth mode it will display total data used(MB), Normal Right click functionality will show total data used except in 5th mode    
-- [x] Vertical Aligment for mode 3,4 for Dash to panel or Big Screen users.
+- [x] Vertical Aligment for Dash to panel or Big Screen users, to enable this go to this [branch](https://github.com/prateekmedia/netspeedsimplified/tree/verticalalign)
 
 #### Todo : 
 ***Nothing TODO***
