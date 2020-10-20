@@ -1,8 +1,12 @@
 /* For all elements */
 .forall{
-    text-align: center !important;
+    text-align: center;
     margin: auto 2px;
     min-width: 4.4em;
+}
+
+.leftlign{
+    text-align: left;
 }
 
 .iwidth{

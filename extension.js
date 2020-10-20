@@ -20,7 +20,10 @@ let fontmode;
 let resetNextCount = false, resetCount = 0;
 let togglebool;
 let reuseable_text;
-let h =0;
+let h = 8;
+let newLine;
+var extRaw;
+let isVertical;
 
 function init() {
 
@@ -29,6 +32,7 @@ function init() {
     mode = settings.get_int('mode'); // default mode using bit (b/s, kb/s)
     fontmode = settings.get_int('fontmode');
     togglebool = settings.get_boolean('togglebool');
+    isVertical = settings.get_boolean('isvertical');
 
     button = new St.Bin({
         style_class: 'panel-button',
@@ -83,9 +87,9 @@ function changeMode(widget, event) {
 
 function chooseLabel(addArg = false /*for mode 4*/) {
     styleName = (mode == 0 || mode == 1 || mode == 4) ? 'sumall' : 'upanddown'
-
     let extraw = '';
-    (!addArg) ? (extraw = togglebool ? ' iwidth' : '') : null // Doesnt increase width on right click if mode==4
+    (!isVertical) ? ((!addArg) ? (extraw = togglebool ? ' iwidth' : '') : null) : // Doesnt increase width on right click if mode==4 or if vertical is true
+    ((mode ==2 || mode ==3) && togglebool ? extraw = ' leftlign' : null) // if vertical is true and right click is also true in mode 2,3 then make them left align
     styleName = 'forall ' + styleName + extraw + ' size'
     styleName = fontmode > 0 ? styleName + '-' + fontmode : styleName  
     
@@ -132,28 +136,41 @@ function parseStat() {
              resetNextCount = false;
              resetCount = count;
            }
-        function commonSigma(thr = true /*If true will return a result else will return empty string*/){
+        newLine = (isVertical && (mode ==2 || mode ==3)) ? "\n" : "";
+        var speedy = speedToString(count - resetCount, 1);
+        function sped(exta = extRaw, spda = speedy){ return exta + spda; }
+        function commonSigma(thr = true /*If true will return a result else will return empty string*/, isnewline = false){
 		let sigma = "Σ ";
-		let extRaw = "  |  " + sigma;
-		let speedy = speedToString(count - resetCount, 1);
+		extRaw = "  |  " + sigma;
 		if (thr && mode !=4){
-			if (mode == 0 || mode == 2) return extRaw + speedy.toLowerCase();
-			else if (mode == 1 || mode == 3) return extRaw + speedy;
+            if ((mode ==0 || mode ==1)){
+                if (isVertical) extRaw = "\n" + sigma;
+                if (mode == 0) return sped(extRaw, speedy.toLowerCase());
+                else return sped(extRaw);
+            }
+            else if ((mode ==2 || mode ==3)) {
+                if (isVertical){
+                    extRaw = "   " + sigma;
+                }
+                if (mode == 2) return sped(extRaw, speedy.toLowerCase());
+                else return sped(extRaw);
+            }
+            else { return ""}
 		}
-		else if (mode == 4)  return sigma + speedy;
+		else if (mode == 4){ 
+            return sped(sigma);
+        }
 		else return "";
 	}
-	
 	(speed || speedUp) ? h = 0 : h++
-		
 	if(h<=8){
 		reuseable_text = (mode >= 0 && mode <= 1) ? dot + speedToString(speed) + commonSigma(togglebool) :
-		(mode >= 2 && mode <= 3) ? " 🡳   " + speedToString(speed - speedUp) + "  🡱   " + speedToString(speedUp) +commonSigma(togglebool) :
+		(mode >= 2 && mode <= 3) ? " 🡳   " + speedToString(speed - speedUp) +newLine+ "  🡱   " + speedToString(speedUp) +commonSigma(togglebool) :
 		(mode == 4) ? commonSigma(): "Mode Unavailable"
 	}
 	else{
-    	  	ioSpeed.set_style_class_name("forall");
-		if (mode !=4) reuseable_text = "--".repeat(mode+1) + commonSigma(togglebool);
+    	ioSpeed.set_style_class_name("forall");
+		if (mode !=4) reuseable_text = "--".repeat(mode+1) + newLine + commonSigma(togglebool, true);
 		else reuseable_text =  commonSigma(togglebool);
     	}
 	ioSpeed.set_text(reuseable_text);
