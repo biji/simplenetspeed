@@ -11,6 +11,8 @@ const Convenience = Me.imports.convenience;
 const PREFS_SCHEMA = 'org.gnome.shell.extensions.netspeedsimplified';
 const refreshTime = 1.5; 
 
+const rCConst = 3;
+
 let settings;
 let button, timeout;
 let ioSpeed;
@@ -18,12 +20,8 @@ let lastCount = 0, lastSpeed = 0, lastCountUp = 0;
 let mode; // 0: kb/s 1: KB/s 2: U:kb/s D:kb/s 3: U:KB/s D:KB/s 4: Total KB
 let fontmode;
 let resetNextCount = false, resetCount = 0;
-let togglebool;
-let reuseable_text;
-let h = 8;
-let newLine;
-var extRaw;
-let isVertical;
+let togglebool, reuseable_text, h = 8, newLine, tTime=0, useOldIcon = false;
+var extRaw, rClickCount =0, isVertical, DIcons = [];
 
 function init() {
 
@@ -31,27 +29,6 @@ function init() {
 
     mode = settings.get_int('mode'); // default mode using bit (b/s, kb/s)
     fontmode = settings.get_int('fontmode');
-    togglebool = settings.get_boolean('togglebool');
-    isVertical = settings.get_boolean('isvertical');
-
-    button = new St.Bin({
-        style_class: 'panel-button',
-        reactive: true,
-        can_focus: true,
-        x_fill: true,
-        y_fill: false,
-        x_expand: true,
-        y_expand: false,
-        track_hover: true
-    });
-
-    ioSpeed = new St.Label({
-        text: '---',
-        y_align: Clutter.ActorAlign.CENTER,
-        style_class: 'forall'
-    });
-    button.set_child(chooseLabel());
-    button.connect('button-press-event', changeMode);
 }
 
 function changeMode(widget, event) {
@@ -66,6 +43,7 @@ function changeMode(widget, event) {
           button.set_child(chooseLabel());
           parseStat();
         }
+	rClickCount++;
     }
     else if (event.get_button() == 2) { // change font
         fontmode++;
@@ -106,6 +84,17 @@ function parseStat() {
         let count = 0;
         let countUp = 0;
         let line;
+	if (rClickCount != 0) tTime++;
+	if(tTime>rCConst){
+		tTime = 0;
+		rClickCount = 0;
+	}
+	if (rClickCount>=rCConst){
+	  	isVertical = !isVertical;
+		rClickCount =0;
+	}
+	log("tTime  : " + tTime);
+	log("rclickcounttttt  " + rClickCount);
         while (line = dstream.read_line(null)) {
             line = String(line);
             line = line.trim();
@@ -136,36 +125,33 @@ function parseStat() {
              resetNextCount = false;
              resetCount = count;
            }
+	
         newLine = (isVertical && (mode ==2 || mode ==3)) ? "\n" : "";
         var speedy = speedToString(count - resetCount, 1);
         function sped(exta = extRaw, spda = speedy){ return exta + spda; }
         function commonSigma(thr = true /*If true will return a result else will return empty string*/, isnewline = false){
-		let sigma = "Σ ";
+		let sigma = DIcons[2]+" ";
 		extRaw = "  |  " + sigma;
 		if (thr && mode !=4){
             if ((mode ==0 || mode ==1)){
-                if (isVertical) extRaw = "\n" + sigma;
-                if (mode == 0) return sped(extRaw, speedy.toLowerCase());
-                else return sped(extRaw);
+                (isVertical) ? (extRaw = "\n") + sigma : null
+                 return (mode == 0) ? sped(extRaw, speedy.toLowerCase()) : sped(extRaw)
             }
             else if ((mode ==2 || mode ==3)) {
-                if (isVertical){
-                    extRaw = "   " + sigma;
-                }
-                if (mode == 2) return sped(extRaw, speedy.toLowerCase());
-                else return sped(extRaw);
+                (isVertical) ? (extRaw = "   " + sigma) + sigma : null
+                return (mode == 2) ? sped(extRaw, speedy.toLowerCase()) : sped(extRaw)
             }
-            else { return ""}
+            else return "";
 		}
 		else if (mode == 4){ 
-            return sped(sigma);
+            return (isVertical) ? sped(sigma) + " -v" : sped(sigma)
         }
 		else return "";
 	}
 	(speed || speedUp) ? h = 0 : h++
 	if(h<=8){
 		reuseable_text = (mode >= 0 && mode <= 1) ? dot + speedToString(speed) + commonSigma(togglebool) :
-		(mode >= 2 && mode <= 3) ? " 🡳   " + speedToString(speed - speedUp) +newLine+ "  🡱   " + speedToString(speedUp) +commonSigma(togglebool) :
+		(mode >= 2 && mode <= 3) ? " "+DIcons[0]+"   " + speedToString(speed - speedUp) +newLine+ "  "+DIcons[1]+"   " + speedToString(speedUp) +commonSigma(togglebool) :
 		(mode == 4) ? commonSigma(): "Mode Unavailable"
 	}
 	else{
@@ -199,8 +185,8 @@ function speedToString(amount, rMode = 0) {
         amount /= 1000;
         ++unit;
     }
-    function ChkifInt(amnt, tofid = 1){
-    	return Number.isInteger(parseFloat(amnt.toFixed(tofid)));
+    function ChkifInt(amnt, digitsToFix = 1){
+    	return Number.isInteger(parseFloat(amnt.toFixed(digitsToFix)));
     }
     digits = ChkifInt(amount) ? 0 : //For Integer like 21.0
      ((mode==4 || rMode !=0) && !ChkifInt(amount*10)) ? 2 /* For floats like 21.1 */ : 1 //For floats like 21.22
@@ -208,7 +194,32 @@ function speedToString(amount, rMode = 0) {
     return String(amount.toFixed(digits)) + " " + speed_map[unit];
 }
 
+function chooseIconSet(){
+	DIcons = (useOldIcon) ? ["↓","↑","∑"] : ["🡳","🡱","Σ"]
+}
+
 function enable() {
+    button = new St.Bin({
+        style_class: 'panel-button',
+        reactive: true,
+        can_focus: true,
+        x_fill: true,
+        y_fill: false,
+        x_expand: true,
+        y_expand: false,
+        track_hover: true
+    });
+
+    ioSpeed = new St.Label({
+        text: '---',
+        y_align: Clutter.ActorAlign.CENTER,
+        style_class: 'forall'
+    });
+    button.set_child(chooseLabel());
+    button.connect('button-press-event', changeMode);
+
+    chooseIconSet();
+	
     Main.panel._rightBox.insert_child_at_index(button, 0);
     timeout = Mainloop.timeout_add_seconds(refreshTime, parseStat);
 }
