@@ -26,7 +26,7 @@
 - [x] If network is not connected, then after 12 sec display text "--" for 1st mode, "----" for 2nd mode, "------" for 3rd mode, "--------" for 4th mode, for fifth mode it will display total data used(MB), Normal Right click functionality will show total data used except in 5th mode    
 - [x] Easy Vertical Aligment for Dash to panel or Big Screen users, to enable this Right Click on any mode continuosly for four times to enable/disable vertical align *(If you have vertical align enabled then in mode 5 you will see " -v" written after total net speed)*, 
 ***Tip : You can also change font size in vertical alignment to your liking by middle mouse click on the speed***
-- [x] Add Old Icons like original simplenetspeed extension, to enable this manually change ```useOldIcon``` value to false in `extension.js` located in `~/.local/share/gnome-shell/extensions/netspeedsimplified@prateekmedia.extension`
+- [x] Add Old Icons like original simplenetspeed extension, to enable this manually change ```useOldIcon``` value to `true` in `extension.js` located in `~/.local/share/gnome-shell/extensions/netspeedsimplified@prateekmedia.extension`
 
 
 #### Todo : 
