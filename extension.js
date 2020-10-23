@@ -151,7 +151,7 @@ function parseStat() {
 	(speed || speedUp) ? h = 0 : h++
 	if(h<=8){
 		reuseable_text = (mode >= 0 && mode <= 1) ? `${dot} ${speedToString(speed)} ${commonSigma(togglebool)}` :
-		(mode >= 2 && mode <= 3) ? `${DIcons[0]}   ${speedToString(speed - speedUp)} ${newLine}  ${DIcons[1]}   ${speedToString(speedUp)} ${commonSigma(togglebool)}` :
+		(mode >= 2 && mode <= 3) ? `${DIcons[0]}   ${speedToString(speed - speedUp)}   ${newLine}${DIcons[1]}   ${speedToString(speedUp)} ${commonSigma(togglebool)}` :
 		(mode == 4) ? commonSigma(): "Mode Unavailable"
 	}
 	else{
