@@ -120,7 +120,7 @@ function parseStat() {
         let speed = (count - lastCount) / refreshTime;
         let speedUp = (countUp - lastCountUp) / refreshTime;
         let dot;
-        dot = (speed > lastSpeed) ? "⇅ " : ""
+        dot = (speed > lastSpeed) ? "⇅" : ""
         if (resetNextCount == true) {
              resetNextCount = false;
              resetCount = count;
@@ -130,7 +130,7 @@ function parseStat() {
         var speedy = speedToString(count - resetCount, 1);
         function sped(exta = extRaw, spda = speedy){ return exta + spda; }
         function commonSigma(thr = true /*If true will return a result else will return empty string*/, isnewline = false){
-		let sigma = DIcons[2]+" ";
+		let sigma = `${DIcons[2]} `;
 		extRaw = "  |  " + sigma;
 		if (thr && mode !=4){
             if ((mode ==0 || mode ==1)){
@@ -150,8 +150,8 @@ function parseStat() {
 	}
 	(speed || speedUp) ? h = 0 : h++
 	if(h<=8){
-		reuseable_text = (mode >= 0 && mode <= 1) ? dot + speedToString(speed) + commonSigma(togglebool) :
-		(mode >= 2 && mode <= 3) ? " "+DIcons[0]+"   " + speedToString(speed - speedUp) +newLine+ "  "+DIcons[1]+"   " + speedToString(speedUp) +commonSigma(togglebool) :
+		reuseable_text = (mode >= 0 && mode <= 1) ? `${dot} ${speedToString(speed)} ${commonSigma(togglebool)}` :
+		(mode >= 2 && mode <= 3) ? `${DIcons[0]}   ${speedToString(speed - speedUp)} ${newLine}  ${DIcons[1]}   ${speedToString(speedUp)} ${commonSigma(togglebool)}` :
 		(mode == 4) ? commonSigma(): "Mode Unavailable"
 	}
 	else{
