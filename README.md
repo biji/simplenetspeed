@@ -58,7 +58,7 @@ if you face any **issues** you can **[open pull request](https://github.com/prat
     
     You can manually download the zip and paste its content in the folder  
     `~/.local/share/gnome-shell/extensions/netspeedsimplified@prateekmedia.extension`  
-    [Create it, if its not their]
+    [Create it, if its not there]
     
     - ***to load/reload extension***    
        Press ```Alt+F2``` then type ```r``` and ```hit enter```.
@@ -76,7 +76,7 @@ if you face any **issues** you can **[open pull request](https://github.com/prat
     & then
     You can manually download the latest zip and paste its content in the folder   
     `~/.local/share/gnome-shell/extensions/netspeedsimplified@prateekmedia.extension`  
-    [Create it, if its not their]
+    [Create it, if its not there]
     
     - ***to remove( using Terminal )( reload required )***   
     ```rm -rf ~/.local/share/gnome-shell/extensions/netspeedsimplified@prateekmedia.extension```  
