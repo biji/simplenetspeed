@@ -22,14 +22,17 @@
 - [x] Added space b/w speed and their units
 - [x] Human readable stylesheet // used minimum width and removed repetitive codes
 - [x] Used ES6 classes for less code and more efficent javascript
-- [x] Right Click to toggle visibility of total data used //If you will Right click on 5th mode i.e. total speed mode then total speed counter will reset to 0 MB.    
+- [x] Right Click to toggle visibility of total data used //If you will Right click on 5th mode i.e. total speed mode then total speed counter will reset to 0 MB. If you want to always show sigma by default then paste below command in terminal    
+`sed -i 's togglebool=false togglebool=true ' ~/.local/share/gnome-shell/extensions/netspeedsimplified@prateekmedia.extension/extension.js`  
 
 #### Changelog for New Version : 
 - [x] If network is not connected, then after 12 sec display text "--" for 1st mode, "----" for 2nd mode, "------" for 3rd mode, "--------" for 4th mode, for fifth mode it will display total data used(MB), Normal Right click functionality will show total data used except in 5th mode  
-- [x] Easy Vertical Aligment for Dash to panel or Big Screen users, to enable this Right Click on any mode continuosly for four times to enable/disable vertical align, to make vertical Alignment default then manually change ```isVertical``` value to `true` in `extension.js` located in `~/.local/share/gnome-shell/extensions/netspeedsimplified@prateekmedia.extension`   
+- [x] Easy Vertical Aligment for Dash to panel or Big Screen users, to enable this Right Click on any mode continuosly for four times to enable/disable vertical align, to make vertical Alignment default then type  
+`sed -i 's isVertical=false isVertical=true ' ~/.local/share/gnome-shell/extensions/netspeedsimplified@prateekmedia.extension/extension.js`  
 *(If you have vertical align enabled then in mode 5 you will see " -v" written after total net speed)* 
 ***Tip : You can also change font size in vertical alignment to your liking by middle mouse click on the speed***  
-- [x] Easy Switch to Old Icons from simplenetspeed extension, to enable this Left Click continuosly for six or seven times to enable/disable old icons, to make old icons default then manually change ```useOldIcon``` value to `true` in `extension.js` located in `~/.local/share/gnome-shell/extensions/netspeedsimplified@prateekmedia.extension`  
+- [x] Easy Switch to Old Icons from simplenetspeed extension, to enable this Left Click continuosly for six or seven times to enable/disable old icons, to make old icons default  then type  
+`sed -i 's useOldIcon=false useOldIcon=true ' ~/.local/share/gnome-shell/extensions/netspeedsimplified@prateekmedia.extension/extension.js`  
 *(If you have old icons enabled then in mode 5 you will see " -o" written after total net speed)*   
 
 #### Todo : 
