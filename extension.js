@@ -9,20 +9,21 @@ const Me = ExtensionUtils.getCurrentExtension();
 const Convenience = Me.imports.convenience;
 
 const PREFS_SCHEMA = 'org.gnome.shell.extensions.netspeedsimplified';
-const refreshTime = 1.5; 
+const refreshTime=1.5; 
 
-const rCConst = 3; //Right Click 4 timees to change Vertical Alignment
-const lCConst = 5; //Left Click 6 timees to change icon set
+const rCConst=3; //Right Click 4 timees to change Vertical Alignment
+const lCConst=5; //Left Click 6 timees to change icon set
 
-let settings;
-let button, timeout;
-let ioSpeed;
-let lastCount = 0, lastSpeed = 0, lastCountUp = 0;
-let mode; // 0: kb/s 1: KB/s 2: U:kb/s D:kb/s 3: U:KB/s D:KB/s 4: Total KB
-let fontmode;
-let resetNextCount = false, resetCount = 0;
-let reuseable_text, h = 8, newLine, tTime=0, ltTime=0, useOldIcon = false;
-var extRaw, rClickCount =0, lClickCount =0, isVertical = false, togglebool = false, DIcons = [];
+let settings,
+  button, timeout,
+  ioSpeed,
+  lastCount = 0, lastSpeed = 0, lastCountUp = 0,
+  mode, // 0: kb/s 1: KB/s 2: U:kb/s D:kb/s 3: U:KB/s D:KB/s 4: Total KB
+  fontmode,
+  resetNextCount=false, resetCount=0,
+  reuseable_text, newLine, h=8, tTime=0, ltTime=0, useOldIcon=false;
+
+var extRaw, rClickCount=0, lClickCount=0, isVertical=false, togglebool=false, DIcons=[];
 
 function init() {
 
@@ -87,26 +88,30 @@ function parseStat() {
         let count = 0;
         let countUp = 0;
         let line;
-	if (rClickCount != 0) tTime++
-	if (lClickCount != 0) ltTime++
-	if (rClickCount>=rCConst){
-		log("Changed Vertical Alignment.");
-	  	isVertical = !isVertical;
-		rClickCount =0;
-	}	
-	if (lClickCount>=lCConst){
-		log("Changed Icon set.");
-	  	useOldIcon = !useOldIcon;
-		chooseIconSet();	
-		lClickCount =0;
+	if (rClickCount != 0){ 
+		tTime++;
+		if (rClickCount>=rCConst){
+			log("Changed Vertical Alignment.");
+			isVertical = !isVertical;
+			rClickCount =0;
+		}
+		if(tTime>rCConst){
+			tTime = 0;
+			rClickCount = 0;
+		}
 	}
-	if(tTime>rCConst){
-		tTime = 0;
-		rClickCount = 0;
-	}
-	if(ltTime>lCConst){
-		ltTime = 0;
-		lClickCount = 0;
+	if (lClickCount != 0) {
+		ltTime++;
+		if (lClickCount>=lCConst){
+			log("Changed Icon set.");
+			useOldIcon = !useOldIcon;
+			chooseIconSet();	
+			lClickCount =0;
+		}
+		if(ltTime>lCConst){
+			ltTime = 0;
+			lClickCount = 0;
+		}
 	}
         while (line = dstream.read_line(null)) {
             line = String(line);
@@ -130,9 +135,9 @@ function parseStat() {
         if (lastCount === 0) lastCount = count;
         if (lastCountUp === 0) lastCountUp = countUp;
 
-        let speed = (count - lastCount) / refreshTime;
-        let speedUp = (countUp - lastCountUp) / refreshTime;
-        let dot;
+        let speed = (count - lastCount) / refreshTime,
+          speedUp = (countUp - lastCountUp) / refreshTime,
+          dot;
         dot = (speed > lastSpeed) ? "⇅" : ""
         if (resetNextCount == true) {
              resetNextCount = false;
@@ -146,20 +151,20 @@ function parseStat() {
 		let sigma = `${DIcons[2]} `;
 		extRaw = "  |  " + sigma;
 		if (thr && mode !=4){
-            if ((mode ==0 || mode ==1)){
-                (isVertical) ? (extRaw = "\n" + sigma) : null
-                 return (mode == 0) ? sped(extRaw, speedy.toLowerCase()) : sped(extRaw)
-            }
-            else if ((mode ==2 || mode ==3)) {
-                (isVertical) ? (extRaw = "      " + sigma) : null
-                return (mode == 2) ? sped(extRaw, speedy.toLowerCase()) : sped(extRaw)
-            }
-            else return "";
-		}
+		    if ((mode ==0 || mode ==1)){
+			(isVertical) ? (extRaw = "\n" + sigma) : null
+			 return (mode == 0) ? sped(extRaw, speedy.toLowerCase()) : sped(extRaw)
+		    }
+		    else if ((mode ==2 || mode ==3)) {
+			(isVertical) ? (extRaw = "      " + sigma) : null
+			return (mode == 2) ? sped(extRaw, speedy.toLowerCase()) : sped(extRaw)
+		    }
+		    else return "";
+			}
 		else if (mode == 4){ 
 			let toReturn = (isVertical) ? sped(sigma) + "\n  -v" : sped(sigma);
 			toReturn = (useOldIcon) ? toReturn + "  -o" : toReturn
-            		return toReturn
+            		return toReturn;
         }
 		else return "";
 	}
@@ -185,8 +190,8 @@ function parseStat() {
 }
 
 function speedToString(amount, rMode = 0) {
-    let digits;
-    let speed_map;
+    let digits,
+      speed_map;
     speed_map = ["B", "KB", "MB", "GB"].map(
 	(rMode==1 || mode ==4) ? v => v : //KB
     	(mode == 0 || mode == 2) ? v => v.toLowerCase() + "/s" : //kb/s
