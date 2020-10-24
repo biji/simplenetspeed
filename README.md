@@ -22,7 +22,7 @@
 - [x] Added space b/w speed and their units
 - [x] Human readable stylesheet // used minimum width and removed repetitive codes
 - [x] Used ES6 classes for less code and more efficent javascript
-- [x] Right Click to toggle visibility of total data used //If you will Right click on 5th mode i.e. total speed mode then total speed counter will reset to 0 MB. If you want to always show sigma by default then paste below command in terminal    
+- [x] Right Click to toggle visibility of total data used //If you will Right click on 5th mode i.e. total speed mode then total speed counter will reset to 0 MB. If you want to always show sigma by default then paste below command in terminal (Disclaimer: the specific below code may break your extension, if it happens then reinstall it)   
 `sed -i 's togglebool=false togglebool=true ' ~/.local/share/gnome-shell/extensions/netspeedsimplified@prateekmedia.extension/extension.js`  
 
 #### Changelog for New Version : 
@@ -33,7 +33,9 @@
 ***Tip : You can also change font size in vertical alignment to your liking by middle mouse click on the speed***  
 - [x] Easy Switch to Old Icons from simplenetspeed extension, to enable this Left Click continuosly for six or seven times to enable/disable old icons, to make old icons default  then type  
 `sed -i 's useOldIcon=false useOldIcon=true ' ~/.local/share/gnome-shell/extensions/netspeedsimplified@prateekmedia.extension/extension.js`  
-*(If you have old icons enabled then in mode 5 you will see " -o" written after total net speed)*   
+*(If you have old icons enabled then in mode 5 you will see " -o" written after total net speed)* 
+
+**To Revert Back any changes made using sed -i command then replace false with true and true with false in orignal command, like the above command will become** `sed -i 's useOldIcon=true useOldIcon=false ...` , if this doesn't work then reinstall the extension.
 
 #### Todo : 
 ***Nothing TODO***
