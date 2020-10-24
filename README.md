@@ -22,7 +22,8 @@
 - [x] Added space b/w speed and their units
 - [x] Human readable stylesheet // used minimum width and removed repetitive codes
 - [x] Used ES6 classes for less code and more efficent javascript
-- [x] Right Click to toggle visibility of total data used //If you will Right click on 5th mode i.e. total speed mode then total speed counter will reset to 0 MB. If you want to always show sigma by default then paste below command in terminal (Disclaimer: the specific below code may break your extension, if it happens then reinstall it)   
+- [x] Right Click to toggle visibility of total data used //If you will Right click on 5th mode i.e. total speed mode then total speed counter will reset to 0 MB.  
+If you want to always show total data used by default then paste below command in terminal (Disclaimer: The code below may break your extension, if it happens then reinstall it)   
 `sed -i 's togglebool=false togglebool=true ' ~/.local/share/gnome-shell/extensions/netspeedsimplified@prateekmedia.extension/extension.js`  
 
 #### Changelog for New Version : 
