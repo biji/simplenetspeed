@@ -11,7 +11,8 @@ const Convenience = Me.imports.convenience;
 const PREFS_SCHEMA = 'org.gnome.shell.extensions.netspeedsimplified';
 const refreshTime = 1.5; 
 
-const rCConst = 3;
+const rCConst = 3; //Right Click 4 timees to change Vertical Alignment
+const lCConst = 5; //Left Click 6 timees to change icon set
 
 let settings;
 let button, timeout;
@@ -20,8 +21,8 @@ let lastCount = 0, lastSpeed = 0, lastCountUp = 0;
 let mode; // 0: kb/s 1: KB/s 2: U:kb/s D:kb/s 3: U:KB/s D:KB/s 4: Total KB
 let fontmode;
 let resetNextCount = false, resetCount = 0;
-let togglebool, reuseable_text, h = 8, newLine, tTime=0, useOldIcon = false;
-var extRaw, rClickCount =0, isVertical, DIcons = [];
+let reuseable_text, h = 8, newLine, tTime=0, ltTime=0, useOldIcon = false;
+var extRaw, rClickCount =0, lClickCount =0, isVertical = false, togglebool = false, DIcons = [];
 
 function init() {
 
@@ -59,15 +60,17 @@ function changeMode(widget, event) {
         settings.set_int('mode', mode);
         button.set_child(chooseLabel(mode==4 ? true : false));
         parseStat();
+	lClickCount++;
     }
     log('mode:' + mode + ' font:' + fontmode);
 }
 
 function chooseLabel(addArg = false /*for mode 4*/) {
-    styleName = (mode == 0 || mode == 1 || mode == 4) ? 'sumall' : 'upanddown'
+    if (mode == 0 || mode == 1 || mode == 4) styleName =  'sumall'; 
+    else if(!isVertical) styleName = 'upanddown';
     let extraw = '';
     (!isVertical) ? ((!addArg) ? (extraw = togglebool ? ' iwidth' : '') : null) : // Doesnt increase width on right click if mode==4 or if vertical is true
-    ((mode ==2 || mode ==3) && togglebool ? extraw = ' leftlign' : null) // if vertical is true and right click is also true in mode 2,3 then make them left align
+    ((mode ==2 || mode ==3) ? extraw = ' leftlign' : null) // if vertical is true in mode 2,3 then make them left align
     styleName = 'forall ' + styleName + extraw + ' size'
     styleName = fontmode > 0 ? styleName + '-' + fontmode : styleName  
     
@@ -84,17 +87,27 @@ function parseStat() {
         let count = 0;
         let countUp = 0;
         let line;
-	if (rClickCount != 0) tTime++;
+	if (rClickCount != 0) tTime++
+	if (lClickCount != 0) ltTime++
+	if (rClickCount>=rCConst){
+		log("Changed Vertical Alignment.");
+	  	isVertical = !isVertical;
+		rClickCount =0;
+	}	
+	if (lClickCount>=lCConst){
+		log("Changed Icon set.");
+	  	useOldIcon = !useOldIcon;
+		chooseIconSet();	
+		lClickCount =0;
+	}
 	if(tTime>rCConst){
 		tTime = 0;
 		rClickCount = 0;
 	}
-	if (rClickCount>=rCConst){
-	  	isVertical = !isVertical;
-		rClickCount =0;
+	if(ltTime>lCConst){
+		ltTime = 0;
+		lClickCount = 0;
 	}
-	log("tTime  : " + tTime);
-	log("rclickcounttttt  " + rClickCount);
         while (line = dstream.read_line(null)) {
             line = String(line);
             line = line.trim();
@@ -134,17 +147,19 @@ function parseStat() {
 		extRaw = "  |  " + sigma;
 		if (thr && mode !=4){
             if ((mode ==0 || mode ==1)){
-                (isVertical) ? (extRaw = "\n") + sigma : null
+                (isVertical) ? (extRaw = "\n" + sigma) : null
                  return (mode == 0) ? sped(extRaw, speedy.toLowerCase()) : sped(extRaw)
             }
             else if ((mode ==2 || mode ==3)) {
-                (isVertical) ? (extRaw = "   " + sigma) + sigma : null
+                (isVertical) ? (extRaw = "      " + sigma) : null
                 return (mode == 2) ? sped(extRaw, speedy.toLowerCase()) : sped(extRaw)
             }
             else return "";
 		}
 		else if (mode == 4){ 
-            return (isVertical) ? sped(sigma) + " -v" : sped(sigma)
+			let toReturn = (isVertical) ? sped(sigma) + "\n  -v" : sped(sigma);
+			toReturn = (useOldIcon) ? toReturn + "  -o" : toReturn
+            		return toReturn
         }
 		else return "";
 	}
@@ -173,9 +188,9 @@ function speedToString(amount, rMode = 0) {
     let digits;
     let speed_map;
     speed_map = ["B", "KB", "MB", "GB"].map(
-	(rMode==1) ? v => v : //KB
+	(rMode==1 || mode ==4) ? v => v : //KB
     	(mode == 0 || mode == 2) ? v => v.toLowerCase() + "/s" : //kb/s
-    	(mode == 1 || mode == 3) ? v => v + "/s" : v=>v) //KB/s
+    	(mode == 1 || mode == 3) ? v => v + "/s" : v=>v) //KB/s, KB
 	
     if (amount === 0) return "0 "  + speed_map[0];
     if (mode==0 || mode==2) amount = amount * 8;
@@ -217,9 +232,8 @@ function enable() {
     });
     button.set_child(chooseLabel());
     button.connect('button-press-event', changeMode);
-
     chooseIconSet();
-	
+
     Main.panel._rightBox.insert_child_at_index(button, 0);
     timeout = Mainloop.timeout_add_seconds(refreshTime, parseStat);
 }
