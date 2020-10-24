@@ -142,7 +142,7 @@ function parseStat() {
         newLine = (isVertical && (mode ==2 || mode ==3)) ? "\n" : "";
         var speedy = speedToString(count - resetCount, 1);
         function sped(exta = extRaw, spda = speedy){ return exta + spda; }
-        function commonSigma(thr = true /*If true will return a result else will return empty string*/, isnewline = false){
+        function commonSigma(thr = true /*If true will return a result else will return empty string*/){
 		let sigma = `${DIcons[2]} `;
 		extRaw = "  |  " + sigma;
 		if (thr && mode !=4){
@@ -171,7 +171,7 @@ function parseStat() {
 	}
 	else{
     	ioSpeed.set_style_class_name("forall");
-		if (mode !=4) reuseable_text = "--".repeat(mode+1) + newLine + commonSigma(togglebool, true);
+		if (mode !=4) reuseable_text = "--".repeat(mode+1) + newLine + commonSigma(togglebool);
 		else reuseable_text =  commonSigma(togglebool);
     	}
 	ioSpeed.set_text(reuseable_text);
