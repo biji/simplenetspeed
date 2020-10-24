@@ -35,7 +35,7 @@
 `sed -i 's useOldIcon=false useOldIcon=true ' ~/.local/share/gnome-shell/extensions/netspeedsimplified@prateekmedia.extension/extension.js`  
 *(If you have old icons enabled then in mode 5 you will see " -o" written after total net speed)* 
 
-**To Revert Back any changes made using sed -i command then replace false with true and true with false in orignal command, like the above command will become** `sed -i 's useOldIcon=true useOldIcon=false ...` , if this doesn't work then reinstall the extension.
+**To Revert Back any changes made using sed -i command then replace false with true and true with false in orignal command, like the above command will become** `sed -i 's useOldIcon=true useOldIcon=false ...` , ***if this doesn't work then reinstall the extension.***
 
 #### Todo : 
 ***Nothing TODO***
