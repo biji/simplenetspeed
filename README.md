@@ -24,10 +24,11 @@
 - [x] Used ES6 classes for less code and more efficent javascript
 - [x] Right Click to toggle visibility of total data used //If you will Right click on 5th mode i.e. total speed mode then total speed counter will reset to 0 MB. 
 - [x] If network is not connected, then after 12 sec display text "--" for 1st mode, "----" for 2nd mode, "------" for 3rd mode, "--------" for 4th mode, for fifth mode it will display total data used(MB), Normal Right click functionality will show total data used except in 5th mode    
-- [x] Easy Vertical Aligment for Dash to panel or Big Screen users, to enable this Right Click on any mode continuosly for four times to enable/disable vertical align *(If you have vertical align enabled then in mode 5 you will see " -v" written after total net speed)*, 
+- [x] Easy Vertical Aligment for Dash to panel or Big Screen users, to enable this Right Click on any mode continuosly for four times to enable/disable vertical align, to make vertical Alignment default then manually change ```isVertical``` value to `true` in `extension.js` located in `~/.local/share/gnome-shell/extensions/netspeedsimplified@prateekmedia.extension`  
+*(If you have vertical align enabled then in mode 5 you will see " -v" written after total net speed)*, 
 ***Tip : You can also change font size in vertical alignment to your liking by middle mouse click on the speed***
-- [x] Add Old Icons like original simplenetspeed extension, to enable this manually change ```useOldIcon``` value to `true` in `extension.js` located in `~/.local/share/gnome-shell/extensions/netspeedsimplified@prateekmedia.extension`
-
+- [x] Easy Switch to Old Icons from simplenetspeed extension, to enable this Left Click continuosly for six or seven times to enable/disable old icons, to make old icons default then manually change ```useOldIcon``` value to `true` in `extension.js` located in `~/.local/share/gnome-shell/extensions/netspeedsimplified@prateekmedia.extension`  
+*(If you have old icons enabled then in mode 5 you will see " -o" written after total net speed)*, 
 
 #### Todo : 
 ***Nothing TODO***
@@ -35,6 +36,7 @@
 if you face any **issues** you can **[open pull request](https://github.com/prateekmedia/netspeedsimplified/pulls)** and can type your issue with images or error codes
 
 > **Left click to change modes**
+> **Left click continuosly for 6/7 times to toggle old icons like simplenetspeed extension, You will se "-o" written in 5th mode after total download data if this is enabled**
   
 *Modes available:*
 1. Total net speed in bits per second 
@@ -46,7 +48,7 @@ if you face any **issues** you can **[open pull request](https://github.com/prat
 > **Right click to toggle total data usage visiblity, Right click on total data usage mode in reset counter**  
 <p align="center"> <img src='https://user-images.githubusercontent.com/41370460/95724032-78b84480-0c93-11eb-9a2f-07976cb99e19.png' />   =====> To this   <img src='https://user-images.githubusercontent.com/41370460/95724072-8968ba80-0c93-11eb-98c9-e5651167760d.png' /></p>  
   
-> **Right click continuosly for 4 times to toggle vertical alignment, This can also be applied to 5th mode**  
+> **Right click continuosly for 4 times in any mode to toggle vertical alignment, You will se "-v" written in 5th mode after total download data if this is enabled**  
   
 > **Middle click to change font size**
 
