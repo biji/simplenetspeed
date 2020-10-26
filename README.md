@@ -62,7 +62,7 @@ if you face any **issues** you can **[open pull request](https://github.com/prat
 
 <h2 align="center">Installing the extension using terminal:</h2>   
 
-* Please Mark this as Watch if you want to know about the updates
+* Please Mark this extension page as Watch if you want to know about the updates
     - ***to install( reload required )( Requirements : git )***    
     ```git clone --single-branch --branch main https://github.com/prateekmedia/netspeedsimplified ~/.local/share/gnome-shell/extensions/netspeedsimplified@prateekmedia.extension``` 
     
