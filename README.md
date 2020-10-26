@@ -1,3 +1,4 @@
+<p align="center"><img src="https://user-images.githubusercontent.com/41370460/97126905-2b8da580-175e-11eb-802d-4540dd9178a7.jpg" height=80px/></p>
 <h1 align="center">Net speed Simplified</h1>
 <h5 align="center"><i>Gnome extension to show network speed</i></h5> 
 
@@ -5,7 +6,7 @@
 
 > Website Link : [prateekmedia.io/netspeedsimplified](https://prateekmedia.github.io/netspeedsimplified/)
 
-> Forked from : [biji/simplenetspeed](https://github.com/biji/simplenetspeed)
+> Forked from : [biji.gnome/simplenetspeed](https://github.com/biji/simplenetspeed)
 
 <p align="center"><img src='https://user-images.githubusercontent.com/41370460/96410083-f9cb8a80-1203-11eb-98a0-4cada29306b1.png' /> *Screenshots*</p>
 
@@ -30,7 +31,7 @@ If you want to always show total data used by default then paste below command i
 - [x] If network is not connected, then after 12 sec display text "--" for 1st mode, "----" for 2nd mode, "------" for 3rd mode, "--------" for 4th mode, for fifth mode it will display total data used(MB), Normal Right click functionality will show total data used except in 5th mode  
 - [x] Easy Vertical Aligment for Dash to panel or Big Screen users, to enable this Right Click on any mode continuosly for four times to enable/disable vertical align, to make vertical Alignment default then type  
 `sed -i 's isVertical=false isVertical=true ' ~/.local/share/gnome-shell/extensions/netspeedsimplified@prateekmedia.extension/extension.js`  
-*(If you have vertical align enabled then in mode 5 you will see " -v" written after total net speed)* 
+*(If you have vertical align enabled then in mode 5 you will see " -v" written after total net speed)*, 
 ***Tip : You can also change font size in vertical alignment to your liking by middle mouse click on the speed***  
 - [x] Easy Switch to Old Icons from simplenetspeed extension, to enable this Left Click continuosly for six or seven times to enable/disable old icons, to make old icons default  then type  
 `sed -i 's useOldIcon=false useOldIcon=true ' ~/.local/share/gnome-shell/extensions/netspeedsimplified@prateekmedia.extension/extension.js`  
