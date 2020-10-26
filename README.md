@@ -1,8 +1,6 @@
-<p align="center"><img src="https://user-images.githubusercontent.com/41370460/97126905-2b8da580-175e-11eb-802d-4540dd9178a7.jpg" height=80px/></p>
+<p align="center"><a href="https://extensions.gnome.org/review/20012"><img src="https://user-images.githubusercontent.com/41370460/97126905-2b8da580-175e-11eb-802d-4540dd9178a7.jpg" height=80px/></a></p>
 <h1 align="center">Net speed Simplified</h1>
 <h5 align="center"><i>Gnome extension to show network speed</i></h5> 
-
-> Gnome Extensions Link : [extensions.gnome/netspeedsimplified](https://extensions.gnome.org/review/20012)
 
 > Website Link : [prateekmedia.io/netspeedsimplified](https://prateekmedia.github.io/netspeedsimplified/)
 
@@ -44,7 +42,8 @@ If you want to always show total data used by default then paste below command i
 
 if you face any **issues** you can **[open pull request](https://github.com/prateekmedia/netspeedsimplified/pulls)** and can type your issue with images or error codes
 
-> **Left click to change modes**
+> **Left click to change modes**,  
+  
 > **Left click continuosly for 6/7 times to toggle old icons like simplenetspeed extension, You will se "-o" written in 5th mode after total download data if this is enabled**
   
 *Modes available:*
@@ -54,14 +53,16 @@ if you face any **issues** you can **[open pull request](https://github.com/prat
 1. Up & down speed in Bytes per second
 1. Total of downloaded in Bytes (Right click to reset counter)
   
-> **Right click to toggle total data usage visiblity, Right click on total data usage mode in reset counter**  
+> **Right click to toggle total data usage visiblity, Right click on total data usage mode in reset counter**,  
 <p align="center"> <img src='https://user-images.githubusercontent.com/41370460/95724032-78b84480-0c93-11eb-9a2f-07976cb99e19.png' />   =====> To this   <img src='https://user-images.githubusercontent.com/41370460/95724072-8968ba80-0c93-11eb-98c9-e5651167760d.png' /></p>  
   
 > **Right click continuosly for 4 times in any mode to toggle vertical alignment, You will se "-v" written in 5th mode after total download data if this is enabled**  
   
 > **Middle click to change font size**
 
-* Installing the extension using terminal:  
+<h2 align="center">Installing the extension using terminal:</h2>   
+
+* Please Mark this as Watch if you want to know about the updates
     - ***to install( reload required )( Requirements : git )***    
     ```git clone --single-branch --branch main https://github.com/prateekmedia/netspeedsimplified ~/.local/share/gnome-shell/extensions/netspeedsimplified@prateekmedia.extension``` 
     
