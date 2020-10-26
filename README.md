@@ -1,4 +1,4 @@
-<p align="center"><a href="https://extensions.gnome.org/review/20012"><img src="https://user-images.githubusercontent.com/41370460/97126905-2b8da580-175e-11eb-802d-4540dd9178a7.jpg" height=80px/></a></p>
+<p align="center"><a href="https://extensions.gnome.org/review/20012"><img src="https://user-images.githubusercontent.com/41370460/97136201-7d432980-1778-11eb-9c65-4c801a7e8e56.png" height=80px/></a></p>
 <h1 align="center">Net speed Simplified</h1>
 <h5 align="center"><i>Gnome extension to show network speed</i></h5> 
 
