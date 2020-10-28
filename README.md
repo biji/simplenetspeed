@@ -2,7 +2,9 @@
 <h1 align="center">Net speed Simplified</h1>
 <h5 align="center"><i>Gnome extension to show network speed</i></h5> 
 
-> Website Link : [prateekmedia.io/netspeedsimplified](https://prateekmedia.github.io/netspeedsimplified/)
+> GNOME Extensions Link : [prateeksu.gnome/netspeedsimplified](https://extensions.gnome.org/extension/3724/net-speed-simplified/)
+
+> Web Link : [prateekmedia.github/netspeedsimplified](https://prateekmedia.github.io/netspeedsimplified)
 
 > Forked from : [biji.gnome/simplenetspeed](https://github.com/biji/simplenetspeed)
 
