@@ -16,14 +16,14 @@ const lCConst=5; //Left Click 6 timees to change icon set
 
 let settings,
   button, timeout,
-  ioSpeed,
+  ioSpeed, spaCe,
   lastCount = 0, lastSpeed = 0, lastCountUp = 0,
   mode, // 0: kb/s 1: KB/s 2: U:kb/s D:kb/s 3: U:KB/s D:KB/s 4: Total KB
   fontmode,
   resetNextCount=false, resetCount=0,
-  reuseable_text, newLine, h=8, tTime=0, ltTime=0, useOldIcon=false;
+  reuseable_text, newLine, h=8, tTime=0, ltTime=0, useOldIcon;
 
-var extRaw, rClickCount=0, lClickCount=0, isVertical=false, togglebool=false, DIcons=[];
+var extRaw, rClickCount=0, lClickCount=0, isVertical, togglebool, DIcons=[];
 
 function init() {
 
@@ -31,50 +31,49 @@ function init() {
 
     mode = settings.get_int('mode'); // default mode using bit (b/s, kb/s)
     fontmode = settings.get_int('fontmode');
+    togglebool = settings.get_boolean('togglebool');
+    isVertical = settings.get_boolean('isvertical');
+    useOldIcon = settings.get_boolean('useoldicon');
 }
 
 function changeMode(widget, event) {
     // log(event.get_button());
     if (event.get_button() == 3) {
-        if (mode ==4 ){// right click: reset downloaded sum
-        resetNextCount = true;
-        parseStat();}
-        else {//right click on other modes; brings total downloaded sum
+        if (mode ==4 ) resetNextCount = true; // right click: reset downloaded sum
+        else {//right click on other modes brings total downloaded sum
           togglebool = !togglebool;
           ioSpeed.set_text("Loading Info...");
-          button.set_child(chooseLabel());
-          parseStat();
         }
-	rClickCount++;
+        parseStat();
+	   rClickCount++;
     }
     else if (event.get_button() == 2) { // change font
         fontmode++;
         if (fontmode > 4) fontmode=0;
 
         settings.set_int('fontmode', fontmode);
-        button.set_child(chooseLabel());
         parseStat();
     }
     else if (event.get_button() == 1) {
         mode++;
         if (mode > 4) mode = 0;
         settings.set_int('mode', mode);
-        button.set_child(chooseLabel(mode==4 ? true : false));
         parseStat();
-	lClickCount++;
+        button.set_child(chooseLabel(mode==4 ? true : false));
+	   lClickCount++;
     }
     log('mode:' + mode + ' font:' + fontmode);
 }
 
 function chooseLabel(addArg = false /*for mode 4*/) {
+    log('mode:' + mode + ' font:' + fontmode);
     if (mode == 0 || mode == 1 || mode == 4) styleName =  'sumall'; 
     else if(!isVertical) styleName = 'upanddown';
     let extraw = '';
     (!isVertical) ? ((!addArg) ? (extraw = togglebool ? ' iwidth' : '') : null) : // Doesnt increase width on right click if mode==4 or if vertical is true
     ((mode ==2 || mode ==3) ? extraw = ' leftlign' : null) // if vertical is true in mode 2,3 then make them left align
     styleName = 'forall ' + styleName + extraw + ' size'
-    styleName = fontmode > 0 ? styleName + '-' + fontmode : styleName  
-    
+    styleName = fontmode > 0 ? styleName + '-' + fontmode : styleName 
     ioSpeed.set_style_class_name(styleName);
     return ioSpeed;
 }
@@ -152,37 +151,38 @@ function parseStat() {
 		extRaw = "  |  " + sigma;
 		if (thr && mode !=4){
 		    if ((mode ==0 || mode ==1)){
-			(isVertical) ? (extRaw = "\n" + sigma) : null
-			 return (mode == 0) ? sped(extRaw, speedy.toLowerCase()) : sped(extRaw)
-		    }
+			     (isVertical) ? (extRaw = "\n" + sigma) : null
+			     return (mode == 0) ? sped(extRaw, speedy.toLowerCase()) : sped(extRaw)
+		  }
 		    else if ((mode ==2 || mode ==3)) {
-			(isVertical) ? (extRaw = "      " + sigma) : null
-			return (mode == 2) ? sped(extRaw, speedy.toLowerCase()) : sped(extRaw)
-		    }
+			     (isVertical) ? (extRaw = "      " + sigma) : null
+			     return (mode == 2) ? sped(extRaw, speedy.toLowerCase()) : sped(extRaw)
+		  }
 		    else return "";
-			}
+		}
 		else if (mode == 4){ 
 			let toReturn = (isVertical) ? sped(sigma) + "\n  -v" : sped(sigma);
 			toReturn = (useOldIcon) ? toReturn + "  -o" : toReturn
-            		return toReturn;
+            return toReturn;
         }
 		else return "";
-	}
-	(speed || speedUp) ? h = 0 : h++
-	if(h<=8){
-		reuseable_text = (mode >= 0 && mode <= 1) ? `${dot} ${speedToString(speed)} ${commonSigma(togglebool)}` :
-		(mode >= 2 && mode <= 3) ? `${DIcons[0]}   ${speedToString(speed - speedUp)}   ${newLine}${DIcons[1]}   ${speedToString(speedUp)} ${commonSigma(togglebool)}` :
-		(mode == 4) ? commonSigma(): "Mode Unavailable"
-	}
-	else{
-    	ioSpeed.set_style_class_name("forall");
-		if (mode !=4) reuseable_text = "--".repeat(mode+1) + newLine + commonSigma(togglebool);
-		else reuseable_text =  commonSigma(togglebool);
+	   }
+       if (useOldIcon) spaCe = "" ; 
+       else spaCe = "  ";
+    	(speed || speedUp) ? h = 0 : h++
+    	if(h<=8){
+    		reuseable_text = (mode >= 0 && mode <= 1) ? `${dot} ${speedToString(speed)} ${commonSigma(togglebool)}` :
+    		(mode >= 2 && mode <= 3) ? `${DIcons[0]} ${spaCe}${speedToString(speed - speedUp)}   ${newLine}${DIcons[1]} ${spaCe}${speedToString(speedUp)} ${commonSigma(togglebool)}` :
+    		(mode == 4) ? commonSigma(): "Mode Unavailable"
     	}
-	ioSpeed.set_text(reuseable_text);
+    	else{
+    		reuseable_text = (mode !=4) ? "--".repeat(mode+1) + newLine + commonSigma(togglebool) : commonSigma(togglebool)
+        	}
+    	ioSpeed.set_text(reuseable_text);
         lastCount = count;
         lastCountUp = countUp;
         lastSpeed = speed;
+        button.set_child(chooseLabel());
     } catch (e) {
         ioSpeed.set_text(e.message);
     }
@@ -215,7 +215,7 @@ function speedToString(amount, rMode = 0) {
 }
 
 function chooseIconSet(){
-	DIcons = (useOldIcon) ? ["↓","↑","∑"] : ["🡳","🡱","Σ"]
+	DIcons = (useOldIcon) ? ["↓","↑","∑"] : ["🡳","🡱","Σ"];
 }
 
 function enable() {
@@ -235,8 +235,12 @@ function enable() {
         y_align: Clutter.ActorAlign.CENTER,
         style_class: 'forall'
     });
-    button.set_child(chooseLabel());
+    /*styleName = 'forall size'
+    styleName = fontmode > 0 ? styleName + '-' + fontmode : styleName 
+    ioSpeed.set_style_class_name(styleName);*/
     button.connect('button-press-event', changeMode);
+    button.set_child(chooseLabel());
+    
     chooseIconSet();
 
     Main.panel._rightBox.insert_child_at_index(button, 0);
