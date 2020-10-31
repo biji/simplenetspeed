@@ -1,15 +1,17 @@
-const Clutter = imports.gi.Clutter;
-const St = imports.gi.St;
-const Main = imports.ui.main;
-const Gio = imports.gi.Gio;
-const Mainloop = imports.mainloop;
+const Clutter = imports.gi.Clutter,
+ St = imports.gi.St,
+ Main = imports.ui.main,
+ Gio = imports.gi.Gio,
+ GLib = imports.gi.GLib,
+ Mainloop = imports.mainloop;
+
+var refreshTime;
 
 const ExtensionUtils = imports.misc.extensionUtils;
 const Me = ExtensionUtils.getCurrentExtension();
 const Convenience = Me.imports.convenience;
 
 const schema = 'org.gnome.shell.extensions.netspeedsimplified';
-const refreshTime=1.5; 
 
 const rCConst=3; //Right Click 4 timees to change Vertical Alignment
 const lCConst=5; //Left Click 6 timees to change icon set
@@ -101,41 +103,41 @@ function parseStat() {
 			lClickCount = 0;
 		}
 	}
-        while (line = dstream.read_line(null)) {
-            line = String(line);
-            line = line.trim();
-            let fields = line.split(/\W+/);
-            if (fields.length<=2) break;
+    while (line = dstream.read_line(null)) {
+        line = String(line);
+        line = line.trim();
+        let fields = line.split(/\W+/);
+        if (fields.length<=2) break;
 
-            if (fields[0] != "lo" && 
-                !fields[0].match(/^virbr[0-9]+/) &&
-                !fields[0].match(/^br[0-9]+/) &&
-                !fields[0].match(/^vnet[0-9]+/) &&
-                !fields[0].match(/^tun[0-9]+/) &&
-                !fields[0].match(/^tap[0-9]+/) &&
-                !isNaN(parseInt(fields[1]))) {
-                    count = count + parseInt(fields[1]) + parseInt(fields[9]);
-                    countUp = countUp + parseInt(fields[9]);
-            }
+        if (fields[0] != "lo" && 
+            !fields[0].match(/^virbr[0-9]+/) &&
+            !fields[0].match(/^br[0-9]+/) &&
+            !fields[0].match(/^vnet[0-9]+/) &&
+            !fields[0].match(/^tun[0-9]+/) &&
+            !fields[0].match(/^tap[0-9]+/) &&
+            !isNaN(parseInt(fields[1]))) {
+                count = count + parseInt(fields[1]) + parseInt(fields[9]);
+                countUp = countUp + parseInt(fields[9]);
         }
-        fstream.close(null);
+    }
+    fstream.close(null);
 
-        if (lastCount === 0) lastCount = count;
-        if (lastCountUp === 0) lastCountUp = countUp;
+    if (lastCount === 0) lastCount = count;
+    if (lastCountUp === 0) lastCountUp = countUp;
 
-        let speed = (count - lastCount) / refreshTime,
-          speedUp = (countUp - lastCountUp) / refreshTime,
-          dot;
-        dot = (speed > lastSpeed) ? "⇅" : ""
-        if (resetNextCount == true) {
-             resetNextCount = false;
-             resetCount = count;
-           }
+    let speed = (count - lastCount) / refreshTime,
+      speedUp = (countUp - lastCountUp) / refreshTime,
+      dot;
+    dot = (speed > lastSpeed) ? "⇅" : ""
+    if (resetNextCount == true) {
+         resetNextCount = false;
+         resetCount = count;
+       }
 	
-        newLine = (isVertical && (mode ==2 || mode ==3)) ? "\n" : "";
-        var speedy = speedToString(count - resetCount, 1);
-        function sped(exta = extRaw, spda = speedy){ return exta + spda; }
-        function commonSigma(thr = true /*If true will return a result else will return empty string*/){
+    newLine = (isVertical && (mode ==2 || mode ==3)) ? "\n" : "";
+    var speedy = speedToString(count - resetCount, 1);
+    function sped(exta = extRaw, spda = speedy){ return exta + spda; }
+    function commonSigma(thr = true /*If true will return a result else will return empty string*/){
 		let sigma = `${DIcons[2]} `;
 		extRaw = "  |  " + sigma;
 		if (thr && mode !=4){
@@ -155,21 +157,21 @@ function parseStat() {
             return toReturn;
         }
 		else return "";
-	   }
-       if (useOldIcon) spaCe = "" ; 
-       else spaCe = "  ";
-    	(speed || speedUp) ? h = 0 : h++
-    	if(h<=8){
-    		reuseable_text = (mode >= 0 && mode <= 1) ? `${dot} ${speedToString(speed)} ${commonSigma(togglebool)}` :
-    		(mode >= 2 && mode <= 3) ? `${DIcons[0]} ${spaCe}${speedToString(speed - speedUp)}   ${newLine}${DIcons[1]} ${spaCe}${speedToString(speedUp)} ${commonSigma(togglebool)}` :
-    		(mode == 4) ? commonSigma(): "Mode Unavailable"
-    	}
-    	else reuseable_text = (mode !=4) ? "--".repeat(mode+1) + newLine + commonSigma(togglebool) : commonSigma(togglebool)
-    	ioSpeed.set_text(reuseable_text);
-        lastCount = count;
-        lastCountUp = countUp;
-        lastSpeed = speed;
-        button.set_child(chooseLabel());
+    }
+    if (useOldIcon) spaCe = "" ; 
+    else spaCe = "  ";
+	(speed || speedUp) ? h = 0 : h++
+	if(h<=8){
+		reuseable_text = (mode >= 0 && mode <= 1) ? `${dot} ${speedToString(speed)} ${commonSigma(togglebool)}` :
+		(mode >= 2 && mode <= 3) ? `${DIcons[0]} ${spaCe}${speedToString(speed - speedUp)}   ${newLine}${DIcons[1]} ${spaCe}${speedToString(speedUp)} ${commonSigma(togglebool)}` :
+		(mode == 4) ? commonSigma(): "Mode Unavailable"
+	}
+	else reuseable_text = (mode !=4) ? "--".repeat(mode+1) + newLine + commonSigma(togglebool) : commonSigma(togglebool)
+	ioSpeed.set_text(reuseable_text);
+    lastCount = count;
+    lastCountUp = countUp;
+    lastSpeed = speed;
+    button.set_child(chooseLabel());
     } catch (e) {
         ioSpeed.set_text(e.message);
     }
@@ -206,6 +208,7 @@ function chooseIconSet(){
 }
 
 function enable() {
+	refreshTime = settings.get_double('refreshtime');;
 	mode = settings.get_int('mode'); // default mode using bit (b/s, kb/s)
     fontmode = settings.get_int('fontmode');
     togglebool = settings.get_boolean('togglebool');
@@ -214,17 +217,29 @@ function enable() {
     lckMuseAct = settings.get_boolean('lockmouseactions');
     fontmode = settings.get_int('fontmode');
 
-    button = new St.Bin({
-        style_class: 'panel-button',
-        reactive: true,
-        can_focus: true,
-        x_fill: true,
-        y_fill: false,
-        x_expand: true,
-        y_expand: false,
-        track_hover: true
-    });
+    var [ok, out, err, exit] = GLib.spawn_command_line_sync("gnome-shell --version");
+    output = out.toString().split(" ")[2];
 
+    if (parseFloat(output) <=3.36) {
+	    button = new St.Bin({
+	        style_class: 'panel-button',
+	        reactive: true,
+	        can_focus: true,
+	        x_fill: true,
+	        y_fill: false,
+	        track_hover: true
+	    });
+	}
+	else{
+	    button = new St.Bin({
+	        style_class: 'panel-button',
+	        reactive: true,
+	        can_focus: true,
+	        x_expand: true,
+	        y_expand: false,
+	        track_hover: true
+	    });
+	}
     ioSpeed = new St.Label({
         text: '---',
         y_align: Clutter.ActorAlign.CENTER,

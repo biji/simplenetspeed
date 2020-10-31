@@ -30,6 +30,29 @@ Prefs.prototype =
     buildPrefsWidget: function()
     {
     let thset = this.settings;
+    function vBoxSpinBtn(staRt, getDouble, whichHbox, getLbl = ""){
+      if (staRt){;
+        boolComp = (thset.get_double(getDouble) === thset.get_default_value(getDouble).unpack());
+        getLbl =  boolComp ? getLbl :
+        `<i>${getLbl}</i>`
+        tootext = boolComp ? "" : "The Value is Changed"
+        whichLbl = new Gtk.Label({label: getLbl, use_markup: true, xalign: 0, tooltip_text: tootext });  
+      }
+      else{
+        whichSpinBtn.set_value(thset.get_double(getDouble));
+        whichSpinBtn.connect('value-changed', () => {
+          this.rTValue = parseFloat(whichSpinBtn.get_value().toFixed(1));
+          if(thset.get_double(getDouble) !== this.rTValue){
+            thset.set_double(getDouble , this.rTValue);
+            }
+          });
+        whichHbox.pack_start(whichLbl, true, true, 0);
+        whichHbox.add(whichSpinBtn);
+
+        vbox.add(whichHbox);
+        vbox.add(new Gtk.Separator({visible : true}));
+      }
+    }
     function vBoxAddSeleCt(stArt, getInt, whichHbox, getLbl = "", getTooTip = ""){
       if (stArt) {  
         boolComp = (thset.get_int(getInt) == thset.get_default_value(getInt).unpack());
@@ -77,6 +100,19 @@ Prefs.prototype =
   	let label = new Gtk.Label({ label: "<b>Default Settings</b>", use_markup: true, xalign:0});
   	let vbox = new Gtk.Box({ orientation: Gtk.Orientation.VERTICAL, margin_left: 20});
   	let footer = new Gtk.Label({ label: "<b><u>To See the changes Disable and then re-enable the extension</u></b>",use_markup: true, margin_top: 20});
+
+//Refresh time
+  let hboxRTime = new Gtk.Box({orientation: Gtk.Orientation.HORIZONTAL, margin_top : 10, margin_bottom : 10});
+  vBoxSpinBtn(true, "refreshtime", hboxRTime, "Refresh Time");
+  whichSpinBtn = new Gtk.SpinButton({
+      adjustment: new Gtk.Adjustment({
+          lower: 1.0, upper: 10.0, step_increment: .1, page_increment: 1, page_size: 0,
+      }),
+      climb_rate: 1,
+      digits: 1,
+      numeric: true,
+    });
+  vBoxSpinBtn(false, "refreshtime", hboxRTime);
 
  //For Modes
   let hboxMode = new Gtk.Box({orientation: Gtk.Orientation.HORIZONTAL, margin_top : 10, margin_bottom : 10});
