@@ -8,8 +8,14 @@
 
 > Forked from : [biji.gnome/simplenetspeed](https://github.com/biji/simplenetspeed)
 
-<p align="center"><img alt="Screenshot" src='https://user-images.githubusercontent.com/41370460/97259164-2143d800-1840-11eb-88ae-8deebc513609.png' /> *Screenshots*</p>
+<p align="center"><img alt="Screenshot" src='https://user-images.githubusercontent.com/41370460/97259164-2143d800-1840-11eb-88ae-8deebc513609.png' /><img alt="Screenshot" src='https://user-images.githubusercontent.com/41370460/97781052-bc291300-1bae-11eb-919f-18eee7ff0de4.png' /> 
 
+*Screenshots*
+  
+ *Above Screenshot is with Matcha dark sea theme*</p>
+
+  
+   
 ***Tested on GNOME 3.36 and 3.38***
 
 #### Whats new in this repo version:
