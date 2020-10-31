@@ -18,5 +18,8 @@
       <key name="useoldicon" type="b">
         <default>false</default>
       </key>
+      <key name="lockmouseactions" type="b">
+        <default>false</default>
+      </key>
   </schema>
 </schemalist>

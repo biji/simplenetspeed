@@ -6,138 +6,119 @@ const Lib = Extension.imports.lib;
 
 const schema = "org.gnome.shell.extensions.netspeedsimplified";
 
-function init()
-{
-}
+function init(){}
 
-function buildPrefsWidget()
-{
+function buildPrefsWidget(){
     let prefs = new Prefs(schema);
 
     return prefs.buildPrefsWidget();
 }
 
-function Prefs(schema)
-{
+function Prefs(schema){
     this.init(schema);
 }
 
 Prefs.prototype =
 {
     settings: null,
-
     init: function(schema)
     {
-	let settings = new Lib.Settings(schema);
-	
-	this.settings = settings.getSettings();
+  	let settings = new Lib.Settings(schema);
+  	this.settings = settings.getSettings();
     },
-
-    changeVertical: function(object, valueVertical)
-    {
-	this.settings.set_boolean("isvertical", object.active);
-    },
-
-    changeToggleBool: function(object, valueToggbool)
-    {
-	this.settings.set_boolean("togglebool", object.active);
-    },
-
-    changeOldIcons: function(object, valueToggbool)
-    {
-	this.settings.set_boolean("useoldicon", object.active);
-    },
-
+    
     buildPrefsWidget: function()
     {
-	let frame = new Gtk.Box({ orientation: Gtk.Orientation.VERTICAL, border_width: 10});
-	let label = new Gtk.Label({ label: "<b>Default Settings</b>", use_markup: true, xalign:0});
-	let vbox = new Gtk.Box({ orientation: Gtk.Orientation.VERTICAL, margin_left: 20});
-	let resetBtn = new Gtk.Button({ label: "Restore Defaults", can_focus: true});
-	let footer = new Gtk.Label({ label: "<b><u>To See changes either press 'Alt + F2' and then type 'r' then press enter or logout and log back in</u></b>",use_markup: true, margin_top: 20});
- //Mode
+    let thset = this.settings;
+    function vBoxAddSeleCt(stArt, getInt, whichHbox, getLbl = "", getTooTip = ""){
+      if (stArt) {  
+        boolComp = (thset.get_int(getInt) == thset.get_default_value(getInt).unpack());
+        getLbl =  boolComp ? getLbl :
+          `<i>${getLbl}</i>`
+        tootext = boolComp ? "" : "The Value is Changed"
+        whichLbl = new Gtk.Label({label: getLbl, use_markup: true, xalign: 0, tooltip_text: tootext });
+        whichVlue =  new Gtk.ComboBoxText({ 
+                      halign: Gtk.Align.END,
+                      tooltip_text: getTooTip 
+                  });
+      }
+      else {
+        whichVlue.set_active(Math.round(thset.get_int(getInt))); 
+        whichVlue.connect('changed', (widget) => {
+          let valueMode = widget.get_active();
+          thset.set_int(getInt, valueMode);
+        })
+        whichHbox.add(whichLbl);
+        whichHbox.pack_end(whichVlue, true, true, 0);
+        vbox.add(whichHbox);
+        vbox.add(new Gtk.Separator({visible : true}));
+      }
+    }
+
+    function vBoxAddTgglBtn(whichHbox, getLbl, getBool,getTooTip = ""){
+      boolComp = (thset.get_boolean(getBool) == thset.get_default_value(getBool).unpack());
+      getLbl =  boolComp ? getLbl :
+      `<i>${getLbl}</i>`
+      tootext = boolComp ? "" : "The Value is Changed"
+      whichLbl = new Gtk.Label({label: getLbl, use_markup: true, xalign: 0, tooltip_text: tootext });  
+      whichVlue = new Gtk.Switch({active: thset.get_boolean(getBool), tooltip_text: getTooTip });
+      whichVlue.connect('notify::active', (widget, whichVlue) => {
+        thset.set_boolean(getBool, widget.active);
+      })
+
+      whichHbox.pack_start(whichLbl, true, true, 0);
+      whichHbox.add(whichVlue);
+
+      vbox.add(whichHbox);
+      vbox.add(new Gtk.Separator({visible : true}));
+    }
+
+  	let frame = new Gtk.Box({ orientation: Gtk.Orientation.VERTICAL, border_width: 10});
+  	let label = new Gtk.Label({ label: "<b>Default Settings</b>", use_markup: true, xalign:0});
+  	let vbox = new Gtk.Box({ orientation: Gtk.Orientation.VERTICAL, margin_left: 20});
+  	let footer = new Gtk.Label({ label: "<b><u>To See the changes Disable and then re-enable the extension</u></b>",use_markup: true, margin_top: 20});
+
+ //For Modes
   let hboxMode = new Gtk.Box({orientation: Gtk.Orientation.HORIZONTAL, margin_top : 10, margin_bottom : 10});
-  let labelMode = new Gtk.Label({label: "Mode (1-5) ", xalign: 0});
-  let value2Mode =  new Gtk.ComboBoxText({ 
-                halign: Gtk.Align.END,
-                tooltip_text: ("Choose which mode to load") 
-            });
-  value2Mode.append_text("Mode 1");
-  value2Mode.append_text("Mode 2");
-  value2Mode.append_text("Mode 3");
-  value2Mode.append_text("Mode 4");
-  value2Mode.append_text("Mode 5");
-  value2Mode.set_active(Math.round(this.settings.get_int("mode"))); 
-  value2Mode.connect('changed', (widget) => {
-    let valueMode = widget.get_active();
-	this.settings.set_int("mode", valueMode);
-  })
-  hboxMode.add(labelMode);
-  hboxMode.pack_end(value2Mode, true, true, 0);
-  vbox.add(hboxMode);
-  vbox.add(new Gtk.Separator({visible : true}));
+  vBoxAddSeleCt(true, "mode", hboxMode, "Mode (1-5)", "Choose which mode to load");
+  whichVlue.append_text("Mode 1");
+  whichVlue.append_text("Mode 2");
+  whichVlue.append_text("Mode 3");
+  whichVlue.append_text("Mode 4");
+  whichVlue.append_text("Mode 5");
+  vBoxAddSeleCt(false, "mode", hboxMode);
 
- //FontMode
-
+ //For FontModes
   let hboxFontMode = new Gtk.Box({orientation: Gtk.Orientation.HORIZONTAL, margin_top : 10, margin_bottom : 10});
-  let labelFontMode = new Gtk.Label({label: "Font Mode ", xalign: 0});
-  let value2FontMode =  new Gtk.ComboBoxText({ 
-                halign: Gtk.Align.END,
-                tooltip_text: ("Choose which font to display") 
-            });
-  value2FontMode.append_text("Default");
-  value2FontMode.append_text("Smallest");
-  value2FontMode.append_text("Smaller");
-  value2FontMode.append_text("Small");
-  value2FontMode.append_text("Large");
-  value2FontMode.set_active(Math.round(this.settings.get_int("fontmode"))); 
-  value2FontMode.connect('changed', (widget) => {
-    let valueFontMode = widget.get_active();
-	this.settings.set_int("fontmode", valueFontMode);
-  })
-  hboxFontMode.add(labelFontMode);
-  hboxFontMode.pack_end(value2FontMode, true, true, 0);
-  vbox.add(hboxFontMode);
-  vbox.add(new Gtk.Separator({visible : true}));
+  vBoxAddSeleCt(true, "fontmode", hboxFontMode, "Font Mode", "Choose which font to display");
+  whichVlue.append_text("Default");
+  whichVlue.append_text("Smallest");
+  whichVlue.append_text("Smaller");
+  whichVlue.append_text("Small");
+  whichVlue.append_text("Large");  
+  vBoxAddSeleCt(false, "fontmode", hboxFontMode);
 
 //For Vertical Alignment
 	let hboxVertical = new Gtk.Box({orientation: Gtk.Orientation.HORIZONTAL, margin_top : 10, margin_bottom : 10});
-	let labelVertical = new Gtk.Label({label: "Vertical Align", xalign: 0});
-	let valueVertical = new Gtk.Switch({active: this.settings.get_boolean("isvertical"), tooltip_text: ("Enabling it will enable Vertical Alignment") });
-	valueVertical.connect('notify::active', Lang.bind(this, this.changeVertical));
+  vBoxAddTgglBtn(hboxVertical, "Vertical Align", "isvertical", "Changing it will toggle Vertical Alignment");
 
-	hboxVertical.pack_start(labelVertical, true, true, 0);
-	hboxVertical.add(valueVertical);
-	vbox.add(hboxVertical);
-
-  vbox.add(new Gtk.Separator({visible : true}))
 //For Default sigma View
 	let hboxToggleBool = new Gtk.Box({orientation: Gtk.Orientation.HORIZONTAL, margin_top : 10, margin_bottom : 10});
-	let labelToggleBool = new Gtk.Label({label: "Toggle Right Click Behaviour", xalign: 0});
-	let valueToggleBool = new Gtk.Switch({active: this.settings.get_boolean("togglebool"), tooltip_text: ("Enabling it will show sigma by default") });
-	valueToggleBool.connect('notify::active', Lang.bind(this, this.changeToggleBool));
-
-	hboxToggleBool.pack_start(labelToggleBool, true, true, 0);
-	hboxToggleBool.add(valueToggleBool);
-	vbox.add(hboxToggleBool);
-    vbox.add(new Gtk.Separator({visible : true}));
+  vBoxAddTgglBtn(hboxToggleBool, "Toggle Right Click Behaviour", "togglebool", "Enabling it will show sigma by default");
 
 //For Toggling Old Icons
-	let hboxOldIcons = new Gtk.Box({orientation: Gtk.Orientation.HORIZONTAL, margin_top : 10, margin_bottom : 10});
-	let labelOldIcons = new Gtk.Label({label: "Display Old Icons", xalign: 0});
-	let valueOldIcons = new Gtk.Switch({active: this.settings.get_boolean("useoldicon"), tooltip_text: ("Enabling it will show Old Icons of simplenetspeed") });
-	valueOldIcons.connect('notify::active', Lang.bind(this, this.changeOldIcons));
+  let hboxOldIcons = new Gtk.Box({orientation: Gtk.Orientation.HORIZONTAL, margin_top : 10, margin_bottom : 10});
+  vBoxAddTgglBtn(hboxOldIcons, "Display Old Icons", "useoldicon", "Enabling it will show Old Icons of simplenetspeed");
 
-	hboxOldIcons.pack_start(labelOldIcons, true, true, 0);
-	hboxOldIcons.add(valueOldIcons);
-	vbox.add(hboxOldIcons);
-    vbox.add(new Gtk.Separator({visible : true}));
-    
+//For Lock Mouse Actions
+  let hboxLckMuseAct = new Gtk.Box({orientation: Gtk.Orientation.HORIZONTAL, margin_top : 10, margin_bottom : 10});
+  vBoxAddTgglBtn(hboxLckMuseAct, "Lock Mouse Actions", "lockmouseactions", "Enabling it will Lock Mouse Actions");
+
 	frame.add(label);
 	frame.add(vbox);
 	frame.add(footer);
 	frame.show_all();
 	
 	return frame;
-    }
+  }
 }

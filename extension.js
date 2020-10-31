@@ -8,7 +8,7 @@ const ExtensionUtils = imports.misc.extensionUtils;
 const Me = ExtensionUtils.getCurrentExtension();
 const Convenience = Me.imports.convenience;
 
-const PREFS_SCHEMA = 'org.gnome.shell.extensions.netspeedsimplified';
+const schema = 'org.gnome.shell.extensions.netspeedsimplified';
 const refreshTime=1.5; 
 
 const rCConst=3; //Right Click 4 timees to change Vertical Alignment
@@ -23,50 +23,39 @@ let settings,
   resetNextCount=false, resetCount=0,
   reuseable_text, newLine, h=8, tTime=0, ltTime=0, useOldIcon;
 
-var extRaw, rClickCount=0, lClickCount=0, isVertical, togglebool, DIcons=[];
+var extRaw, rClickCount=0, lClickCount=0, isVertical, togglebool, DIcons=[], lckMuseAct;
 
 function init() {
-
-    settings = Convenience.getSettings(PREFS_SCHEMA);
-
-    mode = settings.get_int('mode'); // default mode using bit (b/s, kb/s)
-    fontmode = settings.get_int('fontmode');
-    togglebool = settings.get_boolean('togglebool');
-    isVertical = settings.get_boolean('isvertical');
-    useOldIcon = settings.get_boolean('useoldicon');
+    settings = Convenience.getSettings(schema);
 }
 
 function changeMode(widget, event) {
-    // log(event.get_button());
     if (event.get_button() == 3) {
         if (mode ==4 ) resetNextCount = true; // right click: reset downloaded sum
         else {//right click on other modes brings total downloaded sum
           togglebool = !togglebool;
+          settings.set_boolean('togglebool', togglebool);
           ioSpeed.set_text("Loading Info...");
         }
-        parseStat();
 	   rClickCount++;
     }
     else if (event.get_button() == 2) { // change font
         fontmode++;
         if (fontmode > 4) fontmode=0;
-
         settings.set_int('fontmode', fontmode);
-        parseStat();
     }
     else if (event.get_button() == 1) {
         mode++;
         if (mode > 4) mode = 0;
         settings.set_int('mode', mode);
-        parseStat();
-        button.set_child(chooseLabel(mode==4 ? true : false));
 	   lClickCount++;
     }
+    parseStat();
     log('mode:' + mode + ' font:' + fontmode);
 }
 
-function chooseLabel(addArg = false /*for mode 4*/) {
-    log('mode:' + mode + ' font:' + fontmode);
+function chooseLabel() {
+	addArg = (mode==4) ? true : false
     if (mode == 0 || mode == 1 || mode == 4) styleName =  'sumall'; 
     else if(!isVertical) styleName = 'upanddown';
     let extraw = '';
@@ -90,8 +79,8 @@ function parseStat() {
 	if (rClickCount != 0){ 
 		tTime++;
 		if (rClickCount>=rCConst){
-			log("Changed Vertical Alignment.");
 			isVertical = !isVertical;
+            settings.set_boolean('isvertical', isVertical);
 			rClickCount =0;
 		}
 		if(tTime>rCConst){
@@ -102,8 +91,8 @@ function parseStat() {
 	if (lClickCount != 0) {
 		ltTime++;
 		if (lClickCount>=lCConst){
-			log("Changed Icon set.");
 			useOldIcon = !useOldIcon;
+            settings.set_boolean('useoldicon', useOldIcon);
 			chooseIconSet();	
 			lClickCount =0;
 		}
@@ -175,9 +164,7 @@ function parseStat() {
     		(mode >= 2 && mode <= 3) ? `${DIcons[0]} ${spaCe}${speedToString(speed - speedUp)}   ${newLine}${DIcons[1]} ${spaCe}${speedToString(speedUp)} ${commonSigma(togglebool)}` :
     		(mode == 4) ? commonSigma(): "Mode Unavailable"
     	}
-    	else{
-    		reuseable_text = (mode !=4) ? "--".repeat(mode+1) + newLine + commonSigma(togglebool) : commonSigma(togglebool)
-        	}
+    	else reuseable_text = (mode !=4) ? "--".repeat(mode+1) + newLine + commonSigma(togglebool) : commonSigma(togglebool)
     	ioSpeed.set_text(reuseable_text);
         lastCount = count;
         lastCountUp = countUp;
@@ -219,6 +206,14 @@ function chooseIconSet(){
 }
 
 function enable() {
+	mode = settings.get_int('mode'); // default mode using bit (b/s, kb/s)
+    fontmode = settings.get_int('fontmode');
+    togglebool = settings.get_boolean('togglebool');
+    isVertical = settings.get_boolean('isvertical');
+    useOldIcon = settings.get_boolean('useoldicon');
+    lckMuseAct = settings.get_boolean('lockmouseactions');
+    fontmode = settings.get_int('fontmode');
+
     button = new St.Bin({
         style_class: 'panel-button',
         reactive: true,
@@ -235,10 +230,8 @@ function enable() {
         y_align: Clutter.ActorAlign.CENTER,
         style_class: 'forall'
     });
-    /*styleName = 'forall size'
-    styleName = fontmode > 0 ? styleName + '-' + fontmode : styleName 
-    ioSpeed.set_style_class_name(styleName);*/
-    button.connect('button-press-event', changeMode);
+
+    (!lckMuseAct) ? button.connect('button-press-event', changeMode) : null
     button.set_child(chooseLabel());
     
     chooseIconSet();
