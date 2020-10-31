@@ -12,6 +12,9 @@
 
 ***Tested on GNOME 3.36 and 3.38***
 
+#### Whats new in this repo version:
+- [x] Added Preference Dialog with all the customizations needed
+
 #### Feature Highlights : 
 - [x] Reduce Refresh time
 - [x] Supports GNOME SHELL 3.38
@@ -38,9 +41,6 @@ If you want to always show total data used by default then paste below command i
 *(If you have old icons enabled then in mode 5 you will see " -o" written after total net speed)* 
 
 **To Revert Back any changes made using sed -i command then replace false with true and true with false in orignal command, like the above command will become** `sed -i 's useOldIcon=true useOldIcon=false ...` , ***if this doesn't work then reinstall the extension.***
-
-#### Changelog After October 29 :
-- [x] Added Preference Dialog with all the customizations needed
 
 #### Todo : 
 ***Nothing TODO***
