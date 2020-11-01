@@ -1,14 +1,14 @@
-<p align="center"><a href="https://extensions.gnome.org/extension/3724/net-speed-simplified/"><img src="https://user-images.githubusercontent.com/41370460/97136201-7d432980-1778-11eb-9c65-4c801a7e8e56.png" height=80px/></a></p>
+<p align="center"><a href="https://extensions.gnome.org/extension/3724/net-speed-simplified/"><img src="https://user-images.githubusercontent.com/41370460/97136201-7d432980-1778-11eb-9c65-4c801a7e8e56.png" height=80px alt="NSS Logo"/></a></p>
 <h1 align="center">Net speed Simplified</h1>
 <h5 align="center"><i>Gnome extension to show network speed</i></h5> 
 
-[<img src="https://raw.githubusercontent.com/andyholmes/gnome-shell-extensions-badge/master/get-it-on-ego.svg?sanitize=true" height="100">](https://extensions.gnome.org/extension/3724/net-speed-simplified/) or [Install Using Terminal](#installing-the-extension-using-terminal)
+[<img src="https://raw.githubusercontent.com/andyholmes/gnome-shell-extensions-badge/master/get-it-on-ego.svg?sanitize=true" height="100" alt="Get it on GNOME Extensions">](https://extensions.gnome.org/extension/3724/net-speed-simplified/) or [Install Using Terminal](#installing-the-extension-using-terminal)
 
 > Web Link : [prateekmedia.github/netspeedsimplified](https://prateekmedia.github.io/netspeedsimplified)
 
 > Forked from : [biji.gnome/simplenetspeed](https://github.com/biji/simplenetspeed)
 
-<p align="center"><img alt="Screenshot" src='https://user-images.githubusercontent.com/41370460/97259164-2143d800-1840-11eb-88ae-8deebc513609.png' /><img alt="Screenshot" src='https://user-images.githubusercontent.com/41370460/97781052-bc291300-1bae-11eb-919f-18eee7ff0de4.png' /> 
+<p align="center"><img src='https://user-images.githubusercontent.com/41370460/97259164-2143d800-1840-11eb-88ae-8deebc513609.png'  alt="Screenshot 1"/><img src='https://user-images.githubusercontent.com/41370460/97781052-bc291300-1bae-11eb-919f-18eee7ff0de4.png' alt="Screenshot 2"/> 
 
 *Screenshots*
   
@@ -37,10 +37,10 @@
 
 #### Changelog Till v10 : 
 - [x] If network is not connected, then after 12 sec display text "--" for 1st mode, "----" for 2nd mode, "------" for 3rd mode, "--------" for 4th mode, for fifth mode it will display total data used(MB), Normal Right click functionality will show total data used except in 5th mode  
-- [x] Easy Vertical Aligment for Dash to panel or Big Screen users, to enable this Right Click on any mode continuosly for four times to enable/disable vertical align.  
+- [x] Easy Vertical Aligment for Dash to panel or Big Screen users, to enable this Right Click on any mode continuosly for four times to enable/disable vertical align or simply go to prefrences tab for this extension.  
 *(If you have vertical align enabled then in mode 5 you will see " -v" written after total net speed)*,  
 ***Tip : You can also change font size in vertical alignment to your liking by middle mouse click on the speed***  
-- [x] Easy Switch to Old Icons from simplenetspeed extension, to enable this Left Click continuosly for six or seven times to enable/disable old icons.  
+- [x] Easy Switch to Old Icons from simplenetspeed extension, go to prefrences tab for this extension to enable/disable old icons.  
 *(If you have old icons enabled then in mode 5 you will see " -o" written after total net speed)* 
 
 #### Todo : 
@@ -49,8 +49,7 @@
 if you face any **issues** you can **[open pull request](https://github.com/prateekmedia/netspeedsimplified/pulls)** and can type your issue with images or error codes
 
 > **Left click to change modes**,  
-  
-> **Left click continuosly for 6/7 times to toggle old icons like simplenetspeed extension, You will se "-o" written in 5th mode after total download data if this is enabled**
+
   
 *Modes available:*
 1. Total net speed in bits per second 
