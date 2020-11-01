@@ -2,7 +2,8 @@ const Clutter = imports.gi.Clutter,
  St = imports.gi.St,
  Main = imports.ui.main,
  Gio = imports.gi.Gio,
- GLib = imports.gi.GLib,
+ Lang = imports.lang,
+ PanelMenu = imports.ui.panelMenu,
  Mainloop = imports.mainloop;
 
 var refreshTime;
@@ -13,18 +14,42 @@ const Convenience = Me.imports.convenience;
 
 const schema = 'org.gnome.shell.extensions.netspeedsimplified';
 
-const rCConst=3; //Right Click 4 timees to change Vertical Alignment
+const ButtonName = "ShowNetSpeedButton";
+
+const rCConst=4; //Right Click 4 times to change Vertical Alignment
 
 let settings,
   button, timeout,
-  ioSpeed, spaCe,
+  spaCe,
   lastCount = 0, lastSpeed = 0, lastCountUp = 0,
   mode, // 0: kb/s 1: KB/s 2: U:kb/s D:kb/s 3: U:KB/s D:KB/s 4: Total KB
   fontmode,
   resetNextCount=false, resetCount=0,
-  reuseable_text, newLine, h=8, tTime=0, useOldIcon;
+  reuseable_text, newLine, h=8, tTime=0, chooseIconSet;
 
-var extRaw, rClickCount=0, isVertical, togglebool, DIcons=[], lckMuseAct;
+var extRaw, rClickCount=0, isVertical, togglebool, DIcons=[], DWPos=[], lckMuseAct;
+
+const ShowNetBtn = new Lang.Class({
+    Name: ButtonName,
+    Extends: PanelMenu.Button,
+
+    _init: function () {
+        this.parent(0.0, ButtonName);
+
+        ioSpeed = new St.Label({
+            text: '---',
+            y_align: Clutter.ActorAlign.CENTER,
+            style_class: 'forall'
+        });
+        
+
+        (!lckMuseAct) ? this.connect('button-press-event', changeMode) : null
+        
+        this.add_child(chooseLabel());
+    },
+
+});
+
 
 function init() {
     settings = Convenience.getSettings(schema);
@@ -138,12 +163,12 @@ function parseStat() {
 		}
 		else if (mode == 4){ 
 			let toReturn = (isVertical) ? sped(sigma) + "\n  -v" : sped(sigma);
-			toReturn = (useOldIcon) ? toReturn + "  -o" : toReturn
+			toReturn = (chooseIconSet !=0) ? toReturn + "  -o" : toReturn
             return toReturn;
         }
 		else return "";
     }
-    if (useOldIcon) spaCe = "" ; 
+    if (chooseIconSet !=0) spaCe = "" ; 
     else spaCe = "  ";
 	(speed || speedUp) ? h = 0 : h++
 	if(h<=8){
@@ -156,7 +181,7 @@ function parseStat() {
     lastCount = count;
     lastCountUp = countUp;
     lastSpeed = speed;
-    button.set_child(chooseLabel());
+    button.add_child(chooseLabel());
     } catch (e) {
         ioSpeed.set_text(e.message);
     }
@@ -188,59 +213,34 @@ function speedToString(amount, rMode = 0) {
     return String(amount.toFixed(digits)) + " " + speed_map[unit];
 }
 
-function chooseIconSet(){
-	DIcons = (useOldIcon) ? ["↓","↑","∑"] : ["🡳","🡱","Σ"];
+function chooseArrayVal(){
+	DIcons = (chooseIconSet ==0) ? ["🡳","🡱","Σ"] : 
+	 (chooseIconSet ==1) ? ["↓","↑","∑"] :
+	  ["","",""]
+	DWPos = ["right", "left", "center"]
 }
 
 function enable() {
-	refreshTime = settings.get_double('refreshtime');;
-	mode = settings.get_int('mode'); // default mode using bit (b/s, kb/s)
+	refreshTime = settings.get_double('refreshtime');
+	mode = settings.get_int('mode'); // default mode using bit (b/s, kb/s);
     fontmode = settings.get_int('fontmode');
+    whePosition = settings.get_int('wpos');
     togglebool = settings.get_boolean('togglebool');
     isVertical = settings.get_boolean('isvertical');
-    useOldIcon = settings.get_boolean('useoldicon');
+    chooseIconSet = settings.get_int('chooseiconset');
     lckMuseAct = settings.get_boolean('lockmouseactions');
     fontmode = settings.get_int('fontmode');
 
-    var [ok, out, err, exit] = GLib.spawn_command_line_sync("gnome-shell --version");
-    output = out.toString().split(" ")[2];
-
-    if (parseFloat(output) <=3.36) {
-	    button = new St.Bin({
-	        style_class: 'panel-button',
-	        reactive: true,
-	        can_focus: true,
-	        x_fill: true,
-	        y_fill: false,
-	        track_hover: true
-	    });
-	}
-	else{
-	    button = new St.Bin({
-	        style_class: 'panel-button',
-	        reactive: true,
-	        can_focus: true,
-	        x_expand: true,
-	        y_expand: false,
-	        track_hover: true
-	    });
-	}
-    ioSpeed = new St.Label({
-        text: '---',
-        y_align: Clutter.ActorAlign.CENTER,
-        style_class: 'forall'
-    });
-
-    (!lckMuseAct) ? button.connect('button-press-event', changeMode) : null
-    button.set_child(chooseLabel());
+    button = new ShowNetBtn();
     
-    chooseIconSet();
+    chooseArrayVal();
+    whePos = DWPos[whePosition]
 
-    Main.panel._rightBox.insert_child_at_index(button, 0);
+    Main.panel.addToStatusArea(ButtonName, button, 3, whePos);
     timeout = Mainloop.timeout_add_seconds(refreshTime, parseStat);
 }
 
 function disable() {
     Mainloop.source_remove(timeout);
-    Main.panel._rightBox.remove_child(button);
+    button.destroy();
 }

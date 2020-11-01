@@ -103,6 +103,14 @@ Prefs.prototype =
   	let vbox = new Gtk.Box({ orientation: Gtk.Orientation.VERTICAL, margin_left: 20});
   	let footer = new Gtk.Label({ label: "<b><u>To See the changes Disable and then re-enable the extension</u></b>",use_markup: true, margin_top: 20});
 
+ //For Position
+  let hboxWPos = new Gtk.Box({orientation: Gtk.Orientation.HORIZONTAL, margin_top : 10, margin_bottom : 10});
+  vBoxAddSeleCt(true, "wpos", hboxWPos, "Position", "Choose where to Place the extension");
+  whichVlue.append_text("Right");
+  whichVlue.append_text("Left");
+  whichVlue.append_text("Center");
+  vBoxAddSeleCt(false, "wpos", hboxWPos);
+
 //Refresh time
   let hboxRTime = new Gtk.Box({orientation: Gtk.Orientation.HORIZONTAL, margin_top : 10, margin_bottom : 10});
   vBoxSpinBtn(true, "refreshtime", hboxRTime, "Refresh Time");
@@ -142,11 +150,14 @@ Prefs.prototype =
 
 //For Default sigma View
 	let hboxToggleBool = new Gtk.Box({orientation: Gtk.Orientation.HORIZONTAL, margin_top : 10, margin_bottom : 10});
-  vBoxAddTgglBtn(hboxToggleBool, "Toggle Right Click Behaviour", "togglebool", "Enabling it will show sigma by default");
+  vBoxAddTgglBtn(hboxToggleBool, "Show Total Download speed", "togglebool", "Enabling it will show sigma by default");
 
 //For Toggling Old Icons
-  let hboxOldIcons = new Gtk.Box({orientation: Gtk.Orientation.HORIZONTAL, margin_top : 10, margin_bottom : 10});
-  vBoxAddTgglBtn(hboxOldIcons, "Display Old Icons", "useoldicon", "Enabling it will show Old Icons of simplenetspeed");
+  let hboxIconset = new Gtk.Box({orientation: Gtk.Orientation.HORIZONTAL, margin_top : 10, margin_bottom : 10});
+  vBoxAddSeleCt(true, "chooseiconset", hboxIconset, "Choose Icons Set", "Choose which icon set to display");
+  whichVlue.append_text(' 🡳,  🡱,  Σ ');  
+  whichVlue.append_text(' ↓,  ↑,  ∑ ');
+  vBoxAddSeleCt(false, "chooseiconset", hboxIconset);
 
 //For Lock Mouse Actions
   let hboxLckMuseAct = new Gtk.Box({orientation: Gtk.Orientation.HORIZONTAL, margin_top : 10, margin_bottom : 10});
