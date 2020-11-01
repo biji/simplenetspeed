@@ -14,7 +14,6 @@ const Convenience = Me.imports.convenience;
 const schema = 'org.gnome.shell.extensions.netspeedsimplified';
 
 const rCConst=3; //Right Click 4 timees to change Vertical Alignment
-const lCConst=5; //Left Click 6 timees to change icon set
 
 let settings,
   button, timeout,
@@ -23,9 +22,9 @@ let settings,
   mode, // 0: kb/s 1: KB/s 2: U:kb/s D:kb/s 3: U:KB/s D:KB/s 4: Total KB
   fontmode,
   resetNextCount=false, resetCount=0,
-  reuseable_text, newLine, h=8, tTime=0, ltTime=0, useOldIcon;
+  reuseable_text, newLine, h=8, tTime=0, useOldIcon;
 
-var extRaw, rClickCount=0, lClickCount=0, isVertical, togglebool, DIcons=[], lckMuseAct;
+var extRaw, rClickCount=0, isVertical, togglebool, DIcons=[], lckMuseAct;
 
 function init() {
     settings = Convenience.getSettings(schema);
@@ -50,7 +49,6 @@ function changeMode(widget, event) {
         mode++;
         if (mode > 4) mode = 0;
         settings.set_int('mode', mode);
-	   lClickCount++;
     }
     parseStat();
     log('mode:' + mode + ' font:' + fontmode);
@@ -88,19 +86,6 @@ function parseStat() {
 		if(tTime>rCConst){
 			tTime = 0;
 			rClickCount = 0;
-		}
-	}
-	if (lClickCount != 0) {
-		ltTime++;
-		if (lClickCount>=lCConst){
-			useOldIcon = !useOldIcon;
-            settings.set_boolean('useoldicon', useOldIcon);
-			chooseIconSet();	
-			lClickCount =0;
-		}
-		if(ltTime>lCConst){
-			ltTime = 0;
-			lClickCount = 0;
 		}
 	}
     while (line = dstream.read_line(null)) {

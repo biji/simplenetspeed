@@ -30,6 +30,7 @@ Prefs.prototype =
     buildPrefsWidget: function()
     {
     let thset = this.settings;
+    
     function vBoxSpinBtn(staRt, getDouble, whichHbox, getLbl = ""){
       if (staRt){;
         boolComp = (thset.get_double(getDouble) === thset.get_default_value(getDouble).unpack());
@@ -53,6 +54,7 @@ Prefs.prototype =
         vbox.add(new Gtk.Separator({visible : true}));
       }
     }
+    
     function vBoxAddSeleCt(stArt, getInt, whichHbox, getLbl = "", getTooTip = ""){
       if (stArt) {  
         boolComp = (thset.get_int(getInt) == thset.get_default_value(getInt).unpack());
