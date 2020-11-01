@@ -8,7 +8,7 @@
 
 > Forked from : [biji.gnome/simplenetspeed](https://github.com/biji/simplenetspeed)
 
-<p align="center"><img src='https://user-images.githubusercontent.com/41370460/97259164-2143d800-1840-11eb-88ae-8deebc513609.png'  alt="Screenshot 1"/><img src='https://user-images.githubusercontent.com/41370460/97796413-a7dd2880-1c37-11eb-81c8-9fa6b94f71cb.png' alt="Screenshot 2"/> 
+<p align="center"><img src='https://extensions.gnome.org/extension-data/screenshots/screenshot_3724_2jvKeR3.png' width="500px"  alt="Screenshot"/> 
 
 *Screenshots*
   
