@@ -69,7 +69,7 @@ if you face any **issues** you can **[open pull request](https://github.com/prat
 
 * Please Mark this extension page as Watch if you want to know about the updates
     - ***to install( reload required )( Requirements : git )***    
-    ```git clone --single-branch --branch main https://github.com/prateekmedia/netspeedsimplified ~/.local/share/gnome-shell/extensions/netspeedsimplified@prateekmedia.extension``` 
+    ```mkdir ~/.local/share/gnome-shell/extensions/; git clone --single-branch --branch main https://github.com/prateekmedia/netspeedsimplified ~/.local/share/gnome-shell/extensions/netspeedsimplified@prateekmedia.extension``` 
     
     *Or*  
     
@@ -84,7 +84,7 @@ if you face any **issues** you can **[open pull request](https://github.com/prat
       You can do that manually using extensions app or [website](https://extensions.gnome.org/local) or Using Gnome tweaks tool's extension tab  
       
     - ***to reinstall or update( reload required )( Requirements : git )***   
-    ```rm -rf ~/.local/share/gnome-shell/extensions/netspeedsimplified@prateekmedia.extension && git clone --single-branch --branch main https://github.com/prateekmedia/netspeedsimplified ~/.local/share/gnome-shell/extensions/netspeedsimplified@prateekmedia.extension```
+    ```rm -rf ~/.local/share/gnome-shell/extensions/netspeedsimplified@prateekmedia.extension; git clone --single-branch --branch main https://github.com/prateekmedia/netspeedsimplified ~/.local/share/gnome-shell/extensions/netspeedsimplified@prateekmedia.extension```
     
     *Or*  
     
