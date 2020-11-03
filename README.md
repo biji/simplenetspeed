@@ -18,9 +18,11 @@
    
 ***Tested on GNOME 3.36 and 3.38***
 
-#### Whats new in v11:
+#### Whats new in v11 and above:
 - [x] Add Preference Dialog with lots of default customizations.
 - [x] Add Lock Mouse Actions button in Prefrences to disable any mouse click behaviour.
+- [x] Add Position menu to decide where to place the indicator on the Panel.
+- [x] Add Refresh time field by which you can change refresh time value between 1.0 sec to 10.0 sec.
 
 #### Feature Highlights : 
 - [x] Reduce Refresh time
