@@ -21,21 +21,22 @@
 #### Whats new in v11 and above:
 - [x] Add Preference Dialog with lots of default customizations.
 - [x] Add Lock Mouse Actions button in Prefrences to disable any mouse click behaviour.
-- [x] Add Position menu to decide where to place the indicator on the Panel.
+- [x] Add Position menu(with Advanced option) to pinpoint where to place the indicator on the Panel.
 - [x] Add Refresh time field by which you can change refresh time value between 1.0 sec to 10.0 sec.
 
 #### Feature Highlights : 
-- [x] Reduce Refresh time
-- [x] Supports GNOME SHELL 3.38
+- [x] Adjustabl Refresh time
+- [x] Supports GNOME SHELL 3.38 and previous versions compatible
 - [x] Changes width accordingly / dynamic width
 - [x] Centred and more cleaner ui
 - [x] Changed <del>Kbps</del> to kbp/s
 - [x] New sigma icon that respects vertical alignment(old: ∑ , new: Σ)
 - [x] New Speed up and down icons for mode 3 & 4. (old: ↓ and ↑ , new: 🡳 and 🡱)
 - [x] Added space b/w speed and their units
-- [x] Human readable stylesheet // used minimum width and removed repetitive codes
+- [x] Human readable stylesheet // used min-width and removed repetitive codes
 - [x] Used ES6 classes for less code and more efficent javascript
 - [x] Right Click to toggle visibility of total data used //If you will Right click on 5th mode i.e. total speed mode then total speed counter will reset to 0 MB. 
+- [x] Add Preference Menu to customize the whole extension as you need
 
 #### Changelog Till v10 : 
 - [x] If network is not connected, then after 12 sec display text "--" for 1st mode, "----" for 2nd mode, "------" for 3rd mode, "--------" for 4th mode, for fifth mode it will display total data used(MB), Normal Right click functionality will show total data used except in 5th mode  
