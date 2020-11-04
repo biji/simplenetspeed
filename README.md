@@ -46,9 +46,6 @@
 - [x] Easy Switch to Old Icons from simplenetspeed extension, go to prefrences tab for this extension to enable/disable old icons.  
 *(If you have old icons enabled then in mode 5 you will see " -o" written after total net speed)* 
 
-#### Todo : 
-***Nothing TODO***
-
 if you face any **issues** you can **[open pull request](https://github.com/prateekmedia/netspeedsimplified/pulls)** and can type your issue with images or error codes
 
 > **Left click to change modes**,  
