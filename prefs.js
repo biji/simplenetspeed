@@ -1,5 +1,4 @@
 const Gtk = imports.gi.Gtk;
-const Lang = imports.lang;
 
 const Extension = imports.misc.extensionUtils.getCurrentExtension();
 const Lib = Extension.imports.lib;
@@ -35,15 +34,14 @@ Prefs.prototype =
       return new Gtk.Box({orientation: Gtk.Orientation.HORIZONTAL, margin_top : 10, margin_bottom : 10});
     }
 
-    function vBoxSpinBtn(getDouble, whichHbox, getLbl = "", lwer , uper, stpInc = 1, digs = 0, nume = true, pgeInc = 1, pgeSiz = 0, clmrate = 1){
+    function vBoxSpinBtn(getDouble, whichHbox, getLbl = "", getTooTip = "", lwer , uper, stpInc = 1, digs = 0, nume = true, pgeInc = 1, pgeSiz = 0, clmrate = 1){
         boolComp = (thset.get_double(getDouble) === thset.get_default_value(getDouble).unpack());
         getLbl =  boolComp ? getLbl :
           `<i>${getLbl}</i>`
-        tootext = boolComp ? "" : "The Value is Changed"
-        whichLbl = new Gtk.Label({label: getLbl, use_markup: true, xalign: 0, tooltip_text: tootext });  
+        whichLbl = new Gtk.Label({label: getLbl, use_markup: true, xalign: 0, tooltip_text: getTooTip });  
       whichSpinBtn = new Gtk.SpinButton({
         adjustment: new Gtk.Adjustment({
-          lower: lwer, upper: uper, step_increment: stpInc, page_increment: pgeInc, page_size: pgeSiz,
+          lower: lwer, upper: uper, step_increment: stpInc, page_increment: pgeInc, page_size: pgeSiz 
         }),
         climb_rate: clmrate,
         digits: digs,
@@ -69,8 +67,8 @@ Prefs.prototype =
         `<i>${getLbl}</i>`
       tootext = boolComp ? "" : "The Value is Changed"
 
-      whichLbl = new Gtk.Label({label: getLbl, use_markup: true, xalign: 0, tooltip_text: tootext });
-      whichVlue =  new Gtk.ComboBoxText({halign: Gtk.Align.END, tooltip_text: getTooTip});
+      whichLbl = new Gtk.Label({label: getLbl, use_markup: true, xalign: 0,tooltip_text: getTooTip});
+      whichVlue =  new Gtk.ComboBoxText({halign: Gtk.Align.END,  tooltip_text: tootext });
 
 	    for (i in aRray){
 	  	  whichVlue.append_text(aRray[i]);
@@ -88,14 +86,14 @@ Prefs.prototype =
       vbox.add(new Gtk.Separator({visible : true}));
     }
 
-    function vBoxAddTgglBtn(whichHbox, getLbl, getBool,getTooTip = ""){
+    function vBoxAddTgglBtn(whichHbox, getLbl, getBool, getTooTip = ""){
       boolComp = (thset.get_boolean(getBool) == thset.get_default_value(getBool).unpack());
       getLbl =  boolComp ? getLbl :
       `<i>${getLbl}</i>`
       tootext = boolComp ? "" : "The Value is Changed"
-      whichLbl = new Gtk.Label({label: getLbl, use_markup: true, xalign: 0, tooltip_text: tootext });  
-      whichVlue = new Gtk.Switch({active: thset.get_boolean(getBool), tooltip_text: getTooTip });
-      whichVlue.connect('notify::active', (widget, whichVlue) => {
+      whichLbl = new Gtk.Label({label: getLbl, use_markup: true, xalign: 0, tooltip_text: getTooTip });  
+      whichVlue = new Gtk.Switch({active: thset.get_boolean(getBool), tooltip_text: tootext });
+      whichVlue.connect('notify::active', (widget) => {
         thset.set_boolean(getBool, widget.active);
       })
 
@@ -109,7 +107,8 @@ Prefs.prototype =
   	let frame = new Gtk.Box({ orientation: Gtk.Orientation.VERTICAL, border_width: 10});
   	let label = new Gtk.Label({ label: "<b>Default Settings</b>", use_markup: true, xalign:0});
   	let vbox = new Gtk.Box({ orientation: Gtk.Orientation.VERTICAL, margin_left: 20});
-  	let footer = new Gtk.Label({ label: "<b><u>To See the changes Disable and then re-enable the extension</u></b>",use_markup: true, margin_top: 20});
+  	let footer1 = new Gtk.Label({ label: "<b><u>To See the changes Disable and then re-enable the extension</u></b>",use_markup: true, margin_top: 20});
+  	let footer2 = new Gtk.Label({ label: "<b>Pro Tip : Hover over any Label To know more about it</b>",use_markup: true, margin_top: 20});
 
 	//For Position
 	let hboxWPos = newGtkBox();
@@ -121,7 +120,7 @@ Prefs.prototype =
 
 	//Refresh time
 	let hboxRTime = newGtkBox();
-	vBoxSpinBtn("refreshtime", hboxRTime, "Refresh Time", 1.0, 10.0, .1, 1);  
+	vBoxSpinBtn("refreshtime", hboxRTime, "Refresh Time", "Change Refresh time value from anywhere b/w 1 to 10", 1.0, 10.0, .1, 1);  
 
 	//For Modes
 	let hboxMode = newGtkBox();
@@ -149,7 +148,8 @@ Prefs.prototype =
 
 	frame.add(label);
 	frame.add(vbox);
-	frame.add(footer);
+	frame.add(footer1);
+	frame.add(footer2);
 	frame.show_all();
 
 	return frame;

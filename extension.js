@@ -27,7 +27,7 @@ let settings,
   resetNextCount=false, resetCount=0,
   reuseable_text, newLine, h=8, tTime=0, chooseIconSet;
 
-var extRaw, rClickCount=0, isVertical, togglebool, DIcons=[], DWPos=[], lckMuseAct;
+var extRaw, rClickCount=0, isVertical, togglebool, DIcons=[], lckMuseAct;
 
 const ShowNetBtn = new Lang.Class({
     Name: ButtonName,
@@ -208,14 +208,9 @@ function speedToString(amount, rMode = 0) {
     	return Number.isInteger(parseFloat(amnt.toFixed(digitsToFix)));
     }
     digits = ChkifInt(amount) ? 0 : //For Integer like 21.0
-     ((mode==4 || rMode !=0) && !ChkifInt(amount*10)) ? 2 /* For floats like 21.1 */ : 1 //For floats like 21.22
+     ((mode==4 || rMode !=0) && !ChkifInt(amount*10)) ? 2 /* For floats like 21.11 */ : 1 //For floats like 21.2
 
     return String(amount.toFixed(digits)) + " " + speed_map[unit];
-}
-
-function chooseArrayVal(){
-	DIcons = (chooseIconSet ==1) ? ["↓","↑","∑"] :
-	  ["🡳","🡱","Σ"]
 }
 
 function enable() {
@@ -229,10 +224,10 @@ function enable() {
     chooseIconSet = settings.get_int('chooseiconset');
     lckMuseAct = settings.get_boolean('lockmouseactions');
     fontmode = settings.get_int('fontmode');
+	DIcons = [  ["🡳","🡱","Σ"] , ["↓","↑","∑"]  ][chooseIconSet]
 
     button = new ShowNetBtn();
     
-    chooseArrayVal();
 
     Main.panel.addToStatusArea(ButtonName, button, whePosExt, whePos);
     timeout = Mainloop.timeout_add_seconds(refreshTime, parseStat);
