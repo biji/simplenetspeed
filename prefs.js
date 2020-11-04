@@ -31,15 +31,24 @@ Prefs.prototype =
     {
     let thset = this.settings;
     
-    function vBoxSpinBtn(staRt, getDouble, whichHbox, getLbl = ""){
-      if (staRt){;
+    function newGtkBox(){
+      return new Gtk.Box({orientation: Gtk.Orientation.HORIZONTAL, margin_top : 10, margin_bottom : 10});
+    }
+
+    function vBoxSpinBtn(getDouble, whichHbox, getLbl = "", lwer , uper, stpInc = 1, digs = 0, nume = true, pgeInc = 1, pgeSiz = 0, clmrate = 1){
         boolComp = (thset.get_double(getDouble) === thset.get_default_value(getDouble).unpack());
         getLbl =  boolComp ? getLbl :
-        `<i>${getLbl}</i>`
+          `<i>${getLbl}</i>`
         tootext = boolComp ? "" : "The Value is Changed"
         whichLbl = new Gtk.Label({label: getLbl, use_markup: true, xalign: 0, tooltip_text: tootext });  
-      }
-      else{
+      whichSpinBtn = new Gtk.SpinButton({
+        adjustment: new Gtk.Adjustment({
+          lower: lwer, upper: uper, step_increment: stpInc, page_increment: pgeInc, page_size: pgeSiz,
+        }),
+        climb_rate: clmrate,
+        digits: digs,
+        numeric: nume,
+        });
         whichSpinBtn.set_value(thset.get_double(getDouble));
         whichSpinBtn.connect('value-changed', () => {
           this.rTValue = parseFloat(whichSpinBtn.get_value().toFixed(1));
@@ -52,32 +61,31 @@ Prefs.prototype =
 
         vbox.add(whichHbox);
         vbox.add(new Gtk.Separator({visible : true}));
-      }
     }
     
-    function vBoxAddSeleCt(stArt, getInt, whichHbox, getLbl = "", getTooTip = ""){
-      if (stArt) {  
-        boolComp = (thset.get_int(getInt) == thset.get_default_value(getInt).unpack());
-        getLbl =  boolComp ? getLbl :
-          `<i>${getLbl}</i>`
-        tootext = boolComp ? "" : "The Value is Changed"
-        whichLbl = new Gtk.Label({label: getLbl, use_markup: true, xalign: 0, tooltip_text: tootext });
-        whichVlue =  new Gtk.ComboBoxText({ 
-                      halign: Gtk.Align.END,
-                      tooltip_text: getTooTip 
-                  });
-      }
-      else {
-        whichVlue.set_active(Math.round(thset.get_int(getInt))); 
-        whichVlue.connect('changed', (widget) => {
-          let valueMode = widget.get_active();
-          thset.set_int(getInt, valueMode);
-        })
-        whichHbox.add(whichLbl);
-        whichHbox.pack_end(whichVlue, true, true, 0);
-        vbox.add(whichHbox);
-        vbox.add(new Gtk.Separator({visible : true}));
-      }
+    function vBoxAddSeleCt(getInt, whichHbox, getLbl, aRray = [], getTooTip = ""){
+      boolComp = (thset.get_int(getInt) == thset.get_default_value(getInt).unpack());
+      getLbl =  boolComp ? getLbl :
+        `<i>${getLbl}</i>`
+      tootext = boolComp ? "" : "The Value is Changed"
+
+      whichLbl = new Gtk.Label({label: getLbl, use_markup: true, xalign: 0, tooltip_text: tootext });
+      whichVlue =  new Gtk.ComboBoxText({halign: Gtk.Align.END, tooltip_text: getTooTip});
+
+	    for (i in aRray){
+	  	  whichVlue.append_text(aRray[i]);
+      } 
+      
+      whichVlue.set_active(Math.round(thset.get_int(getInt))); 
+      whichVlue.connect('changed', (widget) => {
+        let valueMode = widget.get_active();
+        thset.set_int(getInt, valueMode);
+      })
+      whichHbox.add(whichLbl);
+      whichHbox.pack_end(whichVlue, true, true, 0);
+
+      vbox.add(whichHbox);
+      vbox.add(new Gtk.Separator({visible : true}));
     }
 
     function vBoxAddTgglBtn(whichHbox, getLbl, getBool,getTooTip = ""){
@@ -103,71 +111,47 @@ Prefs.prototype =
   	let vbox = new Gtk.Box({ orientation: Gtk.Orientation.VERTICAL, margin_left: 20});
   	let footer = new Gtk.Label({ label: "<b><u>To See the changes Disable and then re-enable the extension</u></b>",use_markup: true, margin_top: 20});
 
- //For Position
-  let hboxWPos = new Gtk.Box({orientation: Gtk.Orientation.HORIZONTAL, margin_top : 10, margin_bottom : 10});
-  vBoxAddSeleCt(true, "wpos", hboxWPos, "Position", "Choose where to Place the extension");
-  whichVlue.append_text("Right");
-  whichVlue.append_text("Left");
-  whichVlue.append_text("Center");
-  vBoxAddSeleCt(false, "wpos", hboxWPos);
+	//For Position
+	let hboxWPos = newGtkBox();
+	vBoxAddSeleCt("wpos", hboxWPos, "Position on the Panel", ["Right","Left","Center"], "Choose where to Place the extension on the Panel");
 
-//Refresh time
-  let hboxRTime = new Gtk.Box({orientation: Gtk.Orientation.HORIZONTAL, margin_top : 10, margin_bottom : 10});
-  vBoxSpinBtn(true, "refreshtime", hboxRTime, "Refresh Time");
-  whichSpinBtn = new Gtk.SpinButton({
-      adjustment: new Gtk.Adjustment({
-          lower: 1.0, upper: 10.0, step_increment: .1, page_increment: 1, page_size: 0,
-      }),
-      climb_rate: 1,
-      digits: 1,
-      numeric: true,
-    });
-  vBoxSpinBtn(false, "refreshtime", hboxRTime);
+	//For Position Extras
+	let hboxWPosExt = newGtkBox();
+	vBoxAddSeleCt("wposext", hboxWPosExt, "Position(Advanced)", ["Prefer Right Side", "Prefer Left Side"], "Choose further where to Place the extension");
 
- //For Modes
-  let hboxMode = new Gtk.Box({orientation: Gtk.Orientation.HORIZONTAL, margin_top : 10, margin_bottom : 10});
-  vBoxAddSeleCt(true, "mode", hboxMode, "Mode (1-5)", "Choose which mode to load");
-  whichVlue.append_text("Mode 1");
-  whichVlue.append_text("Mode 2");
-  whichVlue.append_text("Mode 3");
-  whichVlue.append_text("Mode 4");
-  whichVlue.append_text("Mode 5");
-  vBoxAddSeleCt(false, "mode", hboxMode);
+	//Refresh time
+	let hboxRTime = newGtkBox();
+	vBoxSpinBtn("refreshtime", hboxRTime, "Refresh Time", 1.0, 10.0, .1, 1);  
 
- //For FontModes
-  let hboxFontMode = new Gtk.Box({orientation: Gtk.Orientation.HORIZONTAL, margin_top : 10, margin_bottom : 10});
-  vBoxAddSeleCt(true, "fontmode", hboxFontMode, "Font Mode", "Choose which font to display");
-  whichVlue.append_text("Default");
-  whichVlue.append_text("Smallest");
-  whichVlue.append_text("Smaller");
-  whichVlue.append_text("Small");
-  whichVlue.append_text("Large");  
-  vBoxAddSeleCt(false, "fontmode", hboxFontMode);
+	//For Modes
+	let hboxMode = newGtkBox();
+	vBoxAddSeleCt("mode", hboxMode, "Mode", ["Mode 1", "Mode 2", "Mode 3", "Mode 4", "Mode 5"], "Choose which mode to load");
 
-//For Vertical Alignment
-	let hboxVertical = new Gtk.Box({orientation: Gtk.Orientation.HORIZONTAL, margin_top : 10, margin_bottom : 10});
-  vBoxAddTgglBtn(hboxVertical, "Vertical Align", "isvertical", "Changing it will toggle Vertical Alignment");
+	//For FontModes
+	let hboxFontMode = newGtkBox();
+	vBoxAddSeleCt("fontmode", hboxFontMode, "Font Mode", ["Default", "Smallest","Smaller","Small","Large"], "Choose which font to display");
 
-//For Default sigma View
-	let hboxToggleBool = new Gtk.Box({orientation: Gtk.Orientation.HORIZONTAL, margin_top : 10, margin_bottom : 10});
-  vBoxAddTgglBtn(hboxToggleBool, "Show Total Download speed", "togglebool", "Enabling it will show sigma by default");
+	//For Vertical Alignment
+	let hboxVertical = newGtkBox();
+	vBoxAddTgglBtn(hboxVertical, "Vertical Align", "isvertical", "Changing it will toggle Vertical Alignment");
 
-//For Toggling Old Icons
-  let hboxIconset = new Gtk.Box({orientation: Gtk.Orientation.HORIZONTAL, margin_top : 10, margin_bottom : 10});
-  vBoxAddSeleCt(true, "chooseiconset", hboxIconset, "Choose Icons Set", "Choose which icon set to display");
-  whichVlue.append_text(' 🡳,  🡱,  Σ ');  
-  whichVlue.append_text(' ↓,  ↑,  ∑ ');
-  vBoxAddSeleCt(false, "chooseiconset", hboxIconset);
+	//For Default sigma View
+	let hboxToggleBool = newGtkBox();
+	vBoxAddTgglBtn(hboxToggleBool, "Show Total Download speed", "togglebool", "Enabling it will show sigma by default");
 
-//For Lock Mouse Actions
-  let hboxLckMuseAct = new Gtk.Box({orientation: Gtk.Orientation.HORIZONTAL, margin_top : 10, margin_bottom : 10});
-  vBoxAddTgglBtn(hboxLckMuseAct, "Lock Mouse Actions", "lockmouseactions", "Enabling it will Lock Mouse Actions");
+	//For Toggling Old Icons
+	let hboxIconset = newGtkBox();
+	vBoxAddSeleCt("chooseiconset", hboxIconset, "Choose Icons Set", [" 🡳,  🡱,  Σ ", " ↓,  ↑,  ∑ "], "Choose which icon set to display");
+
+	//For Lock Mouse Actions
+	let hboxLckMuseAct = newGtkBox();
+	vBoxAddTgglBtn(hboxLckMuseAct, "Lock Mouse Actions", "lockmouseactions", "Enabling it will Lock Mouse Actions");
 
 	frame.add(label);
 	frame.add(vbox);
 	frame.add(footer);
 	frame.show_all();
-	
+
 	return frame;
   }
 }

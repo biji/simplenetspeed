@@ -214,17 +214,16 @@ function speedToString(amount, rMode = 0) {
 }
 
 function chooseArrayVal(){
-	DIcons = (chooseIconSet ==0) ? ["🡳","🡱","Σ"] : 
-	 (chooseIconSet ==1) ? ["↓","↑","∑"] :
-	  ["","",""]
-	DWPos = ["right", "left", "center"]
+	DIcons = (chooseIconSet ==1) ? ["↓","↑","∑"] :
+	  ["🡳","🡱","Σ"]
 }
 
 function enable() {
-	refreshTime = settings.get_double('refreshtime');
-	mode = settings.get_int('mode'); // default mode using bit (b/s, kb/s);
+    refreshTime = settings.get_double('refreshtime');
+    mode = settings.get_int('mode'); // default mode using bit (b/s, kb/s);
     fontmode = settings.get_int('fontmode');
-    whePosition = settings.get_int('wpos');
+    whePos = ["right", "left", "center"][settings.get_int('wpos')]
+    whePosExt = [3,0][settings.get_int('wposext')];
     togglebool = settings.get_boolean('togglebool');
     isVertical = settings.get_boolean('isvertical');
     chooseIconSet = settings.get_int('chooseiconset');
@@ -234,9 +233,8 @@ function enable() {
     button = new ShowNetBtn();
     
     chooseArrayVal();
-    whePos = DWPos[whePosition]
 
-    Main.panel.addToStatusArea(ButtonName, button, 3, whePos);
+    Main.panel.addToStatusArea(ButtonName, button, whePosExt, whePos);
     timeout = Mainloop.timeout_add_seconds(refreshTime, parseStat);
 }
 
