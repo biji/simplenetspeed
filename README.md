@@ -20,12 +20,12 @@
 
 #### Whats new in v11 and above:
 - [x] Add Preference Dialog with lots of default customizations.
-- [x] Add Lock Mouse Actions button in Prefrences to disable any mouse click behaviour.
+- [x] Add Lock Mouse Actions button in Preferences to disable any mouse click behaviour.
 - [x] Add Position menu(with Advanced option) to pinpoint where to place the indicator on the Panel.
 - [x] Add Refresh time field by which you can change refresh time value between 1.0 sec to 10.0 sec.
 
 #### Feature Highlights : 
-- [x] Adjustabl Refresh time
+- [x] Adjustable Refresh time
 - [x] Supports GNOME SHELL 3.38 and previous versions compatible
 - [x] Changes width accordingly / dynamic width
 - [x] Centred and more cleaner ui
