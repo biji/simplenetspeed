@@ -14,7 +14,7 @@
   
  *Above Screenshot is with Adwaita Dark theme*</p>
 
-  
+**Current Version** : ***16***
    
 ***Tested on GNOME 3.36 and 3.38***
 
