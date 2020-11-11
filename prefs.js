@@ -52,6 +52,7 @@ Prefs.prototype =
           this.rTValue = parseFloat(whichSpinBtn.get_value().toFixed(1));
           if(thset.get_double(getDouble) !== this.rTValue){
             thset.set_double(getDouble , this.rTValue);
+            thset.set_boolean('restartextension' , true);
             }
           });
         whichHbox.pack_start(whichLbl, true, true, 0);
@@ -78,6 +79,7 @@ Prefs.prototype =
       whichVlue.connect('changed', (widget) => {
         let valueMode = widget.get_active();
         thset.set_int(getInt, valueMode);
+        thset.set_boolean('restartextension' , true);
       })
       whichHbox.add(whichLbl);
       whichHbox.pack_end(whichVlue, true, true, 0);
@@ -95,6 +97,7 @@ Prefs.prototype =
       whichVlue = new Gtk.Switch({active: thset.get_boolean(getBool), tooltip_text: tootext });
       whichVlue.connect('notify::active', (widget) => {
         thset.set_boolean(getBool, widget.active);
+        thset.set_boolean('restartextension' , true);
       })
 
       whichHbox.pack_start(whichLbl, true, true, 0);
@@ -107,8 +110,7 @@ Prefs.prototype =
   	let frame = new Gtk.Box({ orientation: Gtk.Orientation.VERTICAL, border_width: 10});
   	let label = new Gtk.Label({ label: "<b>Default Settings</b>", use_markup: true, xalign:0});
   	let vbox = new Gtk.Box({ orientation: Gtk.Orientation.VERTICAL, margin_left: 20});
-  	let footer1 = new Gtk.Label({ label: "<b><u>To See the changes Disable and then re-enable the extension</u></b>",use_markup: true, margin_top: 20});
-  	let footer2 = new Gtk.Label({ label: "<b>Pro Tip : Hover over any Label To know more about it</b>",use_markup: true, margin_top: 20});
+  	let mfooter = new Gtk.Label({ label: "<b>Pro Tip : Hover over any Label To know more about it</b>",use_markup: true, margin_top: 20});
 
 	//For Position
 	let hboxWPos = newGtkBox();
@@ -148,8 +150,7 @@ Prefs.prototype =
 
 	frame.add(label);
 	frame.add(vbox);
-	frame.add(footer1);
-	frame.add(footer2);
+	frame.add(mfooter);
 	frame.show_all();
 
 	return frame;

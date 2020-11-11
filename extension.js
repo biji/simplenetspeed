@@ -6,7 +6,7 @@ const Clutter = imports.gi.Clutter,
  PanelMenu = imports.ui.panelMenu,
  Mainloop = imports.mainloop;
 
-var refreshTime;
+var refreshTime, toRestart;
 
 const ExtensionUtils = imports.misc.extensionUtils;
 const Me = ExtensionUtils.getCurrentExtension();
@@ -93,6 +93,7 @@ function chooseLabel() {
 }
 
 function parseStat() {
+    toRestart = settings.get_boolean('restartextension');
     try {
         let input_file = Gio.file_new_for_path('/proc/net/dev');
         let fstream = input_file.read(null);
@@ -182,6 +183,11 @@ function parseStat() {
     lastCountUp = countUp;
     lastSpeed = speed;
     button.add_child(chooseLabel());
+    if (toRestart != false){
+    	settings.set_boolean('restartextension', false);
+    	disable();
+    	enable();
+    }
     } catch (e) {
         ioSpeed.set_text(e.message);
     }
