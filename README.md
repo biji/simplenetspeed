@@ -8,11 +8,11 @@
 
 > Forked from : [biji.gnome/simplenetspeed](https://github.com/biji/simplenetspeed)
 
-<p align="center"><img src='https://extensions.gnome.org/extension-data/screenshots/screenshot_3724_2jvKeR3.png' width="500px"  alt="Screenshot"/> 
+<p align="center"><img src='https://raw.githubusercontent.com/prateekmedia/netspeedsimplified/main/screenshoot.png' width="500px"  alt="Screenshot"/> 
 
 *Screenshots*
   
- *Above Screenshot is with Matcha sea theme*</p>
+ *Above Screenshot is with Adwaita Dark theme*</p>
 
   
    
