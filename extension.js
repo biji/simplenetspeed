@@ -183,7 +183,7 @@ function parseStat() {
     lastCountUp = countUp;
     lastSpeed = speed;
     button.add_child(chooseLabel());
-    if (toRestart != false){
+    if (toRestart == true){
     	settings.set_boolean('restartextension', false);
     	disable();
     	enable();
