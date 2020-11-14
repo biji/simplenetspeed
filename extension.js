@@ -81,6 +81,7 @@ function changeMode(widget, event) {
 
 function chooseLabel() {
 	addArg = (mode==4) ? true : false
+    var styleName;
     if (mode == 0 || mode == 1 || mode == 4) styleName =  'sumall'; 
     else if(!isVertical) styleName = 'upanddown';
     let extraw = '';
