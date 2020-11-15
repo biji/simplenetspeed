@@ -75,7 +75,7 @@ function changeMode(widget, event) {
         if (mode > 4) mode = 0;
         settings.set_int('mode', mode);
     }
-    parseStat();
+    chooseLabel();
     log('mode:' + mode + ' font:' + fontmode);
 }
 
@@ -198,7 +198,6 @@ function parseStat() {
     lastCount = count;
     lastCountUp = countUp;
     lastSpeed = speed;
-    button.add_child(chooseLabel());
     if (toRestart == true){
     	settings.set_boolean('restartextension', false);
     	disable();
