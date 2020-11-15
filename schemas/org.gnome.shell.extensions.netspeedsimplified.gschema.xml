@@ -37,5 +37,8 @@
       <key name="lockmouseactions" type="b">
         <default>false</default>
       </key>
+      <key name="reverseindicators" type="b">
+        <default>false</default>
+      </key>
   </schema>
 </schemalist>

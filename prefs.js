@@ -144,6 +144,10 @@ Prefs.prototype =
 	let hboxIconset = newGtkBox();
 	vBoxAddSeleCt("chooseiconset", hboxIconset, "Choose Icons Set", [" 🡳,  🡱,  Σ ", " ↓,  ↑,  ∑ "], "Choose which icon set to display");
 
+	//For Reversing the download and upload indicators
+	let hboxRevInd = newGtkBox();
+	vBoxAddTgglBtn(hboxRevInd, "Show Upload First", "reverseindicators", "Enabling it will reverse the upload and download speed indicators");
+
 	//For Lock Mouse Actions
 	let hboxLckMuseAct = newGtkBox();
 	vBoxAddTgglBtn(hboxLckMuseAct, "Lock Mouse Actions", "lockmouseactions", "Enabling it will Lock Mouse Actions");

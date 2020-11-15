@@ -27,7 +27,7 @@ let settings,
   resetNextCount=false, resetCount=0,
   reuseable_text, newLine, h=8, tTime=0, chooseIconSet;
 
-var extRaw, rClickCount=0, isVertical, togglebool, DIcons=[], lckMuseAct;
+var extRaw, rClickCount=0, isVertical, togglebool, DIcons=[], lckMuseAct, revIndicator;
 
 const ShowNetBtn = new Lang.Class({
     Name: ButtonName,
@@ -173,11 +173,26 @@ function parseStat() {
     if (chooseIconSet !=0) spaCe = "" ; 
     else spaCe = "  ";
 	(speed || speedUp) ? h = 0 : h++
-	if(h<=8){
-		reuseable_text = (mode >= 0 && mode <= 1) ? `${dot} ${speedToString(speed)} ${commonSigma(togglebool)}` :
-		(mode >= 2 && mode <= 3) ? `${DIcons[0]} ${spaCe}${speedToString(speed - speedUp)}   ${newLine}${DIcons[1]} ${spaCe}${speedToString(speedUp)} ${commonSigma(togglebool)}` :
-		(mode == 4) ? commonSigma(): "Mode Unavailable"
-	}
+
+	if(h<=8) {
+        
+        if (mode >= 0 && mode <= 1) {
+            reuseable_text = `${dot} ${speedToString(speed)} ${commonSigma(togglebool)}`;
+        }
+        else if (mode >= 2 && mode <= 3) {
+            if (revIndicator == false)
+                reuseable_text = `${DIcons[0]} ${spaCe}${speedToString(speed - speedUp)}   ${newLine}${DIcons[1]} ${spaCe}${speedToString(speedUp)} ${commonSigma(togglebool)}`;
+            else
+                reuseable_text = `${DIcons[1]} ${spaCe}${speedToString(speedUp)}   ${newLine}${DIcons[0]} ${spaCe}${speedToString(speed - speedUp)} ${commonSigma(togglebool)}`;
+        }
+        else if (mode == 4) {
+            reuseable_text = commonSigma();
+        }
+        else {
+            reuseable_text =  "Mode Unavailable";
+        }
+
+    }
 	else reuseable_text = (mode !=4) ? "--".repeat(mode+1) + newLine + commonSigma(togglebool) : commonSigma(togglebool)
 	ioSpeed.set_text(reuseable_text);
     lastCount = count;
@@ -229,6 +244,7 @@ function enable() {
     togglebool = settings.get_boolean('togglebool');
     isVertical = settings.get_boolean('isvertical');
     chooseIconSet = settings.get_int('chooseiconset');
+    revIndicator = settings.get_boolean('reverseindicators');
     lckMuseAct = settings.get_boolean('lockmouseactions');
     fontmode = settings.get_int('fontmode');
 	DIcons = [  ["🡳","🡱","Σ"] , ["↓","↑","∑"]  ][chooseIconSet]
