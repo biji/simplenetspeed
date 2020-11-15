@@ -1,7 +1,7 @@
 const Gtk = imports.gi.Gtk;
 
 const Extension = imports.misc.extensionUtils.getCurrentExtension();
-const Lib = Extension.imports.lib;
+const Convenience = Extension.imports.convenience;
 
 const schema = "org.gnome.shell.extensions.netspeedsimplified";
 
@@ -22,8 +22,8 @@ Prefs.prototype =
     settings: null,
     init: function(schema)
     {
-  	let settings = new Lib.Settings(schema);
-  	this.settings = settings.getSettings();
+  	let settings = new Convenience.getSettings(schema);
+  	this.settings = settings;
     },
     
     buildPrefsWidget: function()
