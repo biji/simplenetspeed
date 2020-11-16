@@ -27,7 +27,7 @@ let settings,
   resetNextCount=false, resetCount=0,
   reuseable_text, newLine, h=8, tTime=0, chooseIconSet;
 
-var extRaw, rClickCount=0, isVertical, togglebool, DIcons=[], lckMuseAct, revIndicator;
+var extRaw, rClickCount=0, isVertical, togglebool, DIcons=[], lckMuseAct, revIndicator, ioSpeed;
 
 const ShowNetBtn = new Lang.Class({
     Name: ButtonName,
@@ -75,12 +75,12 @@ function changeMode(widget, event) {
         if (mode > 4) mode = 0;
         settings.set_int('mode', mode);
     }
-    parseStat();
+    chooseLabel();
     log('mode:' + mode + ' font:' + fontmode);
 }
 
 function chooseLabel() {
-	addArg = (mode==4) ? true : false
+    var addArg = (mode==4) ? true : false
     var styleName;
     if (mode == 0 || mode == 1 || mode == 4) styleName =  'sumall'; 
     else if(!isVertical) styleName = 'upanddown';
@@ -198,7 +198,6 @@ function parseStat() {
     lastCount = count;
     lastCountUp = countUp;
     lastSpeed = speed;
-    button.add_child(chooseLabel());
     if (toRestart == true){
     	settings.set_boolean('restartextension', false);
     	disable();
@@ -239,8 +238,8 @@ function enable() {
     refreshTime = settings.get_double('refreshtime');
     mode = settings.get_int('mode'); // default mode using bit (b/s, kb/s);
     fontmode = settings.get_int('fontmode');
-    whePos = ["right", "left", "center"][settings.get_int('wpos')]
-    whePosExt = [3,0][settings.get_int('wposext')];
+    var whePos = ["right", "left", "center"][settings.get_int('wpos')]
+    var whePosExt = [3,0][settings.get_int('wposext')];
     togglebool = settings.get_boolean('togglebool');
     isVertical = settings.get_boolean('isvertical');
     chooseIconSet = settings.get_int('chooseiconset');
