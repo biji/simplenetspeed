@@ -4,7 +4,7 @@
 
 [<img src="https://raw.githubusercontent.com/andyholmes/gnome-shell-extensions-badge/master/get-it-on-ego.svg?sanitize=true" height="100" alt="Get it on GNOME Extensions">](https://extensions.gnome.org/extension/3724/net-speed-simplified/) or [Install Using Terminal](#installing-the-extension-using-terminal)
 
-> Web Link : [prateekmedia.github/netspeedsimplified](https://prateekmedia.github.io/netspeedsimplified)
+> Special Thanks to : [m0hithreddy.github](https://github.com/m0hithreddy) for completely revamping the whole codebase,
 
 > Forked from : [biji.gnome/simplenetspeed](https://github.com/biji/simplenetspeed)
 
@@ -14,7 +14,7 @@
   
  *Above Screenshot is with Adwaita Dark theme*</p>
 
-**Current Version** : ***19***
+**Current Version** : ***20***
    
 ***Tested on GNOME 3.36 and 3.38***
 
@@ -28,7 +28,7 @@
 - [x] Adjustable Refresh time
 - [x] Supports GNOME SHELL 3.38 and previous versions compatible
 - [x] Changes width accordingly / dynamic width
-- [x] Centred and more cleaner ui
+- [x] <del>Centred</del> and more cleaner ui
 - [x] Changed <del>Kbps</del> to kbp/s
 - [x] New sigma icon that respects vertical alignment(old: ∑ , new: Σ)
 - [x] New Speed up and down icons for mode 3 & 4. (old: ↓ and ↑ , new: 🡳 and 🡱)
