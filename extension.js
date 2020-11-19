@@ -105,45 +105,32 @@ function speedToString(amount, rMode = 0) {
 // NetSpeed Components
 var usLabel, dsLabel, tsLabel, tdLabel;
 
-function getUsStyle() {
-    return ('us ' + 'size-' + String(crStng.fontmode));
+function getStyle() {
+    return ('forall size-' + String(crStng.fontmode));
 }
-
-function getDsStyle() {
-    return ('ds ' + 'size-' + String(crStng.fontmode));
-}
-
-function getTsStyle() {
-    return ('ts ' + 'size-' + String(crStng.fontmode));
-}
-
-function getTdStyle() {
-    return ('td ' + 'size-' + String(crStng.fontmode));
-}
-
 function initNsLabels() {
     usLabel = new St.Label({
-        text: 'Loading...',
+        text: '---',
         y_align: Clutter.ActorAlign.CENTER,
-        style_class: getUsStyle()
+        style_class: getStyle()
     });
 
     dsLabel = new St.Label({
-        text: 'Loading...',
+        text: '---',
         y_align: Clutter.ActorAlign.CENTER,
-        style_class: getDsStyle()
+        style_class: getStyle()
     });
 
     tsLabel = new St.Label({
-        text: 'Loading...',
+        text: '---',
         y_align: Clutter.ActorAlign.CENTER,
-        style_class: getTsStyle()
+        style_class: getStyle()
     });
 
     tdLabel = new St.Label({
-        text: 'Loading...',
+        text: '---',
         y_align: Clutter.ActorAlign.CENTER,
-        style_class: getTdStyle()
+        style_class: getStyle()
     });
 }
 
@@ -323,7 +310,10 @@ function parseStat() {
             enable();
         }
     } catch (e) {
-        //ioSpeed.set_text(e.message);
+        usLabel.set_text(e.message);
+        dsLabel.set_text(e.message);
+        tsLabel.set_text(e.message);
+        tdLabel.set_text(e.message);
     }
 
     return true;
