@@ -19,7 +19,7 @@
 ***Tested on GNOME 3.36 and 3.38***
 
 #### Whats new in v11 and above:
-- [x] Add Preference Dialog with lots of default customizations.
+- [x] Add Preference Dialog with lots of default customization.
 - [x] Add Lock Mouse Actions button in Preferences to disable any mouse click behaviour.
 - [x] Add Position menu(with Advanced option) to pinpoint where to place the indicator on the Panel.
 - [x] Add Refresh time field by which you can change refresh time value between 1.0 sec to 10.0 sec.
@@ -28,22 +28,22 @@
 - [x] Adjustable Refresh time
 - [x] Supports GNOME SHELL 3.38 and previous versions compatible
 - [x] Changes width accordingly / dynamic width
-- [x] <del>Centred</del> and more cleaner ui
+- [x] <del>Centered</del> and more cleaner ui
 - [x] Changed <del>Kbps</del> to kbp/s
 - [x] New sigma icon that respects vertical alignment(old: ∑ , new: Σ)
 - [x] New Speed up and down icons for mode 3 & 4. (old: ↓ and ↑ , new: 🡳 and 🡱)
 - [x] Added space b/w speed and their units
 - [x] Human readable stylesheet // used min-width and removed repetitive codes
-- [x] Used ES6 classes for less code and more efficent javascript
+- [x] Used ES6 classes for less code and more efficeint javascript
 - [x] Right Click to toggle visibility of total data used //If you will Right click on 5th mode i.e. total speed mode then total speed counter will reset to 0 MB. 
 - [x] Add Preference Menu to customize the whole extension as you need
 
 #### Changelog Till v10 : 
 - [x] If network is not connected, then after 12 sec display text "--" for 1st mode, "----" for 2nd mode, "------" for 3rd mode, "--------" for 4th mode, for fifth mode it will display total data used(MB), Normal Right click functionality will show total data used except in 5th mode  
-- [x] Easy Vertical Aligment for Dash to panel or Big Screen users, to enable this Right Click on any mode continuosly for four times to enable/disable vertical align or simply go to prefrences tab for this extension.  
+- [x] Easy Vertical Alignment for Dash to panel or Big Screen users, to enable this Right Click on any mode continuously for four times to enable/disable vertical align or simply go to preferences tab for this extension.  
 *(If you have vertical align enabled then in mode 5 you will see " -v" written after total net speed)*,  
 ***Tip : You can also change font size in vertical alignment to your liking by middle mouse click on the speed***  
-- [x] Easy Switch to Old Icons from simplenetspeed extension, go to prefrences tab for this extension to enable/disable old icons.  
+- [x] Easy Switch to Old Icons from simplenetspeed extension, go to preferences tab for this extension to enable/disable old icons.  
 *(If you have old icons enabled then in mode 5 you will see " -o" written after total net speed)* 
 
 if you face any **issues** you can **[open pull request](https://github.com/prateekmedia/netspeedsimplified/pulls)** and can type your issue with images or error codes
@@ -58,10 +58,10 @@ if you face any **issues** you can **[open pull request](https://github.com/prat
 1. Up & down speed in Bytes per second
 1. Total of downloaded in Bytes (Right click to reset counter)
   
-> **Right click to toggle total data usage visiblity, Right click on total data usage mode in reset counter**,  
+> **Right click to toggle total data usage visibility, Right click on total data usage mode in reset counter**,  
 <p align="center"> <img src='https://user-images.githubusercontent.com/41370460/95724032-78b84480-0c93-11eb-9a2f-07976cb99e19.png' />   =====> To this   <img src='https://user-images.githubusercontent.com/41370460/95724072-8968ba80-0c93-11eb-98c9-e5651167760d.png' /></p>  
   
-> **Right click continuosly for 4 times in any mode to toggle vertical alignment, You will se "-v" written in 5th mode after total download data if this is enabled**  
+> **Right click continuously for 4 times in any mode to toggle vertical alignment, You will see "-v" written in 5th mode after total download data if this is enabled**  
   
 > **Middle click to change font size**
 
@@ -88,7 +88,7 @@ if you face any **issues** you can **[open pull request](https://github.com/prat
     
     *Or*  
     
-    First delete netspeedsimplified@prateekmedia.extension diretory by typing  
+    First delete netspeedsimplified@prateekmedia.extension directory by typing  
     `rm -rf ~/.local/share/gnome-shell/extensions/netspeedsimplified@prateekmedia.extension`
     & then
     You can manually download the latest zip and paste its content in the folder   
