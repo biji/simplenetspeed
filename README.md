@@ -2,7 +2,7 @@
 <h1 align="center">Net speed Simplified</h1>
 <h5 align="center"><i>Gnome extension to show network speed</i></h5>
 
-[<img src="https://raw.githubusercontent.com/andyholmes/gnome-shell-extensions-badge/master/get-it-on-ego.svg?sanitize=true" height="100" alt="Get it on GNOME Extensions">](https://extensions.gnome.org/extension/3724/net-speed-simplified/) or [Install Using Terminal](#installing-the-extension-using-terminal)
+[<img src="https://raw.githubusercontent.com/andyholmes/gnome-shell-extensions-badge/master/get-it-on-ego.svg?sanitize=true" height="100" alt="Get it on GNOME Extensions">](https://extensions.gnome.org/extension/3724/net-speed-simplified/) or [Install Manually](#installing-manually)
 
 > Special Thanks to : [m0hithreddy.github](https://github.com/m0hithreddy) for completely revamping the whole codebase,
 
@@ -65,41 +65,10 @@ if you face any **issues** you can **[open pull request](https://github.com/prat
 
 > **Middle click to change font size**
 
-<h2 align="center">Installing the extension using terminal:</h2>   
+<h2 align="center">Installing Manually:</h2>   
 
 * Please Star this repository and mark it as Watch if you want to know about latest updates.
-    - ***to install( reload required )( Requirements : git )***    
-    ```mkdir ~/.local/share/gnome-shell/extensions/; git clone --single-branch --branch main https://github.com/prateekmedia/netspeedsimplified ~/.local/share/gnome-shell/extensions/netspeedsimplified@prateekmedia.extension```
-
-    *Or*  
-
-    You can manually download the zip and paste its content in the folder  
-    `~/.local/share/gnome-shell/extensions/netspeedsimplified@prateekmedia.extension`  
-    [Create it, if its not there]
-
-    - ***to load/reload extension***    
-       Press ```Alt+F2``` then type ```r``` and ```hit enter```.
-
-    - ***to enable/disable/remove***    
-      You can do that manually using extensions app or [website](https://extensions.gnome.org/local) or Using Gnome tweaks tool's extension tab  
-
-    - ***to reinstall or update( reload required )( Requirements : git )***   
-    ```rm -rf ~/.local/share/gnome-shell/extensions/netspeedsimplified@prateekmedia.extension; git clone --single-branch --branch main https://github.com/prateekmedia/netspeedsimplified ~/.local/share/gnome-shell/extensions/netspeedsimplified@prateekmedia.extension```
-
-    *Or*  
-
-    First delete netspeedsimplified@prateekmedia.extension directory by typing  
-    `rm -rf ~/.local/share/gnome-shell/extensions/netspeedsimplified@prateekmedia.extension`
-    & then
-    You can manually download the latest zip and paste its content in the folder   
-    `~/.local/share/gnome-shell/extensions/netspeedsimplified@prateekmedia.extension`  
-    [Create it, if its not there]
-
-    - ***to remove( using Terminal )( reload required )***   
-    ```rm -rf ~/.local/share/gnome-shell/extensions/netspeedsimplified@prateekmedia.extension```  
-
-# Modifcation Required
-
+  
 ## Quick install
 The extension can be quicky installed as following:
 
@@ -119,3 +88,4 @@ The Extension can be managed using Make build system as follows
 
 Likewise extension can be removed (```$ make remove```) or reinstalled (```$ make reinstall```)
 
+You can manage the extension using extensions app or [website](https://extensions.gnome.org/local) or Using Gnome tweaks tool's extension tab  
