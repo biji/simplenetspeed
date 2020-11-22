@@ -41,7 +41,11 @@ function fetchSettings() {
         revIndicator: settings.get_boolean('reverseindicators'),
         lckMuseAct: settings.get_boolean('lockmouseactions'),
         nsPos: settings.get_int('wpos'),
-        nsPosAdv: settings.get_int('wposext')
+        nsPosAdv: settings.get_int('wposext'),
+        usColor: settings.get_string('uscolor'),
+        dsColor: settings.get_string('dscolor'),
+        tsColor: settings.get_string('tscolor'),
+        tdColor: settings.get_string('tdcolor')
     };
 
     initNs();
@@ -58,6 +62,10 @@ function pushSettings() {
     settings.set_boolean('lockmouseactions', crStng.lckMuseAct);
     settings.set_int('wpos', crStng.nsPos);
     settings.set_int('wposext', crStng.nsPosAdv);
+    settings.set_string('uscolor', crStng.usColor);
+    settings.set_string('dscolor', crStng.dsColor);
+    settings.set_string('tscolor', crStng.tsColor);
+    settings.set_string('tdcolor', crStng.tdColor);
 
     initNs();
 }
@@ -112,25 +120,29 @@ function initNsLabels() {
     usLabel = new St.Label({
         text: '---',
         y_align: Clutter.ActorAlign.CENTER,
-        style_class: getStyle()
+        style_class: getStyle(),
+        style: "color: " + crStng.usColor
     });
 
     dsLabel = new St.Label({
         text: '---',
         y_align: Clutter.ActorAlign.CENTER,
-        style_class: getStyle()
+        style_class: getStyle(),
+        style: "color: " + crStng.dsColor
     });
 
     tsLabel = new St.Label({
         text: '---',
         y_align: Clutter.ActorAlign.CENTER,
-        style_class: getStyle()
+        style_class: getStyle(),
+        style: "color: " + crStng.tsColor
     });
 
     tdLabel = new St.Label({
         text: '---',
         y_align: Clutter.ActorAlign.CENTER,
-        style_class: getStyle()
+        style_class: getStyle(),
+        style: "color: " + crStng.tdColor
     });
 }
 
