@@ -1,4 +1,5 @@
 const Gtk = imports.gi.Gtk;
+const Gdk = imports.gi.Gdk;
 
 const Extension = imports.misc.extensionUtils.getCurrentExtension();
 const Convenience = Extension.imports.convenience;
@@ -107,8 +108,37 @@ Prefs.prototype =
       vbox.add(new Gtk.Separator({visible : true}));
     }
 
+    function vBoxAddColorButton(whichHbox, getLbl, getColor, getToolTip = "") {
+      //Deterime whether the option value is changed from default value
+      boolComp = (thset.get_string(getColor) == thset.get_default_value(getColor).unpack());
+      getLbl = boolComp ? getLbl : `<i>${getLbl}</i>`
+      tootext = boolComp ? "" : "The Value is Changed"
+
+      //Create the option name
+      whichLbl = new Gtk.Label({label: getLbl, use_markup: true, xalign: 0, tooltip_text: getToolTip});
+
+      //Create RGBA
+      rgba = new Gdk.RGBA();
+      rgba.parse(thset.get_string(getColor));
+
+      //Create ColorButton 
+      colorButton = new Gtk.ColorButton({tooltip_text: tootext});
+      colorButton.set_rgba(rgba);
+      colorButton.connect('notify::color', (widget) => {  //On the event of modification
+        rgba = widget.get_rgba();
+        thset.set_string(getColor, rgba.to_string());
+        thset.set_boolean('restartextension', true);
+      });
+
+      whichHbox.pack_start(whichLbl, true, true, 0);
+      whichHbox.add(colorButton);
+
+      vbox.add(whichHbox);
+      vbox.add(new Gtk.Separator({visible : true}));
+    }
+
   	let frame = new Gtk.Box({ orientation: Gtk.Orientation.VERTICAL, border_width: 10});
-  	let label = new Gtk.Label({ label: "<b>Default Settings</b>", use_markup: true, xalign:0});
+  	let label = new Gtk.Label({ label: "<b>General Settings</b>", use_markup: true, xalign:0});
   	let vbox = new Gtk.Box({ orientation: Gtk.Orientation.VERTICAL, margin_left: 20});
   	let mfooter = new Gtk.Label({ label: "<b>Pro Tip : Hover over any Label To know more about it</b>",use_markup: true, margin_top: 20});
 
@@ -151,6 +181,24 @@ Prefs.prototype =
 	//For Lock Mouse Actions
 	let hboxLckMuseAct = newGtkBox();
 	vBoxAddTgglBtn(hboxLckMuseAct, "Lock Mouse Actions", "lockmouseactions", "Enabling it will Lock Mouse Actions");
+
+  //Colors
+  
+  //Upload Speed Color 
+  let usColorButton = newGtkBox();
+  vBoxAddColorButton(usColorButton, "Upload Speed Color", "uscolor", "Select the upload speed color");
+  
+  //Download Speed Color 
+  let dsColorButton = newGtkBox();
+  vBoxAddColorButton(dsColorButton, "Download Speed Color", "dscolor", "Select the download speed color");
+
+  //Total Speed Color 
+  let tsColorButton = newGtkBox();
+  vBoxAddColorButton(tsColorButton, "Total Speed Color", "tscolor", "Select the total speed color");
+
+  //Total Download Color 
+  let tdColorButton = newGtkBox();
+  vBoxAddColorButton(tdColorButton, "Total Download Color", "tdcolor", "Select the total download color");
 
 	frame.add(label);
 	frame.add(vbox);

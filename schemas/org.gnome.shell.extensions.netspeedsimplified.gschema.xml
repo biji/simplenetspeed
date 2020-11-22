@@ -40,5 +40,17 @@
       <key name="reverseindicators" type="b">
         <default>false</default>
       </key>
+      <key name="uscolor" type="s">
+        <default>"rgba(255, 255, 255, 1)"</default>
+      </key>
+      <key name="dscolor" type="s">
+        <default>"rgba(255, 255, 255, 1)"</default>
+      </key>
+      <key name="tdcolor" type="s">
+        <default>"rgba(255, 255, 255, 1)"</default>
+      </key>
+      <key name="tscolor" type="s">
+        <default>"rgba(255, 255, 255, 1)"</default>
+      </key>
   </schema>
 </schemalist>
