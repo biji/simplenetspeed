@@ -18,12 +18,17 @@
 
 ***Tested on GNOME 3.36 and 3.38***
 
+#### Whats new in v20 and above:
+- [x] Completely revamped whole codebase
+- [x] Add Show Upload First button to show upload speed first
+- [x] Add Color Customizations to make the extension your own
+
+
 #### Whats new in v11 and above:
 - [x] Add Preference Dialog with lots of default customization.
 - [x] Add Lock Mouse Actions button in Preferences to disable any mouse click behaviour.
 - [x] Add Position menu(with Advanced option) to pinpoint where to place the indicator on the Panel.
 - [x] Add Refresh time field by which you can change refresh time value between 1.0 sec to 10.0 sec.
-- [x] Add Show Upload First button to show upload speed first
 
 #### Feature Highlights :
 - [x] Adjustable Refresh time
