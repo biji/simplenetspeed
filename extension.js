@@ -287,7 +287,7 @@ function parseStat() {
         if (lastCountUp === 0) lastCountUp = countUp;
 
         let speed = (count - lastCount) / crStng.refreshTime, speedUp = (countUp - lastCountUp) / crStng.refreshTime, 
-        dot = (speed > lastSpeed) ? "⇅" : "";
+        dot = (speed > lastSpeed) ? "⇅" : "  ";
 
         if (resetNextCount == true) {
             resetNextCount = false;
