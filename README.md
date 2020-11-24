@@ -4,7 +4,7 @@
 
 [<img src="https://raw.githubusercontent.com/andyholmes/gnome-shell-extensions-badge/master/get-it-on-ego.svg?sanitize=true" height="100" alt="Get it on GNOME Extensions">](https://extensions.gnome.org/extension/3724/net-speed-simplified/) or [Install Manually](#installing-manually)
 
-> Special Thanks to : [m0hithreddy.github](https://github.com/m0hithreddy) for completely revamping the whole codebase,
+> Special Thanks to : [m0hithreddy.github](https://github.com/m0hithreddy) for completely revamping the whole codebase  
 
 > Forked from : [biji.gnome/simplenetspeed](https://github.com/biji/simplenetspeed)
 
@@ -14,7 +14,7 @@
 
  *Above Screenshot is with Adwaita Dark theme*</p>
 
-**Current Version** : ***20***
+**Current Version** : ***21***
 
 ***Tested on GNOME 3.36 and 3.38***
 
@@ -23,16 +23,17 @@
 - [x] Add Lock Mouse Actions button in Preferences to disable any mouse click behaviour.
 - [x] Add Position menu(with Advanced option) to pinpoint where to place the indicator on the Panel.
 - [x] Add Refresh time field by which you can change refresh time value between 1.0 sec to 10.0 sec.
+- [x] Add Show Upload First button to show upload speed first
 
 #### Feature Highlights :
 - [x] Adjustable Refresh time
-- [x] Supports GNOME SHELL 3.38 and previous versions compatible
+- [x] Supports GNOME SHELL 3.38 and Backwards compatible
 - [x] Changes width accordingly / dynamic width
-- [x] <del>Centered</del> and more cleaner ui
+- [x] More cleaner ui
 - [x] Changed <del>Kbps</del> to kbp/s
 - [x] New sigma icon that respects vertical alignment(old: ∑ , new: Σ)
 - [x] New Speed up and down icons for mode 3 & 4. (old: ↓ and ↑ , new: 🡳 and 🡱)
-- [x] Added space b/w speed and their units
+- [x] Add space b/w speed and their units
 - [x] Human readable stylesheet // used min-width and removed repetitive codes
 - [x] Used ES6 classes for less code and more efficeint javascript
 - [x] Right Click to toggle visibility of total data used //If you will Right click on 5th mode i.e. total speed mode then total speed counter will reset to 0 MB.
@@ -46,7 +47,7 @@
 - [x] Easy Switch to Old Icons from simplenetspeed extension, go to preferences tab for this extension to enable/disable old icons.  
 *(If you have old icons enabled then in mode 5 you will see " -o" written after total net speed)*
 
-if you face any **issues** you can **[open pull request](https://github.com/prateekmedia/netspeedsimplified/pulls)** and can type your issue with images or error codes
+if you face any **issues** you can **[file an issue](https://github.com/prateekmedia/netspeedsimplified/issues)** with images or error codes
 
 > **Left click to change modes**,  
 
@@ -86,6 +87,10 @@ The Extension can be managed using Make build system as follows
 
       $ make install
 
-Likewise extension can be removed (```$ make remove```) or reinstalled (```$ make reinstall```)
+Likewise extension can be removed  
+```$ make remove```  
+OR reinstalled  
+```$ make reinstall```  
+
 
 You can manage the extension using extensions app or [website](https://extensions.gnome.org/local) or Using Gnome tweaks tool's extension tab  
