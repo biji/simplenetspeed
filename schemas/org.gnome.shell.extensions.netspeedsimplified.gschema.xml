@@ -40,6 +40,9 @@
       <key name="reverseindicators" type="b">
         <default>false</default>
       </key>
+      <key name="colortggle" type="b">
+        <default>false</default>
+      </key>
       <key name="uscolor" type="s">
         <default>"rgba(255, 255, 255, 1)"</default>
       </key>
