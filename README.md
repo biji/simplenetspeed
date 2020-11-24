@@ -4,9 +4,7 @@
 
 [<img src="https://raw.githubusercontent.com/andyholmes/gnome-shell-extensions-badge/master/get-it-on-ego.svg?sanitize=true" height="100" alt="Get it on GNOME Extensions">](https://extensions.gnome.org/extension/3724/net-speed-simplified/) or [Install Manually](#installing-manually)
 
-> Special Thanks to : [m0hithreddy.github](https://github.com/m0hithreddy) for completely revamping the whole codebase  
-
-> Forked from : [biji.gnome/simplenetspeed](https://github.com/biji/simplenetspeed)
+> Forked from : [biji@gnome/simplenetspeed](https://github.com/biji/simplenetspeed)
 
 <p align="center"><img src='https://raw.githubusercontent.com/prateekmedia/netspeedsimplified/main/screenshoot.png' width="500px"  alt="Screenshot"/>
 
@@ -21,7 +19,8 @@
 #### Whats new in v20 and above:
 - [x] Completely revamped whole codebase
 - [x] Add Show Upload First button to show upload speed first
-- [x] Add Color Customizations to make the extension your own
+- [x] Add Color Customizations to make the extension your own  
+- ( Thanks to [m0hithreddy@github](https://github.com/m0hithreddy) for above features )   
 
 
 #### Whats new in v11 and above:
