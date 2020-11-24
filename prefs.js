@@ -89,7 +89,7 @@ Prefs.prototype =
       vbox.add(new Gtk.Separator({visible : true}));
     }
 
-    function vBoxAddTgglBtn(whichHbox, getLbl, getBool, getTooTip = ""){
+    function vBoxAddTgglBtn(whichHbox, getLbl, getBool, getTooTip = "", func){
       boolComp = (thset.get_boolean(getBool) == thset.get_default_value(getBool).unpack());
       getLbl =  boolComp ? getLbl :
       `<i>${getLbl}</i>`
@@ -98,7 +98,8 @@ Prefs.prototype =
       whichVlue = new Gtk.Switch({active: thset.get_boolean(getBool), tooltip_text: tootext });
       whichVlue.connect('notify::active', (widget) => {
         thset.set_boolean(getBool, widget.active);
-        thset.set_boolean('restartextension' , true);
+        if (func != undefined){ func(widget.active); } 
+		else { thset.set_boolean('restartextension' , true); }
       })
 
       whichHbox.pack_start(whichLbl, true, true, 0);
@@ -183,27 +184,44 @@ Prefs.prototype =
 	vBoxAddTgglBtn(hboxLckMuseAct, "Lock Mouse Actions", "lockmouseactions", "Enabling it will Lock Mouse Actions");
 
   //Colors
+	let hboxColor = newGtkBox();
+	function onColorToggle(widget){
+	  	if (widget){
+  		usColorButton.show();
+ 		dsColorButton.show();
+ 		tsColorButton.show();
+ 		tdColorButton.show();
+  	} else {
+  		usColorButton.hide();
+ 		dsColorButton.hide();
+ 		tsColorButton.hide();
+ 		tdColorButton.hide();
+  	}
+  }
   
-  //Upload Speed Color 
-  let usColorButton = newGtkBox();
-  vBoxAddColorButton(usColorButton, "Upload Speed Color", "uscolor", "Select the upload speed color");
-  
-  //Download Speed Color 
-  let dsColorButton = newGtkBox();
-  vBoxAddColorButton(dsColorButton, "Download Speed Color", "dscolor", "Select the download speed color");
+	vBoxAddTgglBtn(hboxColor, "Show Color Customization", "colortggle", "Enabling it will Show all Color customizations", onColorToggle);
 
-  //Total Speed Color 
-  let tsColorButton = newGtkBox();
-  vBoxAddColorButton(tsColorButton, "Total Speed Color", "tscolor", "Select the total speed color");
+	//Upload Speed Color 
+	let usColorButton = newGtkBox();
+	vBoxAddColorButton(usColorButton, "Upload Speed Color", "uscolor", "Select the upload speed color");
 
-  //Total Download Color 
-  let tdColorButton = newGtkBox();
-  vBoxAddColorButton(tdColorButton, "Total Download Color", "tdcolor", "Select the total download color");
+	//Download Speed Color 
+	let dsColorButton = newGtkBox();
+	vBoxAddColorButton(dsColorButton, "Download Speed Color", "dscolor", "Select the download speed color");
+
+	//Total Speed Color 
+	let tsColorButton = newGtkBox();
+	vBoxAddColorButton(tsColorButton, "Total Speed Color", "tscolor", "Select the total speed color");
+
+	//Total Download Color 
+	let tdColorButton = newGtkBox();
+	vBoxAddColorButton(tdColorButton, "Total Download Color", "tdcolor", "Select the total download color");
 
 	frame.add(label);
 	frame.add(vbox);
 	frame.add(mfooter);
 	frame.show_all();
+	onColorToggle(thset.get_boolean("colortggle"));
 
 	return frame;
   }
