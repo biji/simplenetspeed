@@ -41,11 +41,9 @@
 
 #### Changelog Till v10 :
 - [x] If network is not connected, then after 12 sec display text "--" for 1st mode, "----" for 2nd mode, "------" for 3rd mode, "--------" for 4th mode, for fifth mode it will display total data used(MB), Normal Right click functionality will show total data used except in 5th mode  
-- [x] Easy Vertical Alignment for Dash to panel or Big Screen users, to enable this Right Click on any mode continuously for four times to enable/disable vertical align or simply go to preferences tab for this extension.  
-*(If you have vertical align enabled then in mode 5 you will see " -v" written after total net speed)*,  
+- [x] Easy Vertical Alignment for Dash to panel or Big Screen users, to enable this Right Click on any mode continuously for four times to enable/disable vertical align or simply go to preferences tab for this extension,  
 ***Tip : You can also change font size in vertical alignment to your liking by middle mouse click on the speed***  
-- [x] Easy Switch to Old Icons from simplenetspeed extension, go to preferences tab for this extension to enable/disable old icons.  
-*(If you have old icons enabled then in mode 5 you will see " -o" written after total net speed)*
+- [x] Easy Switch to Old Icons of simplenetspeed extension, go to preferences tab for this extension to enable/disable old icons.  
 
 if you face any **issues** you can **[file an issue](https://github.com/prateekmedia/netspeedsimplified/issues)** with images or error codes
 
@@ -60,9 +58,9 @@ if you face any **issues** you can **[file an issue](https://github.com/prateekm
 1. Total of downloaded in Bytes (Right click to reset counter)
 
 > **Right click to toggle total data usage visibility, Right click on total data usage mode in reset counter**,  
-<p align="center"> <img src='https://user-images.githubusercontent.com/41370460/95724032-78b84480-0c93-11eb-9a2f-07976cb99e19.png' />   =====> To this   <img src='https://user-images.githubusercontent.com/41370460/95724072-8968ba80-0c93-11eb-98c9-e5651167760d.png' /></p>  
+<p align="center"> <img src='https://user-images.githubusercontent.com/41370460/95724032-78b84480-0c93-11eb-9a2f-07976cb99e19.png' /> After right click => <img src='https://user-images.githubusercontent.com/41370460/95724072-8968ba80-0c93-11eb-98c9-e5651167760d.png' /></p>  
 
-> **Right click continuously for 4 times in any mode to toggle vertical alignment, You will see "-v" written in 5th mode after total download data if this is enabled**  
+> **Right click continuously for 4 times in any mode to toggle vertical alignment**  
 
 > **Middle click to change font size**
 
