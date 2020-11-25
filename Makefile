@@ -3,6 +3,8 @@ EXT_HOME=~/.local/share/gnome-shell/extensions/netspeedsimplified@prateekmedia.e
 all: install
 
 install: convenience.js extension.js metadata.json prefs.js stylesheet.css schemas/gschemas.compiled
+	#Remove old files(if any)
+	remove-no-reboot
 	#Create directory structure
 	mkdir -p ${EXT_HOME}
 	mkdir -p ${EXT_HOME}/schemas
@@ -21,6 +23,7 @@ install: convenience.js extension.js metadata.json prefs.js stylesheet.css schem
 	busctl --user call org.gnome.Shell /org/gnome/Shell org.gnome.Shell Eval s 'Meta.restart("Restarting…")'
 
 	#Enabling Gnome extension.
+	sleep 5
 	gnome-extensions enable netspeedsimplified@prateekmedia.extension
 
 remove:
