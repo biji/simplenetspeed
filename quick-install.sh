@@ -15,12 +15,11 @@ curl ${PROJECT_HOME}/extension.js -o ${EXT_HOME}/extension.js
 curl ${PROJECT_HOME}/metadata.json -o ${EXT_HOME}/metadata.json
 curl ${PROJECT_HOME}/prefs.js -o ${EXT_HOME}/prefs.js
 curl ${PROJECT_HOME}/stylesheet.css -o ${EXT_HOME}/stylesheet.css
-curl ${PROJECT_HOME}/stylesheet.css -o ${EXT_HOME}/stylesheet.css
 curl ${PROJECT_HOME}/schemas/gschemas.compiled -o ${EXT_HOME}/schemas/gschemas.compiled
+curl ${PROJECT_HOME}/schemas/org.gnome.shell.extensions.netspeedsimplified.gschema.xml -o ${EXT_HOME}/schemas/org.gnome.shell.extensions.netspeedsimplified.gschema.xml
 
 #Optional files
 curl ${PROJECT_HOME}/LICENSE -o ${EXT_HOME}/LICENSE
-curl ${PROJECT_HOME}/README.md -o ${EXT_HOME}/README.md
 
 #Reloading shell; Sending SIGHUP signal to gnome-shell (equivalent to alt + f2 ; r ; enter)
 busctl --user call org.gnome.Shell /org/gnome/Shell org.gnome.Shell Eval s 'Meta.restart("Restarting…")'
