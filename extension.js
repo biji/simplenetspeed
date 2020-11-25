@@ -89,7 +89,7 @@ function speedToString(amount, rMode = 0) {
     let digits = ((crStng.mode==4 || rMode !=0) && ChkifInt(amount)) ? 0 : //For Integer like 21.0
      ((crStng.mode==4 || rMode !=0) && !ChkifInt(amount*10)) ? 2 /* For floats like 21.11 */ : 1 //For floats like 21.2
 
-	let spaceNum = (crStng.mode!=4 && rMode ==0) ? 4 - Math.round(Math.round(100*Math.log(amount)/Math.log(10))/100) : 0;
+	let spaceNum = (crStng.mode!=4 && rMode ==0) ? 4 - Math.ceil(Math.round(100*Math.log(amount)/Math.log(10))/100) : 0;
 
     return " ".repeat(spaceNum) + amount.toFixed(digits) + " " + speed_map[unit];
 }
