@@ -4,7 +4,7 @@ all: install
 
 install: convenience.js extension.js metadata.json prefs.js stylesheet.css schemas/gschemas.compiled
 	#Remove old files(if any)
-	remove-no-reboot
+	rm -rf ${EXT_HOME}
 	#Create directory structure
 	mkdir -p ${EXT_HOME}
 	mkdir -p ${EXT_HOME}/schemas
