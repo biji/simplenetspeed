@@ -4,11 +4,11 @@ const Clutter = imports.gi.Clutter,
  Main = imports.ui.main,
  Gio = imports.gi.Gio,
  PanelMenu = imports.ui.panelMenu,
- Mainloop = imports.mainloop;
- Me = imports.misc.extensionUtils.getCurrentExtension();
- Convenience = Me.imports.convenience;
- schema = 'org.gnome.shell.extensions.netspeedsimplified';
- ButtonName = "ShowNetSpeedButton";
+ Mainloop = imports.mainloop,
+ Me = imports.misc.extensionUtils.getCurrentExtension(),
+ Convenience = Me.imports.convenience,
+ schema = 'org.gnome.shell.extensions.netspeedsimplified',
+ ButtonName = "ShowNetSpeedButton",
  rCConst=4; //Right Click 4 times to toggle Vertical Alignment
 
 let settings, timeout,
@@ -44,20 +44,10 @@ function fetchSettings() {
 }
 
 function pushSettings() {
-    settings.set_double('refreshtime', crStng.refreshTime);
     settings.set_int('mode', crStng.mode);
     settings.set_int('fontmode', crStng.fontmode); 
     settings.set_boolean('togglebool', crStng.showTotalDwnld);
     settings.set_boolean('isvertical', crStng.isVertical);
-    settings.set_int('chooseiconset', crStng.chooseIconSet);
-    settings.set_boolean('reverseindicators', crStng.revIndicator);
-    settings.set_boolean('lockmouseactions', crStng.lckMuseAct);
-    settings.set_int('wpos', crStng.nsPos);
-    settings.set_int('wposext', crStng.nsPosAdv);
-    settings.set_string('uscolor', crStng.usColor);
-    settings.set_string('dscolor', crStng.dsColor);
-    settings.set_string('tscolor', crStng.tsColor);
-    settings.set_string('tdcolor', crStng.tdColor);
 
     initNs();
 }
