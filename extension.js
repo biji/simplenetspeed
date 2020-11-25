@@ -73,7 +73,7 @@ function speedToString(amount, rMode = 0) {
         (crStng.mode == 0 || crStng.mode == 2) ? v => v.toLowerCase() + "/s" : //kb/s
         (crStng.mode == 1 || crStng.mode == 3) ? v => v + "/s" : v=>v); //KB/s
     
-    if (amount === 0) return "     0.0  "  + speed_map[0];
+    if (amount === 0) return "   0.0 "  + speed_map[0];
     if (crStng.mode == 0 || crStng.mode == 2) amount = amount * 8;
 
     let unit = 0;
@@ -89,7 +89,7 @@ function speedToString(amount, rMode = 0) {
     let digits = ((crStng.mode==4 || rMode !=0) && ChkifInt(amount)) ? 0 : //For Integer like 21.0
      ((crStng.mode==4 || rMode !=0) && !ChkifInt(amount*10)) ? 2 /* For floats like 21.11 */ : 1 //For floats like 21.2
 
-	let spaceNum = (crStng.mode!=4 && rMode ==0) ? 4 - Math.ceil(Math.round(100*Math.log(amount)/Math.log(10))/100) : 0;
+    let spaceNum = 4 - Math.ceil(Math.round(100*Math.log(amount)/Math.log(10))/100); //This will give the number of digits that number have substracted by four
 
     return " ".repeat(spaceNum) + amount.toFixed(digits) + " " + speed_map[unit];
 }
@@ -102,28 +102,28 @@ function getStyle() {
 }
 function initNsLabels() {
     usLabel = new St.Label({
-        text: '---',
+        text: '--',
         y_align: Clutter.ActorAlign.CENTER,
         style_class: getStyle(),
         style: "color: " + crStng.usColor
     });
 
     dsLabel = new St.Label({
-        text: '---',
+        text: '--',
         y_align: Clutter.ActorAlign.CENTER,
         style_class: getStyle(),
         style: "color: " + crStng.dsColor
     });
 
     tsLabel = new St.Label({
-        text: '---',
+        text: '--',
         y_align: Clutter.ActorAlign.CENTER,
         style_class: getStyle(),
         style: "color: " + crStng.tsColor
     });
 
     tdLabel = new St.Label({
-        text: '---',
+        text: '--',
         y_align: Clutter.ActorAlign.CENTER,
         style_class: getStyle(),
         style: "color: " + crStng.tdColor
