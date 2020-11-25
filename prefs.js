@@ -1,10 +1,9 @@
-const Gtk = imports.gi.Gtk;
-const Gdk = imports.gi.Gdk;
+const Gtk = imports.gi.Gtk,
+  Gdk = imports.gi.Gdk;
 
-const Extension = imports.misc.extensionUtils.getCurrentExtension();
-const Convenience = Extension.imports.convenience;
-
-const schema = "org.gnome.shell.extensions.netspeedsimplified";
+const Me = imports.misc.extensionUtils.getCurrentExtension(),
+  Convenience = Me.imports.convenience,
+  schema = "org.gnome.shell.extensions.netspeedsimplified";
 
 function init(){}
 
