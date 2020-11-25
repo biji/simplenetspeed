@@ -3,21 +3,13 @@ const Clutter = imports.gi.Clutter,
  St = imports.gi.St,
  Main = imports.ui.main,
  Gio = imports.gi.Gio,
- Lang = imports.lang,
  PanelMenu = imports.ui.panelMenu,
  Mainloop = imports.mainloop;
-
- const ExtensionUtils = imports.misc.extensionUtils;
- const Me = ExtensionUtils.getCurrentExtension();
- const Convenience = Me.imports.convenience;
-
-var toRestart;
-
-const schema = 'org.gnome.shell.extensions.netspeedsimplified';
-
-const ButtonName = "ShowNetSpeedButton";
-
-const rCConst=4; //Right Click 4 times to change Vertical Alignment
+ Me = imports.misc.extensionUtils.getCurrentExtension();
+ Convenience = Me.imports.convenience;
+ schema = 'org.gnome.shell.extensions.netspeedsimplified';
+ ButtonName = "ShowNetSpeedButton";
+ rCConst=4; //Right Click 4 times to toggle Vertical Alignment
 
 let settings, timeout,
   spaCe,
@@ -85,7 +77,7 @@ function nsPosAdv() {
 
 function speedToString(amount, rMode = 0) {
 
-    var speed_map = ["B", "KB", "MB", "GB"].map(
+    let speed_map = ["B", "KB", "MB", "GB"].map(
         (rMode == 1 && (crStng.mode == 1 || crStng.mode == 3 || crStng.mode == 4)) ? v => v : //KB
         (rMode == 1 && (crStng.mode == 0 || crStng.mode == 2)) ? v => v.toLowerCase() : //kb
         (crStng.mode == 0 || crStng.mode == 2) ? v => v.toLowerCase() + "/s" : //kb/s
@@ -104,7 +96,7 @@ function speedToString(amount, rMode = 0) {
     	return Number.isInteger(parseFloat(amnt.toFixed(digitsToFix)));
     }
 
-    var digits = ChkifInt(amount) ? 0 : //For Integer like 21.0
+    let digits = ChkifInt(amount) ? 0 : //For Integer like 21.0
      ((crStng.mode==4 || rMode !=0) && !ChkifInt(amount*10)) ? 2 /* For floats like 21.11 */ : 1 //For floats like 21.2
 
     return String(amount.toFixed(digits)) + " " + speed_map[unit];
@@ -254,7 +246,7 @@ function mouseEventHandler(widget, event) {
 }
 
 function parseStat() {
-    toRestart = settings.get_boolean('restartextension');
+    let toRestart = settings.get_boolean('restartextension');
     try {
         let input_file = Gio.file_new_for_path('/proc/net/dev');
         let fstream = input_file.read(null);
