@@ -88,36 +88,35 @@ function speedToString(amount, rMode = 0) {
 }
 
 // NetSpeed Components
-var usLabel, dsLabel, tsLabel, tdLabel;
-var usIcon, dsIcon, tsIcon, tdIcon;
+var usLabel, dsLabel, tsLabel, tdLabel, usIcon, dsIcon, tsIcon, tdIcon;
 
 function getStyle() {
     return ('forall size-' + String(crStng.fontmode));
 }
 function initNsLabels() {
     usLabel = new St.Label({
-        text: '---',
+        text: '--',
         y_align: Clutter.ActorAlign.CENTER,
         style_class: getStyle(),
         style: "color: " + crStng.usColor
     });
 
     dsLabel = new St.Label({
-        text: '---',
+        text: '--',
         y_align: Clutter.ActorAlign.CENTER,
         style_class: getStyle(),
         style: "color: " + crStng.dsColor
     });
 
     tsLabel = new St.Label({
-        text: '---',
+        text: '--',
         y_align: Clutter.ActorAlign.CENTER,
         style_class: getStyle(),
         style: "color: " + crStng.tsColor
     });
 
     tdLabel = new St.Label({
-        text: '---',
+        text: '--',
         y_align: Clutter.ActorAlign.CENTER,
         style_class: getStyle(),
         style: "color: " + crStng.tdColor
@@ -176,6 +175,8 @@ function initNs() {
         layout_manager: nsLayout,
         y_align: Clutter.ActorAlign.CENTER
     })
+ 
+   let verticalConstant = (crStng.isVertical) ? 1 : 0 ;
 
     //Attach the components to the grid.
     if (crStng.mode == 0 || crStng.mode == 1) {
@@ -183,26 +184,26 @@ function initNs() {
         nsLayout.attach(tsLabel, 1, 1, 1, 1);
 
         if (crStng.showTotalDwnld) {
-            if (crStng.isVertical){ nsLayout.attach(tdIcon, 0, 2, 1, 1);nsLayout.attach(tdLabel, 1, 2, 1, 1);} 
-            else {  nsLayout.attach(tdIcon, 2, 1, 1, 1);nsLayout.attach(tdLabel, 3, 1, 1, 1) };
+            nsLayout.attach(tdIcon, 2 - (2 *verticalConstant), verticalConstant + 1 , 1, 1);
+            nsLayout.attach(tdLabel, 3 - (2 *verticalConstant), verticalConstant + 1, 1, 1);
         }
     }
     else if (crStng.mode == 2 || crStng.mode == 3) {
         if (crStng.revIndicator) {
             nsLayout.attach(usIcon, 0, 1, 1, 1);
             nsLayout.attach(usLabel, 1, 1, 1, 1);
-            (crStng.isVertical) ? nsLayout.attach(dsLabel, 1, 2, 1, 1) : nsLayout.attach(dsLabel, 2, 1, 1, 1);
+            nsLayout.attach(dsLabel, 2 - verticalConstant, 1 + verticalConstant, 1, 1);
         }
         else {
             nsLayout.attach(dsIcon, 0, 1, 1, 1);
             nsLayout.attach(dsLabel, 1, 1, 1, 1);
-            if (crStng.isVertical) { nsLayout.attach(usIcon, 0, 2, 1, 1); nsLayout.attach(usLabel, 1, 2, 1, 1) }
-            else {nsLayout.attach(usIcon, 2, 1, 1, 1); nsLayout.attach(usLabel, 3, 1, 1, 1);}
+            nsLayout.attach(usIcon, (2 *verticalConstant) , verticalConstant + 1, 1, 1); 
+            nsLayout.attach(usLabel, (2 *verticalConstant) + 1, verticalConstant + 1, 1, 1)
         }
 
         if (crStng.showTotalDwnld) {
-            if (crStng.isVertical) { nsLayout.attach(tdIcon, 2, 2, 1, 1); nsLayout.attach(tdLabel, 3, 2, 1, 1) }
-            else { nsLayout.attach(tdIcon, 4, 1, 1, 1); nsLayout.attach(tdLabel, 5, 1, 1, 1); }
+            nsLayout.attach(tdIcon, 4 - (2 *verticalConstant), 1 + verticalConstant, 1, 1); 
+            nsLayout.attach(tdLabel, 5 - (2 *verticalConstant), 1 + verticalConstant, 1, 1)
         }
     }
     else {
