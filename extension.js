@@ -67,7 +67,7 @@ function nsPosAdv() {
 
 function speedToString(amount, rMode = 0) {
 
-    let speed_map = ["B", "KB", "MB", "GB"].map(
+    let speed_map = [" B", "KB", "MB", "GB"].map(
         (rMode == 1 && (crStng.mode == 1 || crStng.mode == 3 || crStng.mode == 4)) ? v => v : //KB
         (rMode == 1 && (crStng.mode == 0 || crStng.mode == 2)) ? v => v.toLowerCase() : //kb
         (crStng.mode == 0 || crStng.mode == 2) ? v => v.toLowerCase() + "/s" : //kb/s
@@ -82,50 +82,67 @@ function speedToString(amount, rMode = 0) {
         ++unit;
     }
 
-    function ChkifInt(amnt, digitsToFix = 1){
-    	return Number.isInteger(parseFloat(amnt.toFixed(digitsToFix)));
-    }
+    let digits = (crStng.mode==4 || rMode !=0) ? 2 /* For floats like 21.11 and total speed mode */ : 1 //For floats like 21.2
 
-    let digits = ((crStng.mode==4 || rMode !=0) && ChkifInt(amount)) ? 0 : //For Integer like 21.0
-     ((crStng.mode==4 || rMode !=0) && !ChkifInt(amount*10)) ? 2 /* For floats like 21.11 */ : 1 //For floats like 21.2
-
-    let spaceNum = 4 - Math.ceil(Math.round(100*Math.log(amount)/Math.log(10))/100); //This will give the number of digits that number have substracted by four
-
-    return " ".repeat(spaceNum) + amount.toFixed(digits) + " " + speed_map[unit];
+    return amount.toFixed(digits) + " " + speed_map[unit];
 }
 
 // NetSpeed Components
 var usLabel, dsLabel, tsLabel, tdLabel;
+var usIcon, dsIcon, tsIcon, tdIcon;
 
 function getStyle() {
     return ('forall size-' + String(crStng.fontmode));
 }
 function initNsLabels() {
     usLabel = new St.Label({
-        text: '--',
+        text: '---',
         y_align: Clutter.ActorAlign.CENTER,
         style_class: getStyle(),
         style: "color: " + crStng.usColor
     });
 
     dsLabel = new St.Label({
-        text: '--',
+        text: '---',
         y_align: Clutter.ActorAlign.CENTER,
         style_class: getStyle(),
         style: "color: " + crStng.dsColor
     });
 
     tsLabel = new St.Label({
-        text: '--',
+        text: '---',
         y_align: Clutter.ActorAlign.CENTER,
         style_class: getStyle(),
         style: "color: " + crStng.tsColor
     });
 
     tdLabel = new St.Label({
-        text: '--',
+        text: '---',
         y_align: Clutter.ActorAlign.CENTER,
         style_class: getStyle(),
+        style: "color: " + crStng.tdColor
+    });
+    usIcon = new St.Label({
+        text: DIcons(1),
+        y_align: Clutter.ActorAlign.CENTER,
+        style: "color: " + crStng.usColor
+    });
+
+    dsIcon = new St.Label({
+        text: DIcons(0),
+        y_align: Clutter.ActorAlign.CENTER,
+        style: "color: " + crStng.dsColor
+    });
+
+    tsIcon = new St.Label({
+        text: "⇅",
+        y_align: Clutter.ActorAlign.CENTER,
+        style: "color: " + crStng.tsColor
+    });
+
+    tdIcon = new St.Label({
+        text: DIcons(2),
+        y_align: Clutter.ActorAlign.CENTER,
         style: "color: " + crStng.tdColor
     });
 }
@@ -162,27 +179,34 @@ function initNs() {
 
     //Attach the components to the grid.
     if (crStng.mode == 0 || crStng.mode == 1) {
+        nsLayout.attach(tsIcon, 0, 1, 1, 1);
         nsLayout.attach(tsLabel, 1, 1, 1, 1);
 
         if (crStng.showTotalDwnld) {
-            (crStng.isVertical) ? nsLayout.attach(tdLabel, 1, 2, 1, 1) : nsLayout.attach(tdLabel, 2, 1, 1, 1);
+            if (crStng.isVertical){ nsLayout.attach(tdIcon, 0, 2, 1, 1);nsLayout.attach(tdLabel, 1, 2, 1, 1);} 
+            else {  nsLayout.attach(tdIcon, 2, 1, 1, 1);nsLayout.attach(tdLabel, 3, 1, 1, 1) };
         }
     }
     else if (crStng.mode == 2 || crStng.mode == 3) {
         if (crStng.revIndicator) {
+            nsLayout.attach(usIcon, 0, 1, 1, 1);
             nsLayout.attach(usLabel, 1, 1, 1, 1);
             (crStng.isVertical) ? nsLayout.attach(dsLabel, 1, 2, 1, 1) : nsLayout.attach(dsLabel, 2, 1, 1, 1);
         }
         else {
+            nsLayout.attach(dsIcon, 0, 1, 1, 1);
             nsLayout.attach(dsLabel, 1, 1, 1, 1);
-            (crStng.isVertical) ? nsLayout.attach(usLabel, 1, 2, 1, 1) : nsLayout.attach(usLabel, 2, 1, 1, 1);
+            if (crStng.isVertical) { nsLayout.attach(usIcon, 0, 2, 1, 1); nsLayout.attach(usLabel, 1, 2, 1, 1) }
+            else {nsLayout.attach(usIcon, 2, 1, 1, 1); nsLayout.attach(usLabel, 3, 1, 1, 1);}
         }
 
         if (crStng.showTotalDwnld) {
-            (crStng.isVertical) ? nsLayout.attach(tdLabel, 2, 2, 1, 1) : nsLayout.attach(tdLabel, 3, 1, 1, 1);
+            if (crStng.isVertical) { nsLayout.attach(tdIcon, 2, 2, 1, 1); nsLayout.attach(tdLabel, 3, 2, 1, 1) }
+            else { nsLayout.attach(tdIcon, 4, 1, 1, 1); nsLayout.attach(tdLabel, 5, 1, 1, 1); }
         }
     }
     else {
+        nsLayout.attach(tdIcon,  0, 1, 1, 1);
         nsLayout.attach(tdLabel, 1, 1, 1, 1);
     }
 
@@ -270,8 +294,7 @@ function parseStat() {
         if (lastCount === 0) lastCount = count;
         if (lastCountUp === 0) lastCountUp = countUp;
 
-        let speed = (count - lastCount) / crStng.refreshTime, speedUp = (countUp - lastCountUp) / crStng.refreshTime, 
-        dot = "⇅";
+        let speed = (count - lastCount) / crStng.refreshTime, speedUp = (countUp - lastCountUp) / crStng.refreshTime;
 
         if (resetNextCount == true) {
             resetNextCount = false;
@@ -281,12 +304,12 @@ function parseStat() {
         (speed || speedUp) ? h = 0 : h++
 
         if(h<=8) {
-            updateNsLabels(DIcons(1) + " " + speedToString(speedUp),
-            DIcons(0) + " " + speedToString(speed - speedUp),
-            dot + " " + speedToString(speed),
-            DIcons(2) + " " + speedToString(count - resetCount, 1));
+            updateNsLabels(" " + speedToString(speedUp),
+            " " + speedToString(speed - speedUp),
+            " " + speedToString(speed),
+            " " + speedToString(count - resetCount, 1));
         }
-        else updateNsLabels('--', '--', '--', DIcons(2) + " " + speedToString(count - resetCount, 1));
+        else updateNsLabels('--', '--', '--', " " + speedToString(count - resetCount, 1));
 
         lastCount = count;
         lastCountUp = countUp;
