@@ -73,7 +73,7 @@ function speedToString(amount, rMode = 0) {
         (crStng.mode == 0 || crStng.mode == 2) ? v => v.toLowerCase() + "/s" : //kb/s
         (crStng.mode == 1 || crStng.mode == 3) ? v => v + "/s" : v=>v); //KB/s
     
-    if (amount === 0) return "   0.0 "  + speed_map[0];
+    if (amount === 0) return "  0.0 "  + speed_map[0];
     if (crStng.mode == 0 || crStng.mode == 2) amount = amount * 8;
 
     let unit = 0;
@@ -84,14 +84,16 @@ function speedToString(amount, rMode = 0) {
 
     let digits = (crStng.mode==4 || rMode !=0) ? 2 /* For floats like 21.11 and total speed mode */ : 1 //For floats like 21.2
 
-    return amount.toFixed(digits) + " " + speed_map[unit];
+	let spaceNum = 3 - Math.ceil(Math.log10(amount +1));
+
+    return " ".repeat(spaceNum) + amount.toFixed(digits) + " " + speed_map[unit];
 }
 
 // NetSpeed Components
 var usLabel, dsLabel, tsLabel, tdLabel, usIcon, dsIcon, tsIcon, tdIcon;
 
-function getStyle() {
-    return ('forall size-' + String(crStng.fontmode));
+function getStyle(isIcon = false) {
+	return (isIcon) ? 'size-' + (String(crStng.fontmode)) : ('forall size-' + String(crStng.fontmode))
 }
 function initNsLabels() {
     usLabel = new St.Label({
@@ -124,24 +126,28 @@ function initNsLabels() {
     usIcon = new St.Label({
         text: DIcons(1),
         y_align: Clutter.ActorAlign.CENTER,
+        style_class: getStyle(true),
         style: "color: " + crStng.usColor
     });
 
     dsIcon = new St.Label({
         text: DIcons(0),
         y_align: Clutter.ActorAlign.CENTER,
+        style_class: getStyle(true),
         style: "color: " + crStng.dsColor
     });
 
     tsIcon = new St.Label({
         text: "⇅",
         y_align: Clutter.ActorAlign.CENTER,
+        style_class: getStyle(true),
         style: "color: " + crStng.tsColor
     });
 
     tdIcon = new St.Label({
         text: DIcons(2),
         y_align: Clutter.ActorAlign.CENTER,
+        style_class: getStyle(true),
         style: "color: " + crStng.tdColor
     });
 }
@@ -348,3 +354,4 @@ function disable() {
     nsButton.destroy();
     nsButton = null;
 }
+
