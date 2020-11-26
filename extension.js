@@ -184,26 +184,27 @@ function initNs() {
         nsLayout.attach(tsLabel, 1, 1, 1, 1);
 
         if (crStng.showTotalDwnld) {
-            nsLayout.attach(tdIcon, 2 - (2 *verticalConstant), verticalConstant + 1 , 1, 1);
-            nsLayout.attach(tdLabel, 3 - (2 *verticalConstant), verticalConstant + 1, 1, 1);
+            nsLayout.attach(tdIcon,  2 - 2*verticalConstant, 1 + verticalConstant, 1, 1);
+            nsLayout.attach(tdLabel, 3 - 2*verticalConstant, 1 + verticalConstant, 1, 1);
         }
     }
     else if (crStng.mode == 2 || crStng.mode == 3) {
         if (crStng.revIndicator) {
-            nsLayout.attach(usIcon, 0, 1, 1, 1);
+            nsLayout.attach(usIcon,  0, 1, 1, 1);
             nsLayout.attach(usLabel, 1, 1, 1, 1);
-            nsLayout.attach(dsLabel, 2 - verticalConstant, 1 + verticalConstant, 1, 1);
+            nsLayout.attach(dsIcon,  2 - 2*verticalConstant, 1 + verticalConstant, 1, 1); 
+            nsLayout.attach(dsLabel, 3 - 2*verticalConstant, 1 + verticalConstant, 1, 1);
         }
         else {
-            nsLayout.attach(dsIcon, 0, 1, 1, 1);
+            nsLayout.attach(dsIcon,  0, 1, 1, 1);
             nsLayout.attach(dsLabel, 1, 1, 1, 1);
-            nsLayout.attach(usIcon, (2 *verticalConstant) , verticalConstant + 1, 1, 1); 
-            nsLayout.attach(usLabel, (2 *verticalConstant) + 1, verticalConstant + 1, 1, 1)
+            nsLayout.attach(usIcon,  2 - 2*verticalConstant, 1 + verticalConstant, 1, 1); 
+            nsLayout.attach(usLabel, 3 - 2*verticalConstant, 1 + verticalConstant, 1, 1);
         }
 
         if (crStng.showTotalDwnld) {
-            nsLayout.attach(tdIcon, 4 - (2 *verticalConstant), 1 + verticalConstant, 1, 1); 
-            nsLayout.attach(tdLabel, 5 - (2 *verticalConstant), 1 + verticalConstant, 1, 1)
+            nsLayout.attach(tdIcon,  5 - 2*verticalConstant, 1 + verticalConstant, 1, 1); 
+            nsLayout.attach(tdLabel, 6 - 2*verticalConstant, 1 + verticalConstant, 1, 1);
         }
     }
     else {
