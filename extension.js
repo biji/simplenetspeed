@@ -12,12 +12,10 @@ const Clutter = imports.gi.Clutter,
  rCConst=4; //Right Click 4 times to toggle Vertical Alignment
 
 let settings, timeout,
-  spaCe,
   lastCount = 0, lastSpeed = 0, lastCountUp = 0,
   resetNextCount=false, resetCount=0,
-  newLine, h=8, tTime=0;
-
-var extRaw;
+  hideCount=8,
+  B_UNITS;
 
 // Settings
 var crStng; //Initialized in enable()
@@ -32,13 +30,18 @@ function fetchSettings() {
         chooseIconSet: settings.get_int('chooseiconset'),
         revIndicator: settings.get_boolean('reverseindicators'),
         lckMuseAct: settings.get_boolean('lockmouseactions'),
+        hideInd: settings.get_boolean('hideindicator'),
+        shortenUnits: settings.get_boolean('shortenunits'),
         nsPos: settings.get_int('wpos'),
         nsPosAdv: settings.get_int('wposext'),
+        cusFont: settings.get_string('customfont'),
         usColor: settings.get_string('uscolor'),
         dsColor: settings.get_string('dscolor'),
         tsColor: settings.get_string('tscolor'),
         tdColor: settings.get_string('tdcolor')
     };
+
+    B_UNITS = (crStng.shortenUnits) ? ['B', 'K', 'M', 'G', 'T', 'P', 'E', 'Z'] : [' B', 'KB', 'MB', 'GB', 'TB', 'PB', 'EB', 'ZB'] ;
 
     initNs();
 }
@@ -52,7 +55,7 @@ function pushSettings() {
     initNs();
 }
 
-// Helper Functions
+//Helper Functions
 function DIcons(iNum) {
     return [  ["🡳","🡱","Σ"] , ["↓","↑","∑"]  ][crStng.chooseIconSet][iNum];
 }
@@ -67,7 +70,7 @@ function nsPosAdv() {
 
 function speedToString(amount, rMode = 0) {
 
-    let speed_map = [" B", "KB", "MB", "GB"].map(
+    let speed_map = B_UNITS.map(
         (rMode == 1 && (crStng.mode == 1 || crStng.mode == 3 || crStng.mode == 4)) ? v => v : //KB
         (rMode == 1 && (crStng.mode == 0 || crStng.mode == 2)) ? v => v.toLowerCase() : //kb
         (crStng.mode == 0 || crStng.mode == 2) ? v => v.toLowerCase() + "/s" : //kb/s
@@ -85,6 +88,7 @@ function speedToString(amount, rMode = 0) {
     let digits = (crStng.mode==4 || rMode !=0) ? 2 /* For floats like 21.11 and total speed mode */ : 1 //For floats like 21.2
 
 	let spaceNum = 3 - Math.ceil(Math.log10(amount +1));
+	spaceNum <0 ? spaceNum = 0 : null
 
     return " ".repeat(spaceNum) + amount.toFixed(digits) + " " + speed_map[unit];
 }
@@ -100,28 +104,28 @@ function initNsLabels() {
         text: '--',
         y_align: Clutter.ActorAlign.CENTER,
         style_class: getStyle(),
-        style: "color: " + crStng.usColor
+        style: "color: " + crStng.usColor + "; font-family: " + crStng.cusFont
     });
 
     dsLabel = new St.Label({
         text: '--',
         y_align: Clutter.ActorAlign.CENTER,
         style_class: getStyle(),
-        style: "color: " + crStng.dsColor
+        style: "color: " + crStng.dsColor + "; font-family: " + crStng.cusFont
     });
 
     tsLabel = new St.Label({
         text: '--',
         y_align: Clutter.ActorAlign.CENTER,
         style_class: getStyle(),
-        style: "color: " + crStng.tsColor
+        style: "color: " + crStng.tsColor + "; font-family: " + crStng.cusFont
     });
 
     tdLabel = new St.Label({
         text: '--',
         y_align: Clutter.ActorAlign.CENTER,
         style_class: getStyle(),
-        style: "color: " + crStng.tdColor
+        style: "color: " + crStng.tdColor + "; font-family: " + crStng.cusFont
     });
     usIcon = new St.Label({
         text: DIcons(1),
@@ -165,7 +169,7 @@ var nsButton = null, nsActor = null, nsLayout = null;
 function initNs() {
 
     //Destroy the existing button.
-    nsButton != null ? nsButton.destroy() : null;
+    nsDestroy();
 
     //Initialize component Labels
     initNsLabels();
@@ -225,6 +229,11 @@ function initNs() {
     nsButton.add_child(nsActor);
 
     Main.panel.addToStatusArea(ButtonName, nsButton, nsPosAdv(), nsPos());
+}
+
+function nsDestroy() {
+    nsButton != null ? nsButton.destroy() : null
+    nsButton = null;
 }
 
 // Mouse Event Handler
@@ -309,15 +318,25 @@ function parseStat() {
             resetCount = count;
         }
         
-        (speed || speedUp) ? h = 0 : h++
+        (speed || speedUp) ? hideCount = 0 : hideCount <= 8 ? hideCount++ : null
 
-        if(h<=8) {
+        if(hideCount<=8) {
+            nsButton == null ? initNs() : null
+
             updateNsLabels(" " + speedToString(speedUp),
             " " + speedToString(speed - speedUp),
             " " + speedToString(speed),
             " " + speedToString(count - resetCount, 1));
         }
-        else updateNsLabels('--', '--', '--', " " + speedToString(count - resetCount, 1));
+        else {
+            if (crStng.hideInd) {
+                nsDestroy();
+            }
+            else {
+                nsButton == null ? initNs() : null
+                updateNsLabels('--', '--', '--', speedToString(count - resetCount, 1));
+            }
+        }
 
         lastCount = count;
         lastCountUp = countUp;
@@ -351,7 +370,6 @@ function enable() {
 
 function disable() {
     Mainloop.source_remove(timeout);
-    nsButton.destroy();
-    nsButton = null;
+    nsDestroy();
 }
 

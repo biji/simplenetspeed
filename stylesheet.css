@@ -1,9 +1,8 @@
 /* For all elements */
 .forall{
     text-align: right;
-    min-width: 6em;
-    margin: 0 10px;
-    font-family : 'Monospace';
+    min-width: 6.5em;
+    margin: 0 8px;
 }
 
 /* Font change on middle click*/
