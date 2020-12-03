@@ -16,7 +16,6 @@ install: convenience.js extension.js metadata.json prefs.js stylesheet.css schem
 	#Optional files
 	cp LICENSE ${EXT_HOME} 2>/dev/null || true
 	cp README.md ${EXT_HOME} 2>/dev/null || true
-	cp screenshoot.png ${EXT_HOME} 2>/dev/null || true
 	cp schemas/org.gnome.shell.extensions.netspeedsimplified.gschema.xml ${EXT_HOME}/schemas 2>/dev/null || true
 
 	#Reloading shell; Sending SIGHUP signal to gnome-shell (equivalent to alt + f2 ; r ; enter)

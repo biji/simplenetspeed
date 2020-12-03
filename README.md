@@ -1,4 +1,4 @@
-<p align="center"><a href="https://extensions.gnome.org/extension/3724/net-speed-simplified/"><img src="https://user-images.githubusercontent.com/41370460/97136201-7d432980-1778-11eb-9c65-4c801a7e8e56.png" height=80px alt="NSS Logo"/></a></p>
+<p align="center"><a href="https://extensions.gnome.org/extension/3724/net-speed-simplified/"><img src="https://raw.githubusercontent.com/prateekmedia/netspeedsimplified/main/images/icon.png" height=80px alt="NSS Logo"/></a></p>
 <h1 align="center">Net speed Simplified</h1>
 <h5 align="center"><i>Gnome extension to show network speed</i></h5>
 
@@ -6,7 +6,7 @@
 
 > Forked from : [biji@gnome/simplenetspeed](https://github.com/biji/simplenetspeed)
 
-<p align="center"><img src='https://raw.githubusercontent.com/prateekmedia/netspeedsimplified/main/screenshoot.png' width="500px"  alt="Screenshot"/>
+<p align="center"><img src='https://raw.githubusercontent.com/prateekmedia/netspeedsimplified/main/images/screenshoot.png' width="500px"  alt="Screenshot"/>
 
 *Screenshots*
 
