@@ -28,7 +28,7 @@ Prefs.prototype =
     
     buildPrefsWidget: function()
     {
-    let thset = this.settings;
+    let thset = this.settings;		
     
     function newGtkBox(){
       return new Gtk.Box({orientation: Gtk.Orientation.HORIZONTAL, margin_top : 10, margin_bottom : 10});
@@ -160,8 +160,26 @@ Prefs.prototype =
   	let frame = new Gtk.ScrolledWindow();
   	let label = new Gtk.Label({ label: "<b>General Settings</b>", use_markup: true, xalign:0});
   	let vbox = new Gtk.Box({ orientation: Gtk.Orientation.VERTICAL, margin_left: 20});
+  	let resetBtn = new Gtk.Button ({label: "Restore Defaults"});;
   	let mfooter = new Gtk.Label({ label: "<b>Pro Tip : Hover over any Label To know more about it</b>",use_markup: true, margin_top: 20});
-
+  	
+	resetBtn.connect ("clicked", ()=>{
+		let strArray = ["customfont", "uscolor", "dscolor", "tscolor", "tdcolor"];
+		let intArray = ["wpos", "wposext", "refreshtime", "mode", "fontmode", "chooseiconset",];
+		let boolArray = ["isvertical", "togglebool", "reverseindicators", "lockmouseactions", "hideindicator", "shortenunits"];
+		for (i in strArray){
+		  thset.set_string(strArray[i], thset.get_default_value(strArray[i]).unpack());
+      		} 
+		for (j in intArray){
+		  thset.set_int(intArray[j], thset.get_default_value(intArray[j]).unpack());
+      		} 
+		for (k in boolArray){
+		  thset.set_boolean(boolArray[k], thset.get_default_value(boolArray[k]).unpack());
+      		} 
+		thset.set_boolean('restartextension' , true);
+		frame.destroy();
+	});
+	
 	vbox.add(label);
 	//For Position
 	let hboxWPos = newGtkBox();
@@ -248,6 +266,8 @@ Prefs.prototype =
 	//Total Download Color 
 	let tdColorButton = newGtkBox();
 	vBoxAddColorButton(tdColorButton, "Total Download Color", "tdcolor", "Select the total download color");
+	
+	vbox.add(resetBtn);
 	vbox.add(mfooter);
 	frame.add(vbox);
 	frame.show_all();
