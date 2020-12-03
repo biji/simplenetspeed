@@ -55,6 +55,9 @@ If you faced an **issue** then you can **[file an issue here](https://github.com
 
 - **Middle click to change font size**
 
+#### *Special Thanks to*
+- [biji](https://github.com/biji) for Creating this awesome Extension  
+- [m0hithreddy](https://github.com/m0hithreddy) for his support in rewriting extension.js with Clutter and other features..
 
 <h2 align="center">Installing Manually</h2>   
   
