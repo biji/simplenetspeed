@@ -21,6 +21,7 @@
 - [x] Add *Use Custom Font* button in [Preference](#Feature-Highlights-for-Preferences)
 - [x] Add *Hide when Disconnected* button in [Preference](#Feature-Highlights-for-Preferences)
 - [x] Add *Use Shorten Units* button in [Preference](#Feature-Highlights-for-Preferences)
+- [x] Add *Restore Defaults* button in [Preference](#Feature-Highlights-for-Preferences)
 
 #### Features
 - [x] Cleaner UI
