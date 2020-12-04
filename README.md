@@ -4,8 +4,6 @@
 
 [<img src="https://raw.githubusercontent.com/andyholmes/gnome-shell-extensions-badge/master/get-it-on-ego.svg?sanitize=true" height="100" alt="Get it on GNOME Extensions">](https://extensions.gnome.org/extension/3724/net-speed-simplified/) or [Install Manually](#installing-manually)
 
-> Forked from : [biji@gnome/simplenetspeed](https://github.com/biji/simplenetspeed)
-
 <p align="center"><img src='https://raw.githubusercontent.com/prateekmedia/netspeedsimplified/main/images/screenshoot.png' width="500px"  alt="Screenshot"/>
 
 *Screenshots*</p>
@@ -56,8 +54,8 @@ If you faced an **issue** then you can **[file an issue here](https://github.com
 - **Middle click to change font size**
 
 #### *Special Thanks to*
-- [biji](https://github.com/biji) for Creating this awesome Extension  
-- [m0hithreddy](https://github.com/m0hithreddy) for his support in rewriting extension.js with Clutter and other features..
+- [biji](https://github.com/biji) for Creating [simplenetspeed](https://github.com/biji/simplenetspeed)
+- [m0hithreddy](https://github.com/m0hithreddy) for his support in rewriting extension.js with Clutter, Adopting Make build system and more..
 
 <h2 align="center">Installing Manually</h2>   
   
