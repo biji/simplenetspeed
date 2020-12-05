@@ -371,4 +371,3 @@ function disable() {
     Mainloop.source_remove(timeout);
     nsDestroy();
 }
-
