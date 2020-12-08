@@ -89,17 +89,24 @@ Prefs.prototype =
     }
 
     function vBoxAddTgglBtn(whichHbox, getLbl, getBool, getTooTip = "", func){
-      boolComp = (thset.get_boolean(getBool) == thset.get_default_value(getBool).unpack());
-      getLbl =  boolComp ? getLbl :
-      `<i>${getLbl}</i>`
+      boolComp = true;
+      if (func ==undefined){
+      	boolComp = (thset.get_boolean(getBool) == thset.get_default_value(getBool).unpack());
+		getLbl =  boolComp ? getLbl :
+		`<i>${getLbl}</i>`
+      }
       tootext = boolComp ? "" : "The Value is Changed"
       whichLbl = new Gtk.Label({label: getLbl, use_markup: true, xalign: 0, tooltip_text: getTooTip });  
-      whichVlue = new Gtk.Switch({active: thset.get_boolean(getBool), tooltip_text: tootext });
+      whichVlue = new Gtk.Switch({
+      	active: getBool ? thset.get_boolean(getBool) : false, tooltip_text: tootext 
+      	});
       whichVlue.connect('notify::active', (widget) => {
-        thset.set_boolean(getBool, widget.active);
         if (func != undefined){ func(widget.active); } 
-		else { thset.set_boolean('restartextension' , true); }
-      })
+		else { 
+			thset.set_boolean(getBool, widget.active);
+      		thset.set_boolean('restartextension' , true);
+      	}
+        })
 
       whichHbox.pack_start(whichLbl, true, true, 0);
       whichHbox.add(whichVlue);
@@ -213,14 +220,6 @@ Prefs.prototype =
 	let hboxIconset = newGtkBox();
 	vBoxAddSeleCt("chooseiconset", hboxIconset, "Choose Icons Set", [" 🡳,  🡱,  Σ ", " ↓,  ↑,  ∑ "], "Choose which icon set to display");
 
-	//For Reversing the download and upload indicators
-	let hboxRevInd = newGtkBox();
-	vBoxAddTgglBtn(hboxRevInd, "Show Upload First", "reverseindicators", "Enabling it will reverse the upload and download speed indicators");
-
-	//For Lock Mouse Actions
-	let hboxLckMuseAct = newGtkBox();
-	vBoxAddTgglBtn(hboxLckMuseAct, "Lock Mouse Actions", "lockmouseactions", "Enabling it will Lock Mouse Actions");
-	
 	//For Hide When Disconnected
 	let hboxHideInd = newGtkBox();
 	vBoxAddTgglBtn(hboxHideInd, "Hide When Disconnected", "hideindicator", "Enabling it will Hide Indicator when disconnected");
@@ -229,27 +228,34 @@ Prefs.prototype =
 	let hboxShUni = newGtkBox();
 	vBoxAddTgglBtn(hboxShUni, "Shorten Units", "shortenunits", "Enabling it will result in shorten units like K instead of KB");
 	
-	//For Custom Font name
-	let hboxCustFont = newGtkBox();
-	vBoxAddEntry(hboxCustFont, "Custom Font Name", "customfont", "Enter the font name you want, you can also write style here for all elements except indicators")
-	
   //Colors
 	let hboxColor = newGtkBox();
-	function onColorToggle(widget){
+	function showOrHide(widget){
+		let advWidgets = [hboxRevInd, hboxLckMuseAct, hboxCustFont, usColorButton, dsColorButton, tsColorButton, tdColorButton];
 	  	if (widget){
-  		usColorButton.show();
- 		dsColorButton.show();
- 		tsColorButton.show();
- 		tdColorButton.show();
+	  		for (i in advWidgets){
+	  			advWidgets[i].show();
+	  		}
   	} else {
-  		usColorButton.hide();
- 		dsColorButton.hide();
- 		tsColorButton.hide();
- 		tdColorButton.hide();
+	  		for (i in advWidgets){
+	  			advWidgets[i].hide();
+	  		}
   	}
   }
+	
+	vBoxAddTgglBtn(hboxColor, "Show Advanced Options", "", "Enabling it will Show all Color customizations", showOrHide);
   
-	vBoxAddTgglBtn(hboxColor, "Show Color Customization", "colortggle", "Enabling it will Show all Color customizations", onColorToggle);
+	//For Reversing the download and upload indicators
+	let hboxRevInd = newGtkBox();
+	vBoxAddTgglBtn(hboxRevInd, "Show Upload First", "reverseindicators", "Enabling it will reverse the upload and download speed indicators");
+
+	//For Lock Mouse Actions
+	let hboxLckMuseAct = newGtkBox();
+	vBoxAddTgglBtn(hboxLckMuseAct, "Lock Mouse Actions", "lockmouseactions", "Enabling it will Lock Mouse Actions");
+	
+	//For Custom Font name
+	let hboxCustFont = newGtkBox();
+	vBoxAddEntry(hboxCustFont, "Custom Font Name", "customfont", "Enter the font name you want, you can also write style here for all elements except indicators");
 
 	//Upload Speed Color 
 	let usColorButton = newGtkBox();
@@ -271,7 +277,7 @@ Prefs.prototype =
 	vbox.add(mfooter);
 	frame.add(vbox);
 	frame.show_all();
-	onColorToggle(thset.get_boolean("colortggle"));
+	showOrHide(false);
 
 	return frame;
   }
