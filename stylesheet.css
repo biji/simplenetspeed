@@ -2,6 +2,7 @@
 .forall{
     text-align: right;
     margin: 0 8px;
+    min-width: 6.5em;
 }
 
 /* Font change on middle click*/
