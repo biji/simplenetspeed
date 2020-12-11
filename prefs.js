@@ -57,9 +57,9 @@ Prefs.prototype =
           });
         whichHbox.pack_start(whichLbl, true, true, 0);
         whichHbox.add(whichSpinBtn);
+        whichHbox.add(new Gtk.Separator({visible : true}));
 
         vbox.add(whichHbox);
-        vbox.add(new Gtk.Separator({visible : true}));
     }
     
     function vBoxAddSeleCt(getInt, whichHbox, getLbl, aRray = [], getTooTip = ""){
@@ -83,9 +83,9 @@ Prefs.prototype =
       })
       whichHbox.add(whichLbl);
       whichHbox.pack_end(whichVlue, true, true, 0);
+      whichHbox.add(new Gtk.Separator({visible : true}));
 
       vbox.add(whichHbox);
-      vbox.add(new Gtk.Separator({visible : true}));
     }
 
     function vBoxAddTgglBtn(whichHbox, getLbl, getBool, getTooTip = "", func){
@@ -110,9 +110,9 @@ Prefs.prototype =
 
       whichHbox.pack_start(whichLbl, true, true, 0);
       whichHbox.add(whichVlue);
+        whichHbox.add(new Gtk.Separator({visible : true}));
 
       vbox.add(whichHbox);
-      vbox.add(new Gtk.Separator({visible : true}));
     }
 
     function vBoxAddColorButton(whichHbox, getLbl, getColor, getToolTip = "") {
@@ -139,9 +139,9 @@ Prefs.prototype =
 
       whichHbox.pack_start(whichLbl, true, true, 0);
       whichHbox.add(colorButton);
+      whichHbox.add(new Gtk.Separator({visible : true}));
 
       vbox.add(whichHbox);
-      vbox.add(new Gtk.Separator({visible : true}));
     }
 
     function vBoxAddEntry(whichHbox, getLbl, getString, getTooTip = "", func){
@@ -159,9 +159,9 @@ Prefs.prototype =
 
       whichHbox.pack_start(whichLbl, true, true, 0);
       whichHbox.add(whichVlue);
+      whichHbox.add(new Gtk.Separator({visible : true}));
 
       vbox.add(whichHbox);
-      vbox.add(new Gtk.Separator({visible : true}));
     }
     
   	let frame = new Gtk.ScrolledWindow();
@@ -277,6 +277,8 @@ Prefs.prototype =
 	vbox.add(mfooter);
 	frame.add(vbox);
 	frame.show_all();
+        frame.connect('destroy', main_quit);
+
 	showOrHide(false);
 
 	return frame;
