@@ -30,6 +30,7 @@ function fetchSettings() {
         chooseIconSet: settings.get_int('chooseiconset'),
         revIndicator: settings.get_boolean('reverseindicators'),
         lckMuseAct: settings.get_boolean('lockmouseactions'),
+        cusFont: settings.get_string('customfont'),
         hideInd: settings.get_boolean('hideindicator'),
         shortenUnits: settings.get_boolean('shortenunits'),
         nsPos: settings.get_int('wpos'),
@@ -103,28 +104,28 @@ function initNsLabels() {
         text: '--',
         y_align: Clutter.ActorAlign.CENTER,
         style_class: getStyle(),
-        style: "color: " + crStng.usColor
+        style: "min-width: 6.5em;color: " + crStng.usColor + "; font-family: " + crStng.cusFont
     });
 
     dsLabel = new St.Label({
         text: '--',
         y_align: Clutter.ActorAlign.CENTER,
         style_class: getStyle(),
-        style: "color: " + crStng.dsColor
+        style: "min-width: 6.5em;color: " + crStng.dsColor + "; font-family: " + crStng.cusFont
     });
 
     tsLabel = new St.Label({
         text: '--',
         y_align: Clutter.ActorAlign.CENTER,
         style_class: getStyle(),
-        style: "color: " + crStng.tsColor
+        style: "min-width: 6.5em;color: " + crStng.tsColor + "; font-family: " + crStng.cusFont
     });
 
     tdLabel = new St.Label({
         text: '--',
         y_align: Clutter.ActorAlign.CENTER,
         style_class: getStyle(),
-        style: "color: " + crStng.tdColor
+        style: "min-width: 6.5em;color: " + crStng.tdColor + "; font-family: " + crStng.cusFont
     });
     usIcon = new St.Label({
         text: DIcons(1),
