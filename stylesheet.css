@@ -1,9 +1,7 @@
 /* For all elements */
 .forall{
     text-align: right;
-    min-width: 7em;
     margin: 0 8px;
-    font-family : 'Monospace';
 }
 
 /* Font change on middle click*/
