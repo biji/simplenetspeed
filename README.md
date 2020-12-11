@@ -56,6 +56,7 @@ If you faced an **issue** then you can **[file an issue here](https://github.com
 #### *Special Thanks to*
 - [biji](https://github.com/biji) for Creating [simplenetspeed](https://github.com/biji/simplenetspeed)
 - [m0hithreddy](https://github.com/m0hithreddy) for his support in rewriting extension.js with Clutter, Adopting Make build system and more..
+[Know More](https://github.com/prateekmedia/netspeedsimplified/graphs/contributors)
 
 <h2 align="center">Installing Manually</h2>   
   
