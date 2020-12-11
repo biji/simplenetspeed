@@ -30,139 +30,135 @@ Prefs.prototype =
     {
     let thset = this.settings;		
     
-    function newGtkBox(){
-      return new Gtk.Box({orientation: Gtk.Orientation.HORIZONTAL, margin_top : 10, margin_bottom : 10});
-    }
+	function newGtkBox(){
+		return new Gtk.Box({orientation: Gtk.Orientation.HORIZONTAL, margin_top : 10, margin_bottom : 10});
+	}
 
-    function vBoxSpinBtn(getDouble, whichHbox, getLbl = "", getTooTip = "", lwer , uper, stpInc = 1, digs = 0, nume = true, pgeInc = 1, pgeSiz = 0, clmrate = 1){
-        boolComp = (thset.get_double(getDouble) === thset.get_default_value(getDouble).unpack());
-        getLbl =  boolComp ? getLbl :
-          `<i>${getLbl}</i>`
-        whichLbl = new Gtk.Label({label: getLbl, use_markup: true, xalign: 0, tooltip_text: getTooTip });  
-      whichSpinBtn = new Gtk.SpinButton({
-        adjustment: new Gtk.Adjustment({
-          lower: lwer, upper: uper, step_increment: stpInc, page_increment: pgeInc, page_size: pgeSiz 
-        }),
-        climb_rate: clmrate,
-        digits: digs,
-        numeric: nume,
-        });
-        whichSpinBtn.set_value(thset.get_double(getDouble));
-        whichSpinBtn.connect('value-changed', () => {
-          this.rTValue = parseFloat(whichSpinBtn.get_value().toFixed(1));
-          if(thset.get_double(getDouble) !== this.rTValue){
-            thset.set_double(getDouble , this.rTValue);
-            thset.set_boolean('restartextension' , true);
-            }
-          });
-        whichHbox.pack_start(whichLbl, true, true, 0);
-        whichHbox.add(whichSpinBtn);
-        whichHbox.add(new Gtk.Separator({visible : true}));
+	function vBoxSpinBtn(getDouble, whichHbox, getLbl = "", getTooTip = "", lwer , uper, stpInc = 1, digs = 0, nume = true, pgeInc = 1, pgeSiz = 0, clmrate = 1){
+		boolComp = (thset.get_double(getDouble) === thset.get_default_value(getDouble).unpack());
+		getLbl =  boolComp ? getLbl :
+		  `<i>${getLbl}</i>`
+		whichLbl = new Gtk.Label({label: getLbl, use_markup: true, xalign: 0, tooltip_text: getTooTip });  
+		whichSpinBtn = new Gtk.SpinButton({
+		adjustment: new Gtk.Adjustment({
+		  lower: lwer, upper: uper, step_increment: stpInc, page_increment: pgeInc, page_size: pgeSiz 
+		}),
+		climb_rate: clmrate,
+		digits: digs,
+		numeric: nume,
+		});
+		whichSpinBtn.set_value(thset.get_double(getDouble));
+		whichSpinBtn.connect('value-changed', () => {
+		  this.rTValue = parseFloat(whichSpinBtn.get_value().toFixed(1));
+		  if(thset.get_double(getDouble) !== this.rTValue){
+		    thset.set_double(getDouble , this.rTValue);
+		    thset.set_boolean('restartextension' , true);
+		    }
+		  });
+		whichHbox.pack_start(whichLbl, true, true, 0);
+		whichHbox.add(whichSpinBtn);
 
-        vbox.add(whichHbox);
-    }
+		vbox.add(whichHbox);
+	}
     
-    function vBoxAddSeleCt(getInt, whichHbox, getLbl, aRray = [], getTooTip = ""){
-      boolComp = (thset.get_int(getInt) == thset.get_default_value(getInt).unpack());
-      getLbl =  boolComp ? getLbl :
-        `<i>${getLbl}</i>`
-      tootext = boolComp ? "" : "The Value is Changed"
-
-      whichLbl = new Gtk.Label({label: getLbl, use_markup: true, xalign: 0,tooltip_text: getTooTip});
-      whichVlue =  new Gtk.ComboBoxText({halign: Gtk.Align.END,  tooltip_text: tootext });
-
-	    for (i in aRray){
-	  	  whichVlue.append_text(aRray[i]);
-      } 
-      
-      whichVlue.set_active(Math.round(thset.get_int(getInt))); 
-      whichVlue.connect('changed', (widget) => {
-        let valueMode = widget.get_active();
-        thset.set_int(getInt, valueMode);
-        thset.set_boolean('restartextension' , true);
-      })
-      whichHbox.add(whichLbl);
-      whichHbox.pack_end(whichVlue, true, true, 0);
-      whichHbox.add(new Gtk.Separator({visible : true}));
-
-      vbox.add(whichHbox);
-    }
-
-    function vBoxAddTgglBtn(whichHbox, getLbl, getBool, getTooTip = "", func){
-      boolComp = true;
-      if (func ==undefined){
-      	boolComp = (thset.get_boolean(getBool) == thset.get_default_value(getBool).unpack());
+	function vBoxAddSeleCt(getInt, whichHbox, getLbl, aRray = [], getTooTip = ""){
+		boolComp = (thset.get_int(getInt) == thset.get_default_value(getInt).unpack());
 		getLbl =  boolComp ? getLbl :
 		`<i>${getLbl}</i>`
-      }
-      tootext = boolComp ? "" : "The Value is Changed"
-      whichLbl = new Gtk.Label({label: getLbl, use_markup: true, xalign: 0, tooltip_text: getTooTip });  
-      whichVlue = new Gtk.Switch({
-      	active: getBool ? thset.get_boolean(getBool) : false, tooltip_text: tootext 
-      	});
-      whichVlue.connect('notify::active', (widget) => {
-        if (func != undefined){ func(widget.active); } 
-		else { 
-			thset.set_boolean(getBool, widget.active);
-      		thset.set_boolean('restartextension' , true);
-      	}
-        })
+		tootext = boolComp ? "" : "The Value is Changed"
 
-      whichHbox.pack_start(whichLbl, true, true, 0);
-      whichHbox.add(whichVlue);
-        whichHbox.add(new Gtk.Separator({visible : true}));
+		whichLbl = new Gtk.Label({label: getLbl, use_markup: true, xalign: 0,tooltip_text: getTooTip});
+		whichVlue =  new Gtk.ComboBoxText({halign: Gtk.Align.END,  tooltip_text: tootext });
 
-      vbox.add(whichHbox);
-    }
+		    for (i in aRray){
+			  whichVlue.append_text(aRray[i]);
+		} 
 
-    function vBoxAddColorButton(whichHbox, getLbl, getColor, getToolTip = "") {
-      //Deterime whether the option value is changed from default value
-      boolComp = (thset.get_string(getColor) == thset.get_default_value(getColor).unpack());
-      getLbl = boolComp ? getLbl : `<i>${getLbl}</i>`
-      tootext = boolComp ? "" : "The Value is Changed"
+		whichVlue.set_active(Math.round(thset.get_int(getInt))); 
+		whichVlue.connect('changed', (widget) => {
+		let valueMode = widget.get_active();
+		thset.set_int(getInt, valueMode);
+		thset.set_boolean('restartextension' , true);
+		})
+		whichHbox.add(whichLbl);
+		whichHbox.pack_end(whichVlue, true, true, 0);
 
-      //Create the option name
-      whichLbl = new Gtk.Label({label: getLbl, use_markup: true, xalign: 0, tooltip_text: getToolTip});
+		vbox.add(whichHbox);
+	}
 
-      //Create RGBA
-      rgba = new Gdk.RGBA();
-      rgba.parse(thset.get_string(getColor));
+	function vBoxAddTgglBtn(whichHbox, getLbl, getBool, getTooTip = "", func){
+		boolComp = true;
+		if (func ==undefined){
+		boolComp = (thset.get_boolean(getBool) == thset.get_default_value(getBool).unpack());
+			getLbl =  boolComp ? getLbl :
+			`<i>${getLbl}</i>`
+		}
+		tootext = boolComp ? "" : "The Value is Changed"
+		whichLbl = new Gtk.Label({label: getLbl, use_markup: true, xalign: 0, tooltip_text: getTooTip });  
+		whichVlue = new Gtk.Switch({
+		active: getBool ? thset.get_boolean(getBool) : false, tooltip_text: tootext 
+		});
+		whichVlue.connect('notify::active', (widget) => {
+		if (func != undefined){ func(widget.active); } 
+			else { 
+				thset.set_boolean(getBool, widget.active);
+			thset.set_boolean('restartextension' , true);
+		}
+		})
 
-      //Create ColorButton 
-      colorButton = new Gtk.ColorButton({tooltip_text: tootext});
-      colorButton.set_rgba(rgba);
-      colorButton.connect('notify::color', (widget) => {  //On the event of modification
-        rgba = widget.get_rgba();
-        thset.set_string(getColor, rgba.to_string());
-        thset.set_boolean('restartextension', true);
-      });
+		whichHbox.pack_start(whichLbl, true, true, 0);
+		whichHbox.add(whichVlue);
 
-      whichHbox.pack_start(whichLbl, true, true, 0);
-      whichHbox.add(colorButton);
-      whichHbox.add(new Gtk.Separator({visible : true}));
+		vbox.add(whichHbox);
+	}
 
-      vbox.add(whichHbox);
-    }
+	function vBoxAddColorButton(whichHbox, getLbl, getColor, getToolTip = "") {
+		//Deterime whether the option value is changed from default value
+		boolComp = (thset.get_string(getColor) == thset.get_default_value(getColor).unpack());
+		getLbl = boolComp ? getLbl : `<i>${getLbl}</i>`
+		tootext = boolComp ? "" : "The Value is Changed"
 
-    function vBoxAddEntry(whichHbox, getLbl, getString, getTooTip = "", func){
-      boolComp = (thset.get_string(getString) == thset.get_default_value(getString).unpack());
-      getLbl =  boolComp ? getLbl :
-      `<i>${getLbl}</i>`
-      tootext = boolComp ? "" : "The Value is Changed"
-      whichLbl = new Gtk.Label({label: getLbl, use_markup: true, xalign: 0, tooltip_text: getTooTip });  
-      whichVlue = new Gtk.Entry({text: thset.get_string(getString), tooltip_text: tootext, placeholder_text: "Press Enter to apply" });
-      whichVlue.connect('activate', (widget) => {
-        thset.set_string(getString, widget.get_text());
-        if (func != undefined){ func(widget.active); } 
-		else { thset.set_boolean('restartextension' , true); }
-      })
+		//Create the option name
+		whichLbl = new Gtk.Label({label: getLbl, use_markup: true, xalign: 0, tooltip_text: getToolTip});
 
-      whichHbox.pack_start(whichLbl, true, true, 0);
-      whichHbox.add(whichVlue);
-      whichHbox.add(new Gtk.Separator({visible : true}));
+		//Create RGBA
+		rgba = new Gdk.RGBA();
+		rgba.parse(thset.get_string(getColor));
 
-      vbox.add(whichHbox);
-    }
+		//Create ColorButton 
+		colorButton = new Gtk.ColorButton({tooltip_text: tootext});
+		colorButton.set_rgba(rgba);
+		colorButton.connect('notify::color', (widget) => {  //On the event of modification
+		rgba = widget.get_rgba();
+		thset.set_string(getColor, rgba.to_string());
+		thset.set_boolean('restartextension', true);
+		});
+
+		whichHbox.pack_start(whichLbl, true, true, 0);
+		whichHbox.add(colorButton);
+
+		vbox.add(whichHbox);
+	}
+
+	function vBoxAddEntry(whichHbox, getLbl, getString, getTooTip = "", func){
+		boolComp = (thset.get_string(getString) == thset.get_default_value(getString).unpack());
+		getLbl =  boolComp ? getLbl :
+		`<i>${getLbl}</i>`
+		tootext = boolComp ? "" : "The Value is Changed"
+		whichLbl = new Gtk.Label({label: getLbl, use_markup: true, xalign: 0, tooltip_text: getTooTip });  
+		whichVlue = new Gtk.Entry({text: thset.get_string(getString), tooltip_text: tootext, placeholder_text: "Press Enter to apply" });
+		whichVlue.connect('activate', (widget) => {
+		thset.set_string(getString, widget.get_text());
+		if (func != undefined){ func(widget.active); } 
+			else { thset.set_boolean('restartextension' , true); }
+		})
+
+		whichHbox.pack_start(whichLbl, true, true, 0);
+		whichHbox.add(whichVlue);
+		whichHbox.add(new Gtk.Separator({visible : true}));
+
+		vbox.add(whichHbox);
+	}
     
   	let frame = new Gtk.ScrolledWindow();
   	let label = new Gtk.Label({ label: "<b>General Settings</b>", use_markup: true, xalign:0});
@@ -228,20 +224,20 @@ Prefs.prototype =
 	let hboxShUni = newGtkBox();
 	vBoxAddTgglBtn(hboxShUni, "Shorten Units", "shortenunits", "Enabling it will result in shorten units like K instead of KB");
 	
-  //Colors
+	//Colors
 	let hboxColor = newGtkBox();
 	function showOrHide(widget){
 		let advWidgets = [hboxRevInd, hboxLckMuseAct, hboxCustFont, usColorButton, dsColorButton, tsColorButton, tdColorButton];
-	  	if (widget){
-	  		for (i in advWidgets){
-	  			advWidgets[i].show();
-	  		}
-  	} else {
-	  		for (i in advWidgets){
-	  			advWidgets[i].hide();
-	  		}
-  	}
-  }
+		if (widget){
+			for (i in advWidgets){
+				advWidgets[i].show();
+			}
+		} else {
+			for (i in advWidgets){
+				advWidgets[i].hide();
+			}
+		}
+	}
 	
 	vBoxAddTgglBtn(hboxColor, "Show Advanced Options", "", "Enabling it will Show all Color customizations", showOrHide);
   
@@ -277,10 +273,10 @@ Prefs.prototype =
 	vbox.add(mfooter);
 	frame.add(vbox);
 	frame.show_all();
-        frame.connect('destroy', main_quit);
+	frame.connect('destroy', Gtk.main_quit);
 
 	showOrHide(false);
 
 	return frame;
-  }
+	}
 }
