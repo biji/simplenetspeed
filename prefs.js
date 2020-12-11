@@ -239,7 +239,7 @@ Prefs.prototype =
 		}
 	}
 	
-	vBoxAddTgglBtn(hboxColor, "Show Advanced Options", "", "Enabling it will Show all Color customizations", showOrHide);
+	vBoxAddTgglBtn(hboxColor, "Show Advanced Options", "", "Enabling it will Show all Advanced customizations", showOrHide);
   
 	//For Reversing the download and upload indicators
 	let hboxRevInd = newGtkBox();
