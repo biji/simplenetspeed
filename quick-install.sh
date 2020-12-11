@@ -27,5 +27,7 @@ curl ${PROJECT_HOME}/LICENSE -o ${EXT_HOME}/LICENSE
 #Reloading shell; Sending SIGHUP signal to gnome-shell (equivalent to alt + f2 ; r ; enter)
 busctl --user call org.gnome.Shell /org/gnome/Shell org.gnome.Shell Eval s 'Meta.restart("Restarting…")'
 
+sleep 5
+
 #Enabling Gnome extension.
 gnome-extensions enable netspeedsimplified@prateekmedia.extension
