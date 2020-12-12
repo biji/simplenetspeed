@@ -16,10 +16,10 @@
 - [x] Completely revamped whole codebase PR#4
 - [x] Add Show Upload First button to show upload speed first PR#2
 - [x] Add Color Customizations to make the extension your own PR#7
-- [x] Add *Use Custom Font* button in [Preference](#Feature-Highlights-for-Preferences)
-- [x] Add *Hide when Disconnected* button in [Preference](#Feature-Highlights-for-Preferences)
-- [x] Add *Use Shorten Units* button in [Preference](#Feature-Highlights-for-Preferences)
-- [x] Add *Restore Defaults* button in [Preference](#Feature-Highlights-for-Preferences)
+- [x] Add *Use Custom Font* button in Preference
+- [x] Add *Hide when Disconnected* button in Preference
+- [x] Add *Use Shorten Units* button in Preference
+- [x] Add *Restore Defaults* button in Preference
 
 #### Features
 - [x] Cleaner UI
@@ -38,24 +38,22 @@
 If you faced an **issue** then you can **[file an issue here](https://github.com/prateekmedia/netspeedsimplified/issues)**
  
 #### Modes
-- Total net speed in bits per second
-- Total net speed in Bytes per second
-- Up & down speed in bits per second
-- Up & down speed in Bytes per second
-- Total of downloaded in Bytes (Right click to reset counter)
+1. `Total net speed in b/s, kb/s, ...`
+1. `Total net speed in B/s, KB/s, ...`
+1. `Up & down speed in b/s, kb/s, ...`
+1. `Up & down speed in B/s, KB/s, ...`
+1. `Total downloads in B, KB, ... (Right click to reset counter)`
 
 #### Mouse Events
-- **Left click to change [modes](#modes)**
-
-- **Right click to toggle total data usage visibility** 
-
-- **Right click continuously for 4 times in any mode to toggle vertical alignment**  
-
-- **Middle click to change font size**
+- **Left click**: Cycle through the [modes](#modes).
+- **Right click(in first four modes)**: Toggle the visibility of total downloaded.
+- **Right click(in fifth mode)**: Reset total downloaded.
+- **Right Click(Four consecutive times)**: Toggle through horizantal/vertical alignment.
+- **Middle click**: Cycle through the font sizes.
 
 #### *Special Thanks to*
 - [biji](https://github.com/biji) for Creating [simplenetspeed](https://github.com/biji/simplenetspeed)
-- [m0hithreddy](https://github.com/m0hithreddy) for his support in rewriting extension.js with Clutter, Adopting Make build system and more..
+- [m0hithreddy](https://github.com/m0hithreddy) for his support in rewriting extension.js with Clutter and rewritjng readme.md, Adopting Make build system and more..
 [Know More](https://github.com/prateekmedia/netspeedsimplified/graphs/contributors)
 
 <h2 align="center">Installing Manually</h2>   
@@ -63,7 +61,7 @@ If you faced an **issue** then you can **[file an issue here](https://github.com
 ### Quick install
 For quick install use below command:
 
-    $ /bin/bash -c "$(curl -sL https://git.io/Jk28b)"
+    $ bash -c "$(curl -sL https://git.io/Jk28b)"
 
 
 ### Installing using Make
