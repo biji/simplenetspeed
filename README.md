@@ -8,7 +8,7 @@
 
 *Screenshots*</p>
 
-**Current Version** : ***22***
+**Current Version** : ***23***
 
 ***Tested on GNOME 3.36 and 3.38***
 
