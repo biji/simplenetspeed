@@ -1,14 +1,14 @@
 <p align="center"><a href="https://extensions.gnome.org/extension/3724/net-speed-simplified/"><img src="https://raw.githubusercontent.com/prateekmedia/netspeedsimplified/main/images/icon.png" height=80px alt="NSS Logo"/></a></p>
 <h1 align="center">Net speed Simplified</h1>
 <p align="center"><i><b>A Net Speed extension With Loads of Customization.</b></i></p>
+<p align="center">
+<a href="https://github.com/prateekmedia/netspeedsimplified/releases"><img alt="GitHub release" src="https://img.shields.io/github/v/release/prateekmedia/netspeedsimplified"/></a> <a href="LICENSE"><img alt="License" src="https://img.shields.io/github/license/prateekmedia/netspeedsimplified?color=blue"/></a>
+</p>
 
 [<img src="https://raw.githubusercontent.com/andyholmes/gnome-shell-extensions-badge/master/get-it-on-ego.svg?sanitize=true" height="100" alt="Get it on GNOME Extensions">](https://extensions.gnome.org/extension/3724/net-speed-simplified/) or [Install Manually](#installing-manually)
 
 <p align="center"><img src='https://raw.githubusercontent.com/prateekmedia/netspeedsimplified/main/images/screenshoot.png' width="500px"  alt="Screenshot"/>
-
-*Screenshots*</p>
-
-**Current Version** : ***23***
+</p>
 
 ***Tested on GNOME 3.36 and 3.38***
 
@@ -53,7 +53,7 @@ If you faced an **issue** then you can **[file an issue here](https://github.com
 
 #### *Special Thanks to*
 - [biji](https://github.com/biji) for Creating [simplenetspeed](https://github.com/biji/simplenetspeed)
-- [m0hithreddy](https://github.com/m0hithreddy) for his support in rewriting extension.js with Clutter and rewritjng readme.md, Adopting Make build system and more..
+- [m0hithreddy](https://github.com/m0hithreddy) for his support in rewriting extension.js with Clutter and rewriting readme.md, Adopting Make build system and more..
 [Know More](https://github.com/prateekmedia/netspeedsimplified/graphs/contributors)
 
 <h2 align="center">Installing Manually</h2>   
