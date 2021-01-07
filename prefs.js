@@ -243,7 +243,7 @@ Prefs.prototype =
 	
 	//Minimum Width
 	let hboxMinWidth = newGtkBox();
-	vBoxSpinBtn("minwidth", hboxMinWidth, "Minimum Width", "Change Minimum Width value from anywhere b/w 3em to 10em", 3.0, 10.0, .1, 1);  
+	vBoxSpinBtn("minwidth", hboxMinWidth, "Minimum Width", "Change Minimum Width value from anywhere b/w 3em to 10em", 3.0, 10.0, .5, 1);  
 	
 	//For Custom Font name
 	let hboxCustFont = newGtkBox();
