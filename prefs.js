@@ -52,6 +52,7 @@ Prefs.prototype =
 		  this.rTValue = parseFloat(whichSpinBtn.get_value().toFixed(1));
 		  if(thset.get_double(getDouble) !== this.rTValue){
 		    thset.set_double(getDouble , this.rTValue);
+    		    thset.set_boolean('restartextension' , true);
 		    }
 		  });
 		whichHbox.pack_start(whichLbl, true, true, 0);
@@ -75,8 +76,9 @@ Prefs.prototype =
 
 		whichVlue.set_active(Math.round(thset.get_int(getInt))); 
 		whichVlue.connect('changed', (widget) => {
-		let valueMode = widget.get_active();
-		thset.set_int(getInt, valueMode);
+			let valueMode = widget.get_active();
+			thset.set_int(getInt, valueMode);
+			thset.set_boolean('restartextension' , true);
 		})
 		whichHbox.add(whichLbl);
 		whichHbox.pack_end(whichVlue, true, true, 0);
@@ -98,7 +100,10 @@ Prefs.prototype =
 		});
 		whichVlue.connect('notify::active', (widget) => {
 			if (func != undefined) func(widget.active); 
-			else thset.set_boolean(getBool, widget.active);
+			else {
+				thset.set_boolean(getBool, widget.active);
+				thset.set_boolean('restartextension' , true);
+			    }
 		})
 
 		whichHbox.pack_start(whichLbl, true, true, 0);
@@ -124,8 +129,9 @@ Prefs.prototype =
 		colorButton = new Gtk.ColorButton({tooltip_text: tootext});
 		colorButton.set_rgba(rgba);
 		colorButton.connect('notify::color', (widget) => {  //On the event of modification
-		rgba = widget.get_rgba();
-		thset.set_string(getColor, rgba.to_string());
+			rgba = widget.get_rgba();
+			thset.set_string(getColor, rgba.to_string());
+			thset.set_boolean('restartextension' , true);
 		});
 
 		whichHbox.pack_start(whichLbl, true, true, 0);
@@ -144,6 +150,7 @@ Prefs.prototype =
 		whichVlue.connect('activate', (widget) => {
 		thset.set_string(getString, widget.get_text());
 			if (func != undefined){ func(widget.active); }
+			else { thset.set_boolean('restartextension' , true); }
 		})
 
 		whichHbox.pack_start(whichLbl, true, true, 0);
@@ -172,6 +179,7 @@ Prefs.prototype =
 		for (k in boolArray){
 		  thset.set_boolean(boolArray[k], thset.get_default_value(boolArray[k]).unpack());
       		}
+		thset.set_boolean('restartextension' , true);
 		frame.destroy();
 	});
 	

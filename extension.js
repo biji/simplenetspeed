@@ -282,6 +282,7 @@ function mouseEventHandler(widget, event) {
 }
 
 function parseStat() {
+    let toRestart = settings.get_boolean('restartextension');
     try {
         let input_file = Gio.file_new_for_path('/proc/net/dev');
         let fstream = input_file.read(null);
@@ -349,16 +350,16 @@ function parseStat() {
         tsLabel.set_text(e.message);
         tdLabel.set_text(e.message);
     }
-
+    toRestart ? _settingsChanged() : null;
     return true;
 }
 
 function init() {
     settings = Convenience.getSettings(schema);
-    this._settingsChangedId = this.settings.connect('changed', this._settingsChanged);
 }
 
 function _settingsChanged(){
+    settings.set_boolean('restartextension', false);
     disable();
     enable();
 }
