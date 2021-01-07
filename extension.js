@@ -100,6 +100,9 @@ function getStyle(isIcon = false) {
 	return (isIcon) ? 'size-' + (String(crStng.fontmode)) : ('forall size-' + String(crStng.fontmode))
 }
 function initNsLabels() {
+    if(!crStng.cusFont){
+    	crStng.cusFont =  "inherit";
+    }
     usLabel = new St.Label({
         text: '--',
         y_align: Clutter.ActorAlign.CENTER,

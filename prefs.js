@@ -162,8 +162,8 @@ Prefs.prototype =
     
   	let frame = new Gtk.ScrolledWindow();
   	let label = new Gtk.Label({ label: "<b>General Settings</b>", use_markup: true, xalign:0});
-  	let vbox = new Gtk.Box({ orientation: Gtk.Orientation.VERTICAL, margin_left: 20});
-  	let resetBtn = new Gtk.Button ({label: "Restore Defaults"});;
+  	let vbox = new Gtk.Box({ orientation: Gtk.Orientation.VERTICAL, margin_left: 25, margin_right: 25});
+  	let resetBtn = new Gtk.Button ({label: "Restore Defaults"});
   	let mfooter = new Gtk.Label({ label: "<b>Pro Tip : Hover over any Label To know more about it</b>",use_markup: true, margin_top: 20});
   	
 	resetBtn.connect ("clicked", ()=>{
