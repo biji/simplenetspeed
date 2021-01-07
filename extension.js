@@ -100,62 +100,60 @@ function getStyle(isIcon = false) {
 	return (isIcon) ? 'size-' + (String(crStng.fontmode)) : ('forall size-' + String(crStng.fontmode))
 }
 function initNsLabels() {
-    if(!crStng.cusFont){
-    	crStng.cusFont =  "inherit";
-    }
+    let extraInfo = crStng.cusFont ? "; font-family: " + crStng.cusFont : "";
     usLabel = new St.Label({
         text: '--',
         y_align: Clutter.ActorAlign.CENTER,
         style_class: getStyle(),
-        style: "color: " + crStng.usColor + "; font-family: " + crStng.cusFont
+        style: "color: " + crStng.usColor + extraInfo
     });
 
     dsLabel = new St.Label({
         text: '--',
         y_align: Clutter.ActorAlign.CENTER,
         style_class: getStyle(),
-        style: "color: " + crStng.dsColor + "; font-family: " + crStng.cusFont
+        style: "color: " + crStng.dsColor + extraInfo
     });
 
     tsLabel = new St.Label({
         text: '--',
         y_align: Clutter.ActorAlign.CENTER,
         style_class: getStyle(),
-        style: "color: " + crStng.tsColor + "; font-family: " + crStng.cusFont
+        style: "color: " + crStng.tsColor + extraInfo
     });
 
     tdLabel = new St.Label({
         text: '--',
         y_align: Clutter.ActorAlign.CENTER,
         style_class: getStyle(),
-        style: "color: " + crStng.tdColor + "; font-family: " + crStng.cusFont
+        style: "color: " + crStng.tdColor + extraInfo
     });
     usIcon = new St.Label({
         text: DIcons(1),
         y_align: Clutter.ActorAlign.CENTER,
         style_class: getStyle(true),
-        style: "color: " + crStng.usColor + "; font-family: " + crStng.cusFont
+        style: "color: " + crStng.usColor + extraInfo
     });
 
     dsIcon = new St.Label({
         text: DIcons(0),
         y_align: Clutter.ActorAlign.CENTER,
         style_class: getStyle(true),
-        style: "color: " + crStng.dsColor + "; font-family: " + crStng.cusFont
+        style: "color: " + crStng.dsColor + extraInfo
     });
 
     tsIcon = new St.Label({
         text: "⇅",
         y_align: Clutter.ActorAlign.CENTER,
         style_class: getStyle(true),
-        style: "color: " + crStng.tsColor + "; font-family: " + crStng.cusFont
+        style: "color: " + crStng.tsColor + extraInfo
     });
 
     tdIcon = new St.Label({
         text: DIcons(2),
         y_align: Clutter.ActorAlign.CENTER,
         style_class: getStyle(true),
-        style: "color: " + crStng.tdColor + "; font-family: " + crStng.cusFont
+        style: "color: " + crStng.tdColor + extraInfo
     });
 }
 
