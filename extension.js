@@ -30,6 +30,7 @@ function fetchSettings() {
         chooseIconSet: settings.get_int('chooseiconset'),
         revIndicator: settings.get_boolean('reverseindicators'),
         lckMuseAct: settings.get_boolean('lockmouseactions'),
+        minWidth: settings.get_double('minwidth'),
         cusFont: settings.get_string('customfont'),
         hideInd: settings.get_boolean('hideindicator'),
         shortenUnits: settings.get_boolean('shortenunits'),
@@ -101,32 +102,33 @@ function getStyle(isIcon = false) {
 }
 function initNsLabels() {
     let extraInfo = crStng.cusFont ? "; font-family: " + crStng.cusFont : "";
+    let extraLabelInfo = extraInfo + "; min-width: " + crStng.minWidth +"em";
     usLabel = new St.Label({
         text: '--',
         y_align: Clutter.ActorAlign.CENTER,
         style_class: getStyle(),
-        style: "color: " + crStng.usColor + extraInfo
+        style: "color: " + crStng.usColor + extraLabelInfo
     });
 
     dsLabel = new St.Label({
         text: '--',
         y_align: Clutter.ActorAlign.CENTER,
         style_class: getStyle(),
-        style: "color: " + crStng.dsColor + extraInfo
+        style: "color: " + crStng.dsColor + extraLabelInfo
     });
 
     tsLabel = new St.Label({
         text: '--',
         y_align: Clutter.ActorAlign.CENTER,
         style_class: getStyle(),
-        style: "color: " + crStng.tsColor + extraInfo
+        style: "color: " + crStng.tsColor + extraLabelInfo
     });
 
     tdLabel = new St.Label({
         text: '--',
         y_align: Clutter.ActorAlign.CENTER,
         style_class: getStyle(),
-        style: "color: " + crStng.tdColor + extraInfo
+        style: "color: " + crStng.tdColor + extraLabelInfo
     });
     usIcon = new St.Label({
         text: DIcons(1),
@@ -280,7 +282,6 @@ function mouseEventHandler(widget, event) {
 }
 
 function parseStat() {
-    let toRestart = settings.get_boolean('restartextension');
     try {
         let input_file = Gio.file_new_for_path('/proc/net/dev');
         let fstream = input_file.read(null);
@@ -343,11 +344,6 @@ function parseStat() {
         lastCountUp = countUp;
         lastSpeed = speed;
 
-        if (toRestart == true){
-            settings.set_boolean('restartextension', false);
-            disable();
-            enable();
-        }
     } catch (e) {
         usLabel.set_text(e.message);
         tsLabel.set_text(e.message);
@@ -359,6 +355,12 @@ function parseStat() {
 
 function init() {
     settings = Convenience.getSettings(schema);
+    this._settingsChangedId = this.settings.connect('changed', this._settingsChanged);
+}
+
+function _settingsChanged(){
+    disable();
+    enable();
 }
 
 function enable() {

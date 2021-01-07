@@ -52,7 +52,6 @@ Prefs.prototype =
 		  this.rTValue = parseFloat(whichSpinBtn.get_value().toFixed(1));
 		  if(thset.get_double(getDouble) !== this.rTValue){
 		    thset.set_double(getDouble , this.rTValue);
-		    thset.set_boolean('restartextension' , true);
 		    }
 		  });
 		whichHbox.pack_start(whichLbl, true, true, 0);
@@ -78,7 +77,6 @@ Prefs.prototype =
 		whichVlue.connect('changed', (widget) => {
 		let valueMode = widget.get_active();
 		thset.set_int(getInt, valueMode);
-		thset.set_boolean('restartextension' , true);
 		})
 		whichHbox.add(whichLbl);
 		whichHbox.pack_end(whichVlue, true, true, 0);
@@ -99,11 +97,8 @@ Prefs.prototype =
 		active: getBool ? thset.get_boolean(getBool) : false, tooltip_text: tootext 
 		});
 		whichVlue.connect('notify::active', (widget) => {
-		if (func != undefined){ func(widget.active); } 
-			else { 
-				thset.set_boolean(getBool, widget.active);
-			thset.set_boolean('restartextension' , true);
-		}
+			if (func != undefined) func(widget.active); 
+			else thset.set_boolean(getBool, widget.active);
 		})
 
 		whichHbox.pack_start(whichLbl, true, true, 0);
@@ -131,7 +126,6 @@ Prefs.prototype =
 		colorButton.connect('notify::color', (widget) => {  //On the event of modification
 		rgba = widget.get_rgba();
 		thset.set_string(getColor, rgba.to_string());
-		thset.set_boolean('restartextension', true);
 		});
 
 		whichHbox.pack_start(whichLbl, true, true, 0);
@@ -149,8 +143,7 @@ Prefs.prototype =
 		whichVlue = new Gtk.Entry({text: thset.get_string(getString), tooltip_text: tootext, placeholder_text: "Press Enter to apply" });
 		whichVlue.connect('activate', (widget) => {
 		thset.set_string(getString, widget.get_text());
-		if (func != undefined){ func(widget.active); } 
-			else { thset.set_boolean('restartextension' , true); }
+			if (func != undefined){ func(widget.active); }
 		})
 
 		whichHbox.pack_start(whichLbl, true, true, 0);
@@ -178,8 +171,7 @@ Prefs.prototype =
       		} 
 		for (k in boolArray){
 		  thset.set_boolean(boolArray[k], thset.get_default_value(boolArray[k]).unpack());
-      		} 
-		thset.set_boolean('restartextension' , true);
+      		}
 		frame.destroy();
 	});
 	
@@ -227,7 +219,7 @@ Prefs.prototype =
 	//Colors
 	let hboxColor = newGtkBox();
 	function showOrHide(widget){
-		let advWidgets = [hboxRevInd, hboxLckMuseAct, hboxCustFont, usColorButton, dsColorButton, tsColorButton, tdColorButton];
+		let advWidgets = [hboxRevInd, hboxLckMuseAct, hboxMinWidth, hboxCustFont, usColorButton, dsColorButton, tsColorButton, tdColorButton];
 		if (widget){
 			for (i in advWidgets){
 				advWidgets[i].show();
@@ -248,6 +240,10 @@ Prefs.prototype =
 	//For Lock Mouse Actions
 	let hboxLckMuseAct = newGtkBox();
 	vBoxAddTgglBtn(hboxLckMuseAct, "Lock Mouse Actions", "lockmouseactions", "Enabling it will Lock Mouse Actions");
+	
+	//Minimum Width
+	let hboxMinWidth = newGtkBox();
+	vBoxSpinBtn("minwidth", hboxMinWidth, "Minimum Width", "Change Minimum Width value from anywhere b/w 3em to 10em", 3.0, 10.0, .1, 1);  
 	
 	//For Custom Font name
 	let hboxCustFont = newGtkBox();
