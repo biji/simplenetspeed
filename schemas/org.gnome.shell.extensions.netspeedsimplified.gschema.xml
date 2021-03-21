@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<schemalist gettext-domain="netspeedsimplified@prateekmedia.extension">
+  <schema path="/org/gnome/shell/extensions/netspeedsimplified/" id="org.gnome.shell.extensions.netspeedsimplified">
+      <key name="mode" type="i">
+        <range min="0" max="4" />
+        <default>0</default>
+      </key>
+      <key name="fontmode" type="i">
+        <range min="0" max="4" />
+        <default>0</default>
+      </key>
+      <key name="wpos" type="i">
+        <range min="0" max="2" />
+        <default>0</default>
+      </key>
+      <key name="wposext" type="i">
+        <range min="0" max="1" />
+        <default>0</default>
+      </key>
+      <key name="refreshtime" type="d">
+        <range min="1.0" max="10.0" />
+        <default>1.5</default>
+      </key>
+      <key name="togglebool" type="b">
+        <default>false</default>
+      </key>
+      <key name="isvertical" type="b">
+        <default>false</default>
+      </key>
+      <key name="restartextension" type="b">
+        <default>false</default>
+      </key>
+      <key name="chooseiconset" type="i">
+        <range min="0" max="1" />
+        <default>0</default>
+      </key>
+      <key name="lockmouseactions" type="b">
+        <default>false</default>
+      </key>
+      <key name="minwidth" type="d">
+        <range min="3.0" max="10.0" />
+        <default>6.5</default>
+      </key>
+      <key name="reverseindicators" type="b">
+        <default>false</default>
+      </key>
+      <key name="hideindicator" type="b">
+        <default>true</default>
+      </key>
+      <key name="shortenunits" type="b">
+        <default>false</default>
+      </key>
+      <key name="customfont" type="s">
+        <default>""</default>
+      </key>
+      <key name="uscolor" type="s">
+        <default>"rgba(255, 255, 255, 1)"</default>
+      </key>
+      <key name="dscolor" type="s">
+        <default>"rgba(255, 255, 255, 1)"</default>
+      </key>
+      <key name="tdcolor" type="s">
+        <default>"rgba(255, 255, 255, 1)"</default>
+      </key>
+      <key name="tscolor" type="s">
+        <default>"rgba(255, 255, 255, 1)"</default>
+      </key>
+  </schema>
+</schemalist>

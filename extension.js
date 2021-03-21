@@ -1,110 +1,288 @@
-const Clutter = imports.gi.Clutter;
-const St = imports.gi.St;
-const Main = imports.ui.main;
-// const Tweener = imports.ui.tweener;
-const Gio = imports.gi.Gio;
-const Mainloop = imports.mainloop;
-// const GLib = imports.gi.GLib;
+//Imports
+const Clutter = imports.gi.Clutter,
+ St = imports.gi.St,
+ Main = imports.ui.main,
+ Gio = imports.gi.Gio,
+ PanelMenu = imports.ui.panelMenu,
+ Mainloop = imports.mainloop,
+ Me = imports.misc.extensionUtils.getCurrentExtension(),
+ Convenience = Me.imports.convenience,
+ schema = 'org.gnome.shell.extensions.netspeedsimplified',
+ ButtonName = "ShowNetSpeedButton",
+ rCConst=4; //Right Click 4 times to toggle Vertical Alignment
 
-const ExtensionUtils = imports.misc.extensionUtils;
-const Me = ExtensionUtils.getCurrentExtension();
-const Convenience = Me.imports.convenience;
+let settings, timeout,
+  lastCount = 0, lastSpeed = 0, lastCountUp = 0,
+  resetNextCount=false, resetCount=0,
+  hideCount=8,
+  B_UNITS;
 
-const PREFS_SCHEMA = 'org.gnome.shell.extensions.simplenetspeed';
-const refreshTime = 3.0;
+// Settings
+var crStng; //Initialized in enable()
 
-let settings;
-let button, timeout;
-// let icon, iconDark;
-let ioSpeed;
-let lastCount = 0, lastSpeed = 0, lastCountUp = 0;
-let mode; // 0: kbps 1: K/s 2: U:kbps D:kbps 3: U:K/s D:K/s 4: Total KB
-let fontmode;
-let resetNextCount = false, resetCount = 0;
+function fetchSettings() {
+    crStng = {
+        refreshTime: settings.get_double('refreshtime'),
+        mode: settings.get_int('mode'),
+        fontmode: settings.get_int('fontmode'),
+        showTotalDwnld: settings.get_boolean('togglebool'),
+        isVertical: settings.get_boolean('isvertical'),
+        chooseIconSet: settings.get_int('chooseiconset'),
+        revIndicator: settings.get_boolean('reverseindicators'),
+        lckMuseAct: settings.get_boolean('lockmouseactions'),
+        minWidth: settings.get_double('minwidth'),
+        cusFont: settings.get_string('customfont'),
+        hideInd: settings.get_boolean('hideindicator'),
+        shortenUnits: settings.get_boolean('shortenunits'),
+        nsPos: settings.get_int('wpos'),
+        nsPosAdv: settings.get_int('wposext'),
+        usColor: settings.get_string('uscolor'),
+        dsColor: settings.get_string('dscolor'),
+        tsColor: settings.get_string('tscolor'),
+        tdColor: settings.get_string('tdcolor')
+    };
 
-function init() {
+    B_UNITS = (crStng.shortenUnits) ? ['B', 'K', 'M', 'G', 'T', 'P', 'E', 'Z'] : [' B', 'KB', 'MB', 'GB', 'TB', 'PB', 'EB', 'ZB'] ;
 
-    settings = Convenience.getSettings(PREFS_SCHEMA);
-
-    mode = settings.get_int('mode'); // default mode using bit (bps, kbps)
-    fontmode = settings.get_int('fontmode'); 
-
-    button = new St.Bin({
-        style_class: 'panel-button',
-        reactive: true,
-        can_focus: true,
-        x_expand: true,
-        y_expand: false,
-        track_hover: true
-    });
-
-    /*
-    icon = new St.Icon({
-        gicon: Gio.icon_new_for_string(Me.path + "/icons/harddisk.svg")
-    });
-    iconDark = new St.Icon({
-        gicon: Gio.icon_new_for_string(Me.path + "/icons/harddisk-dark.svg")
-    });*/
-
-    ioSpeed = new St.Label({
-        text: '---',
-        y_align: Clutter.ActorAlign.CENTER,
-        style_class: 'simplenetspeed-label'
-    });
-
-    // ioSpeedStaticIcon = new St.Label({
-    //     text: '💾',
-    //     style_class: 'simplenetspeed-static-icon'
-    // });
-
-    button.set_child(chooseLabel());
-    button.connect('button-press-event', changeMode);
+    initNs();
 }
 
-function changeMode(widget, event) {
-    // log(event.get_button());
-    if (event.get_button() == 3 && mode == 4) { // right click: reset downloaded sum
-        resetNextCount = true;
-        parseStat();
+function pushSettings() {
+    settings.set_int('mode', crStng.mode);
+    settings.set_int('fontmode', crStng.fontmode); 
+    settings.set_boolean('togglebool', crStng.showTotalDwnld);
+    settings.set_boolean('isvertical', crStng.isVertical);
+
+    initNs();
+}
+
+//Helper Functions
+function DIcons(iNum) {
+    return [  ["🡳","🡱","Σ"] , ["↓","↑","∑"]  ][crStng.chooseIconSet][iNum];
+}
+
+function nsPos() {
+    return ["right", "left", "center"][crStng.nsPos];
+}
+
+function nsPosAdv() {
+    return [3, 0][crStng.nsPosAdv];
+}
+
+function speedToString(amount, rMode = 0) {
+
+    let speed_map = B_UNITS.map(
+        (rMode == 1 && (crStng.mode == 1 || crStng.mode == 3 || crStng.mode == 4)) ? v => v : //KB
+        (rMode == 1 && (crStng.mode == 0 || crStng.mode == 2)) ? v => v.toLowerCase() : //kb
+        (crStng.mode == 0 || crStng.mode == 2) ? v => v.toLowerCase() + "/s" : //kb/s
+        (crStng.mode == 1 || crStng.mode == 3) ? v => v + "/s" : v=>v); //KB/s
+    
+    if (amount === 0) return "  0.0 "  + speed_map[0];
+    if (crStng.mode == 0 || crStng.mode == 2) amount = amount * 8;
+
+    let unit = 0;
+    while (amount >= 1000) { // 1M=1024K, 1MB/s=1000MB/s
+        amount /= 1000;
+        ++unit;
+    }
+
+    let digits = (crStng.mode==4 || rMode !=0) ? 2 /* For floats like 21.11 and total speed mode */ : 1 //For floats like 21.2
+
+	let spaceNum = 3 - Math.ceil(Math.log10(amount +1));
+	spaceNum <0 ? spaceNum = 0 : null
+
+    return " ".repeat(spaceNum) + amount.toFixed(digits) + " " + speed_map[unit];
+}
+
+// NetSpeed Components
+var usLabel, dsLabel, tsLabel, tdLabel, usIcon, dsIcon, tsIcon, tdIcon;
+
+function getStyle(isIcon = false) {
+	return (isIcon) ? 'size-' + (String(crStng.fontmode)) : ('forall size-' + String(crStng.fontmode))
+}
+function initNsLabels() {
+    let extraInfo = crStng.cusFont ? "; font-family: " + crStng.cusFont : "";
+    let extraLabelInfo = extraInfo + "; min-width: " + crStng.minWidth +"em";
+    usLabel = new St.Label({
+        text: '--',
+        y_align: Clutter.ActorAlign.CENTER,
+        style_class: getStyle(),
+        style: "color: " + crStng.usColor + extraLabelInfo
+    });
+
+    dsLabel = new St.Label({
+        text: '--',
+        y_align: Clutter.ActorAlign.CENTER,
+        style_class: getStyle(),
+        style: "color: " + crStng.dsColor + extraLabelInfo
+    });
+
+    tsLabel = new St.Label({
+        text: '--',
+        y_align: Clutter.ActorAlign.CENTER,
+        style_class: getStyle(),
+        style: "color: " + crStng.tsColor + extraLabelInfo
+    });
+
+    tdLabel = new St.Label({
+        text: '--',
+        y_align: Clutter.ActorAlign.CENTER,
+        style_class: getStyle(),
+        style: "color: " + crStng.tdColor + extraLabelInfo
+    });
+    usIcon = new St.Label({
+        text: DIcons(1),
+        y_align: Clutter.ActorAlign.CENTER,
+        style_class: getStyle(true),
+        style: "color: " + crStng.usColor + extraInfo
+    });
+
+    dsIcon = new St.Label({
+        text: DIcons(0),
+        y_align: Clutter.ActorAlign.CENTER,
+        style_class: getStyle(true),
+        style: "color: " + crStng.dsColor + extraInfo
+    });
+
+    tsIcon = new St.Label({
+        text: "⇅",
+        y_align: Clutter.ActorAlign.CENTER,
+        style_class: getStyle(true),
+        style: "color: " + crStng.tsColor + extraInfo
+    });
+
+    tdIcon = new St.Label({
+        text: DIcons(2),
+        y_align: Clutter.ActorAlign.CENTER,
+        style_class: getStyle(true),
+        style: "color: " + crStng.tdColor + extraInfo
+    });
+}
+
+function updateNsLabels(up, down, up_down, total) { //UpSpeed, DownSpeed, UpSpeed + DownSpeed, TotalDownloaded
+    usLabel.set_text(up);
+    dsLabel.set_text(down);
+    tsLabel.set_text(up_down);
+    tdLabel.set_text(total);
+}
+
+// Initalize NetSpeed
+var nsButton = null, nsActor = null, nsLayout = null;
+
+function initNs() {
+
+    //Destroy the existing button.
+    nsDestroy();
+
+    //Initialize component Labels
+    initNsLabels();
+
+    //Allocate 3 * 3 grid (suited for all modes)
+    nsLayout = new Clutter.GridLayout();   
+    nsLayout.insert_row(1);
+    nsLayout.insert_row(2);
+    nsLayout.insert_column(1);
+    nsLayout.insert_column(2);
+
+    nsActor = new Clutter.Actor({
+        layout_manager: nsLayout,
+        y_align: Clutter.ActorAlign.CENTER
+    })
+ 
+   let verticalConstant = (crStng.isVertical) ? 1 : 0 ;
+
+    //Attach the components to the grid.
+    if (crStng.mode == 0 || crStng.mode == 1) {
+        nsLayout.attach(tsIcon, 0, 1, 1, 1);
+        nsLayout.attach(tsLabel, 1, 1, 1, 1);
+
+        if (crStng.showTotalDwnld) {
+            nsLayout.attach(tdIcon,  2 - 2*verticalConstant, 1 + verticalConstant, 1, 1);
+            nsLayout.attach(tdLabel, 3 - 2*verticalConstant, 1 + verticalConstant, 1, 1);
+        }
+    }
+    else if (crStng.mode == 2 || crStng.mode == 3) {
+        if (crStng.revIndicator) {
+            nsLayout.attach(usIcon,  0, 1, 1, 1);
+            nsLayout.attach(usLabel, 1, 1, 1, 1);
+            nsLayout.attach(dsIcon,  2 - 2*verticalConstant, 1 + verticalConstant, 1, 1); 
+            nsLayout.attach(dsLabel, 3 - 2*verticalConstant, 1 + verticalConstant, 1, 1);
+        }
+        else {
+            nsLayout.attach(dsIcon,  0, 1, 1, 1);
+            nsLayout.attach(dsLabel, 1, 1, 1, 1);
+            nsLayout.attach(usIcon,  2 - 2*verticalConstant, 1 + verticalConstant, 1, 1); 
+            nsLayout.attach(usLabel, 3 - 2*verticalConstant, 1 + verticalConstant, 1, 1);
+        }
+
+        if (crStng.showTotalDwnld) {
+            nsLayout.attach(tdIcon,  5 - 2*verticalConstant, 1 + verticalConstant, 1, 1); 
+            nsLayout.attach(tdLabel, 6 - 2*verticalConstant, 1 + verticalConstant, 1, 1);
+        }
+    }
+    else {
+        nsLayout.attach(tdIcon,  0, 1, 1, 1);
+        nsLayout.attach(tdLabel, 1, 1, 1, 1);
+    }
+
+    //Create the button and add to Main.panel
+    nsButton = new PanelMenu.Button(0.0, ButtonName);
+
+    (!crStng.lckMuseAct) ? nsButton.connect('button-press-event', mouseEventHandler) : null;
+    nsButton.add_child(nsActor);
+
+    Main.panel.addToStatusArea(ButtonName, nsButton, nsPosAdv(), nsPos());
+}
+
+function nsDestroy() {
+    nsButton != null ? nsButton.destroy() : null
+    nsButton = null;
+}
+
+// Mouse Event Handler
+var startTime = null, rClickCount = 0;
+
+function mouseEventHandler(widget, event) {
+    if (event.get_button() == 3) {
+        if (crStng.mode == 4)
+            resetNextCount = true; // right click: reset downloaded sum
+        else
+          crStng.showTotalDwnld = !(crStng.showTotalDwnld); // right click on other modes brings total downloaded sum
+
+       // Logic to toggle crStng.isVertical after rCConstant consequent right clicks.
+       if (startTime == null) {
+           startTime = new Date();
+       }
+
+       if (((new Date() - startTime) / 1000) <= crStng.refreshTime * 2) {
+           if (rClickCount == rCConst - 1) {
+               crStng.isVertical = !(crStng.isVertical);
+               startTime = null;
+               rClickCount = 0;
+           }
+           else {
+               rClickCount++;
+           }
+       }
+       else {
+           startTime = new Date();
+           rClickCount = 1;
+       }
     }
     else if (event.get_button() == 2) { // change font
-        fontmode++;
-        if (fontmode > 4) {
-            fontmode=0;
-        }
-        settings.set_int('fontmode', fontmode);
-        button.set_child(chooseLabel());
-        parseStat();
+        crStng.fontmode++;
+        if (crStng.fontmode > 4) crStng.fontmode = 0;
     }
     else if (event.get_button() == 1) {
-        mode++;
-        if (mode > 4) {
-            mode = 0;
-        }
-        settings.set_int('mode', mode);
-        button.set_child(chooseLabel());
-        parseStat();
+        crStng.mode++;
+        if (crStng.mode > 4) crStng.mode = 0;
     }
-    log('mode:' + mode + ' font:' + fontmode);
-}
 
-function chooseLabel() {
-    if (mode == 0 || mode == 1 || mode == 4) {
-        styleName = 'simplenetspeed-label';
-    }
-    else { // 2 , 3
-        styleName = 'simplenetspeed-label-w';
-    }
-    
-    if (fontmode > 0) {
-        styleName = styleName + '-' + fontmode;
-    } 
-    
-    ioSpeed.set_style_class_name(styleName);
-    return ioSpeed;
+    pushSettings();
 }
 
 function parseStat() {
+    let toRestart = settings.get_boolean('restartextension');
     try {
         let input_file = Gio.file_new_for_path('/proc/net/dev');
         let fstream = input_file.read(null);
@@ -113,6 +291,7 @@ function parseStat() {
         let count = 0;
         let countUp = 0;
         let line;
+        
         while (line = dstream.read_line(null)) {
             line = String(line);
             line = line.trim();
@@ -135,98 +314,65 @@ function parseStat() {
         if (lastCount === 0) lastCount = count;
         if (lastCountUp === 0) lastCountUp = countUp;
 
-        let speed = (count - lastCount) / refreshTime;
-        let speedUp = (countUp - lastCountUp) / refreshTime;
+        let speed = (count - lastCount) / crStng.refreshTime, speedUp = (countUp - lastCountUp) / crStng.refreshTime;
 
-        // TEST
-        // lastSpeed = 199899999;
-        // speed= 1998999999;
-        // speedUp= 99899999;
+        if (resetNextCount == true) {
+            resetNextCount = false;
+            resetCount = count;
+        }
+        
+        (speed || speedUp) ? hideCount = 0 : hideCount <= 8 ? hideCount++ : null
 
-        let dot = "";
-        if (speed > lastSpeed) {
-            dot = "⇅";
-        }
+        if(hideCount<=8) {
+            nsButton == null ? initNs() : null
 
-        if (mode >= 0 && mode <= 1) {
-            ioSpeed.set_text(dot + speedToString(speed));
+            updateNsLabels(" " + speedToString(speedUp),
+            " " + speedToString(speed - speedUp),
+            " " + speedToString(speed),
+            " " + speedToString(count - resetCount, 1));
         }
-        else if (mode >= 2 && mode <= 3) {
-            ioSpeed.set_text("↓" + speedToString(speed - speedUp) + " ↑" + speedToString(speedUp));
-        }
-        else if (mode == 4) {
-            if (resetNextCount == true) {
-                resetNextCount = false;
-                resetCount = count;
+        else {
+            if (crStng.hideInd) {
+                nsDestroy();
             }
-            ioSpeed.set_text("∑ " + speedToString(count - resetCount));
+            else {
+                nsButton == null ? initNs() : null
+                updateNsLabels('--', '--', '--', speedToString(count - resetCount, 1));
+            }
         }
 
         lastCount = count;
         lastCountUp = countUp;
         lastSpeed = speed;
+
     } catch (e) {
-        ioSpeed.set_text(e.message);
+        usLabel.set_text(e.message);
+        tsLabel.set_text(e.message);
+        tdLabel.set_text(e.message);
     }
-
-    /*
-    let curDiskstats = GLib.file_get_contents('/proc/diskstats');
-
-    if (diskstats == curDiskstats) {
-        if (cur !== 0) {
-            button.set_child(iconDark);
-            cur = 0;
-        }
-    } else {
-        if (cur != 1) {
-            button.set_child(icon);
-            cur = 1;
-        }
-        diskstats = curDiskstats;
-    }*/
-
+    toRestart ? _settingsChanged() : null;
     return true;
 }
 
-function speedToString(amount) {
-    let digits;
-    let speed_map;
-    if (mode == 0 || mode == 2) {
-        speed_map = ["bps", "Kbps", "Mbps", "Gbps"];
-    }
-    else if (mode == 1 || mode == 3) {
-        speed_map = ["B/s", "K/s", "M/s", "G/s"];
-    }
-    else if (mode == 4) {
-        speed_map = ["B", "KB", "MB", "GB"];
-    }
+function init() {
+    settings = Convenience.getSettings(schema);
+}
 
-    if (amount === 0)
-        return "0"  + speed_map[0];
-
-    if (mode==0 || mode==2) amount = amount * 8;
-
-    let unit = 0;
-    while (amount >= 1000) { // 1M=1024K, 1MB/s=1000MB/s
-        amount /= 1000;
-        ++unit;
-    }
-
-    if (amount >= 100) // 100MB 100KB 200KB
-        digits = 0;
-    else if (amount >= 10) // 10MB 10.2
-        digits = 1;
-    else 
-        digits = 2;
-    return String(amount.toFixed(digits)) + speed_map[unit];
+function _settingsChanged(){
+    settings.set_boolean('restartextension', false);
+    disable();
+    enable();
 }
 
 function enable() {
-    Main.panel._rightBox.insert_child_at_index(button, 0);
-    timeout = Mainloop.timeout_add_seconds(refreshTime, parseStat);
+
+    fetchSettings(); // Automatically creates the netSpeed Button.
+    
+    //Run infinite loop.
+    timeout = Mainloop.timeout_add_seconds(crStng.refreshTime, parseStat);
 }
 
 function disable() {
     Mainloop.source_remove(timeout);
-    Main.panel._rightBox.remove_child(button);
+    nsDestroy();
 }
