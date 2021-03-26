@@ -1,5 +1,8 @@
 const Gtk = imports.gi.Gtk,
   Gdk = imports.gi.Gdk;
+  
+const Config = imports.misc.config;
+const ShellVersion = parseFloat(Config.PACKAGE_VERSION);
 
 const Me = imports.misc.extensionUtils.getCurrentExtension(),
   Convenience = Me.imports.convenience,
@@ -28,8 +31,17 @@ Prefs.prototype =
     
     buildPrefsWidget: function()
     {
-    let thset = this.settings;		
-    
+    let thset = this.settings;
+    let isGnome40 = ShellVersion >= 40;
+
+	function addIt(element, child){
+		if(isGnome40){
+			element.append(child);
+		} else {
+			element.add(child);
+		}
+	}
+	    
 	function newGtkBox(){
 		return new Gtk.Box({orientation: Gtk.Orientation.HORIZONTAL, margin_top : 10, margin_bottom : 10});
 	}
@@ -56,10 +68,10 @@ Prefs.prototype =
 		    }
 		  });
 		whichLbl.set_hexpand(true);
-		whichHbox.append(whichLbl);
-		whichHbox.append(whichSpinBtn);
+		addIt(whichHbox, whichLbl);
+		addIt(whichHbox, whichSpinBtn);
 
-		vbox.append(whichHbox);
+		addIt(vbox, whichHbox);
 	}
     
 	function vBoxAddSeleCt(getInt, whichHbox, getLbl, aRray = [], getTooTip = ""){
@@ -82,10 +94,10 @@ Prefs.prototype =
 			thset.set_boolean('restartextension' , true);
 		})
 		whichLbl.set_hexpand(true);
-		whichHbox.append(whichLbl);
-		whichHbox.append(whichVlue);
+		addIt(whichHbox, whichLbl);
+		addIt(whichHbox, whichVlue);
 
-		vbox.append(whichHbox);
+		addIt(vbox, whichHbox);
 	}
 
 	function vBoxAddTgglBtn(whichHbox, getLbl, getBool, getTooTip = "", func){
@@ -109,10 +121,10 @@ Prefs.prototype =
 		})
 
 		whichLbl.set_hexpand(true);
-		whichHbox.append(whichLbl);
-		whichHbox.append(whichVlue);
+		addIt(whichHbox, whichLbl);
+		addIt(whichHbox, whichVlue);
 
-		vbox.append(whichHbox);
+		addIt(vbox, whichHbox);
 	}
 
 	function vBoxAddColorButton(whichHbox, getLbl, getColor, getToolTip = "") {
@@ -138,10 +150,10 @@ Prefs.prototype =
 		});
 
 		whichLbl.set_hexpand(true);
-		whichHbox.append(whichLbl);
-		whichHbox.append(colorButton);
+		addIt(whichHbox, whichLbl);
+		addIt(whichHbox, colorButton);
 
-		vbox.append(whichHbox);
+		addIt(vbox, whichHbox);
 	}
 
 	function vBoxAddEntry(whichHbox, getLbl, getString, getTooTip = "", func){
@@ -158,11 +170,10 @@ Prefs.prototype =
 		})
 
 		whichLbl.set_hexpand(true);
-		whichHbox.append(whichLbl);
-		whichHbox.append(whichVlue);
-		whichHbox.append(new Gtk.Separator({visible : true}));
+		addIt(whichHbox, whichLbl);
+		addIt(whichHbox, whichVlue);
 
-		vbox.append(whichHbox);
+		addIt(vbox, whichHbox);
 	}
     
   	let frame = new Gtk.ScrolledWindow();
@@ -187,7 +198,7 @@ Prefs.prototype =
 		frame.destroy();
 	});
 	
-	vbox.append(label);
+	addIt(vbox, label);
 	//For Position
 	let hboxWPos = newGtkBox();
 	vBoxAddSeleCt("wpos", hboxWPos, "Position on the Panel", ["Right","Left","Center"], "Choose where to Place the extension on the Panel");
@@ -264,10 +275,14 @@ Prefs.prototype =
 	let tdColorButton = newGtkBox();
 	vBoxAddColorButton(tdColorButton, "Total Download Color", "tdcolor", "Select the total download color");
 	
-	vbox.append(resetBtn);
-	frame.child = vbox;
-	// frame.connect('destroy', Gtk.main_quit);
-
+	addIt(vbox, resetBtn);
+	if (isGnome40) {frame.child = vbox;}
+	else {
+		frame.add(vbox);
+		frame.show_all();
+		frame.connect('destroy', Gtk.main_quit);
+	}
+	
 	return frame;
 	}
 }

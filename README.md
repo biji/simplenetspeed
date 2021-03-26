@@ -10,7 +10,7 @@
 <p align="center"><img src='https://raw.githubusercontent.com/prateekmedia/netspeedsimplified/main/images/screenshoot.png' width="500px"  alt="Screenshot"/>
 </p>
 
-***Tested on GNOME 40***
+***Tested on GNOME 40, 3.38 and 3.36***
 
 #### What's new
 - [x] Add Limit Unit option
