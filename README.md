@@ -7,7 +7,7 @@
 
 [<img src="https://raw.githubusercontent.com/andyholmes/gnome-shell-extensions-badge/master/get-it-on-ego.svg?sanitize=true" height="100" alt="Get it on GNOME Extensions">](https://extensions.gnome.org/extension/3724/net-speed-simplified/) or [Install Manually](#installing-manually)
 
-<p align="center"><img src='https://raw.githubusercontent.com/prateekmedia/netspeedsimplified/main/images/screenshoot.png' width="500px"  alt="Screenshot"/>
+<p align="center"><img src='https://extensions.gnome.org/extension-data/screenshots/screenshot_3724.gif' width="500px"  alt="Screenshot"/>
 </p>
 
 ***Tested on GNOME 40, 3.38 and 3.36***
