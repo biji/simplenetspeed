@@ -13,6 +13,8 @@
 ***Tested on GNOME 40, 3.38 and 3.36***
 
 #### What's new
+- [x] Add Use System Color Scheme option
+- [x] Make Preferences more fluent with speed indicator
 - [x] Add Limit Unit option
 - [x] Add Gnome 40 Support
 - [x] Fix a bug where refresh time was getting reset to 6.5
