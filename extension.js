@@ -198,7 +198,7 @@ function initNs() {
 
     let verticalConstant = (crStng.isVertical) ? 1 : 0;
     let heightConstant = 1 + verticalConstant;
-    let widthConstant = 2 * (1 -  verticalConstant);
+    let widthConstant = 2 * (1 - verticalConstant);
 
     //Attach the components to the grid.
     if (crStng.mode == 0 || crStng.mode == 1) {
@@ -286,10 +286,10 @@ function mouseEventHandler(widget, event) {
     }
 
     pushSettings();
+    parseStat();
 }
 
 function parseStat() {
-    let toRestart = settings.get_boolean('restartextension');
     try {
         let input_file = Gio.file_new_for_path('/proc/net/dev');
         let fstream = input_file.read(null);
@@ -357,24 +357,27 @@ function parseStat() {
         tsLabel.set_text(e.message);
         tdLabel.set_text(e.message);
     }
-    toRestart ? _settingsChanged() : null;
     return true;
+}
+
+function _settingsChanged() {
+    if (settings.get_boolean('restartextension')) {
+        settings.set_boolean('restartextension', false);
+        disable();
+        enable();
+        parseStat();
+    }
 }
 
 function init() {
     settings = Convenience.getSettings(schema);
 }
 
-function _settingsChanged() {
-    settings.set_boolean('restartextension', false);
-    disable();
-    enable();
-    parseStat();
-}
-
 function enable() {
 
     fetchSettings(); // Automatically creates the netSpeed Button.
+    this._settingsChangedId = this.settings.connect('changed', this._settingsChanged);
+    parseStat();
 
     //Run infinite loop.
     timeout = Mainloop.timeout_add_seconds(crStng.refreshTime, parseStat);
