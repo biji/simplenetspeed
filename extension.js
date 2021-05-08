@@ -1,21 +1,21 @@
 //Imports
 const Clutter = imports.gi.Clutter,
- St = imports.gi.St,
- Main = imports.ui.main,
- Gio = imports.gi.Gio,
- PanelMenu = imports.ui.panelMenu,
- Mainloop = imports.mainloop,
- Me = imports.misc.extensionUtils.getCurrentExtension(),
- Convenience = Me.imports.convenience,
- schema = 'org.gnome.shell.extensions.netspeedsimplified',
- ButtonName = "ShowNetSpeedButton",
- rCConst=4; //Right Click 4 times to toggle Vertical Alignment
+    St = imports.gi.St,
+    Main = imports.ui.main,
+    Gio = imports.gi.Gio,
+    PanelMenu = imports.ui.panelMenu,
+    Mainloop = imports.mainloop,
+    Me = imports.misc.extensionUtils.getCurrentExtension(),
+    Convenience = Me.imports.convenience,
+    schema = 'org.gnome.shell.extensions.netspeedsimplified',
+    ButtonName = "ShowNetSpeedButton",
+    rCConst = 4; //Right Click 4 times to toggle Vertical Alignment
 
 let settings, timeout,
-  lastCount = 0, lastSpeed = 0, lastCountUp = 0,
-  resetNextCount=false, resetCount=0,
-  hideCount=8,
-  B_UNITS;
+    lastCount = 0, lastSpeed = 0, lastCountUp = 0,
+    resetNextCount = false, resetCount = 0,
+    hideCount = 8,
+    B_UNITS;
 
 // Settings
 var crStng; //Initialized in enable()
@@ -36,6 +36,7 @@ function fetchSettings() {
         hideInd: settings.get_boolean('hideindicator'),
         shortenUnits: settings.get_boolean('shortenunits'),
         nsPos: settings.get_int('wpos'),
+        systemColr: settings.get_boolean('systemcolr'),
         nsPosAdv: settings.get_int('wposext'),
         usColor: settings.get_string('uscolor'),
         dsColor: settings.get_string('dscolor'),
@@ -43,14 +44,14 @@ function fetchSettings() {
         tdColor: settings.get_string('tdcolor')
     };
 
-    B_UNITS = (crStng.shortenUnits) ? ['B', 'K', 'M', 'G', 'T', 'P', 'E', 'Z'] : [' B', 'KB', 'MB', 'GB', 'TB', 'PB', 'EB', 'ZB'] ;
+    B_UNITS = (crStng.shortenUnits) ? ['B', 'K', 'M', 'G', 'T', 'P', 'E', 'Z'] : [' B', 'KB', 'MB', 'GB', 'TB', 'PB', 'EB', 'ZB'];
 
     initNs();
 }
 
 function pushSettings() {
     settings.set_int('mode', crStng.mode);
-    settings.set_int('fontmode', crStng.fontmode); 
+    settings.set_int('fontmode', crStng.fontmode);
     settings.set_boolean('togglebool', crStng.showTotalDwnld);
     settings.set_boolean('isvertical', crStng.isVertical);
 
@@ -59,7 +60,7 @@ function pushSettings() {
 
 //Helper Functions
 function DIcons(iNum) {
-    return [  ["🡳","🡱","Σ"] , ["↓","↑","∑"]  ][crStng.chooseIconSet][iNum];
+    return [["🡳", "🡱", "Σ"], ["↓", "↑", "∑"]][crStng.chooseIconSet][iNum];
 }
 
 function nsPos() {
@@ -74,12 +75,12 @@ function speedToString(amount, rMode = 0) {
 
     let speed_map = B_UNITS.map(
         (rMode == 1 && (crStng.mode == 1 || crStng.mode == 3 || crStng.mode == 4)) ? v => v : //KB
-        (rMode == 1 && (crStng.mode == 0 || crStng.mode == 2)) ? v => v.toLowerCase() : //kb
-        (crStng.mode == 0 || crStng.mode == 2) ? v => v.toLowerCase() + "/s" : //kb/s
-        (crStng.mode == 1 || crStng.mode == 3) ? v => v + "/s" :  //KB/s
-         v=>v); // Others
-    
-    if (amount === 0) return "  0.0 "  + speed_map[0];
+            (rMode == 1 && (crStng.mode == 0 || crStng.mode == 2)) ? v => v.toLowerCase() : //kb
+                (crStng.mode == 0 || crStng.mode == 2) ? v => v.toLowerCase() + "/s" : //kb/s
+                    (crStng.mode == 1 || crStng.mode == 3) ? v => v + "/s" :  //KB/s
+                        v => v); // Others
+
+    if (amount === 0) return "  0.0 " + speed_map[0];
     if (crStng.mode == 0 || crStng.mode == 2) amount = amount * 8;
 
     let unit = 0;
@@ -91,10 +92,10 @@ function speedToString(amount, rMode = 0) {
         unit++;
     }
 
-    let digits = (crStng.mode==4 || rMode !=0) ? 2 /* For floats like 21.11 and total speed mode */ : 1 //For floats like 21.2
+    let digits = (crStng.mode == 4 || rMode != 0) ? 2 /* For floats like 21.11 and total speed mode */ : 1 //For floats like 21.2
 
-	let spaceNum = 3 - Math.ceil(Math.log10(amount +1));
-	spaceNum <0 ? spaceNum = 0 : null
+    let spaceNum = 3 - Math.ceil(Math.log10(amount + 1));
+    spaceNum < 0 ? spaceNum = 0 : null
 
     return " ".repeat(spaceNum) + amount.toFixed(digits) + " " + speed_map[unit];
 }
@@ -103,68 +104,69 @@ function speedToString(amount, rMode = 0) {
 var usLabel, dsLabel, tsLabel, tdLabel, usIcon, dsIcon, tsIcon, tdIcon;
 
 function getStyle(isIcon = false) {
-	return (isIcon) ? 'size-' + (String(crStng.fontmode)) : ('forall size-' + String(crStng.fontmode))
+    return (isIcon) ? 'size-' + (String(crStng.fontmode)) : ('forall size-' + String(crStng.fontmode))
 }
 function initNsLabels() {
-    let extraInfo = crStng.cusFont ? "; font-family: " + crStng.cusFont : "";
-    let extraLabelInfo = extraInfo + "; min-width: " + crStng.minWidth +"em";
+    let extraInfo = crStng.cusFont ? "font-family: " + crStng.cusFont + "; " : "";
+    let extraLabelInfo = extraInfo + "min-width: " + crStng.minWidth + "em; ";
+
     usLabel = new St.Label({
         text: '--',
         y_align: Clutter.ActorAlign.CENTER,
         style_class: getStyle(),
-        style: "color: " + crStng.usColor + extraLabelInfo
+        style: extraLabelInfo + (crStng.systemColr ? "color: " + crStng.usColor : "")
     });
 
     dsLabel = new St.Label({
         text: '--',
         y_align: Clutter.ActorAlign.CENTER,
         style_class: getStyle(),
-        style: "color: " + crStng.dsColor + extraLabelInfo
+        style: extraLabelInfo + (crStng.systemColr ? "" : "color: " + crStng.dsColor)
     });
 
     tsLabel = new St.Label({
         text: '--',
         y_align: Clutter.ActorAlign.CENTER,
         style_class: getStyle(),
-        style: "color: " + crStng.tsColor + extraLabelInfo
+        style: extraLabelInfo + (crStng.systemColr ? "" : "color: " + crStng.tsColor)
     });
 
     tdLabel = new St.Label({
         text: '--',
         y_align: Clutter.ActorAlign.CENTER,
         style_class: getStyle(),
-        style: "color: " + crStng.tdColor + extraLabelInfo
+        style: extraLabelInfo + (crStng.systemColr ? "" : "color: " + crStng.tdColor)
     });
     usIcon = new St.Label({
         text: DIcons(1),
         y_align: Clutter.ActorAlign.CENTER,
         style_class: getStyle(true),
-        style: "color: " + crStng.usColor + extraInfo
+        style: extraInfo + (crStng.systemColr ? "" : "color: " + crStng.usColor)
     });
 
     dsIcon = new St.Label({
         text: DIcons(0),
         y_align: Clutter.ActorAlign.CENTER,
         style_class: getStyle(true),
-        style: "color: " + crStng.dsColor + extraInfo
+        style: extraInfo + (crStng.systemColr ? "" : "color: " + crStng.dsColor)
     });
 
     tsIcon = new St.Label({
         text: "⇅",
         y_align: Clutter.ActorAlign.CENTER,
         style_class: getStyle(true),
-        style: "color: " + crStng.tsColor + extraInfo
+        style: extraInfo + (crStng.systemColr ? "" : "color: " + crStng.tsColor)
     });
 
     tdIcon = new St.Label({
         text: DIcons(2),
         y_align: Clutter.ActorAlign.CENTER,
         style_class: getStyle(true),
-        style: "color: " + crStng.tdColor + extraInfo
+        style: extraInfo + (crStng.systemColr ? "" : "color: " + crStng.tdColor)
     });
 }
 
-function updateNsLabels(up, down, up_down, total) { //UpSpeed, DownSpeed, UpSpeed + DownSpeed, TotalDownloaded
+function updateNsLabels(up, down, up_down, total) {
     usLabel.set_text(up);
     dsLabel.set_text(down);
     tsLabel.set_text(up_down);
@@ -183,7 +185,7 @@ function initNs() {
     initNsLabels();
 
     //Allocate 3 * 3 grid (suited for all modes)
-    nsLayout = new Clutter.GridLayout();   
+    nsLayout = new Clutter.GridLayout();
     nsLayout.insert_row(1);
     nsLayout.insert_row(2);
     nsLayout.insert_column(1);
@@ -193,8 +195,10 @@ function initNs() {
         layout_manager: nsLayout,
         y_align: Clutter.ActorAlign.CENTER
     })
- 
-   let verticalConstant = (crStng.isVertical) ? 1 : 0 ;
+
+    let verticalConstant = (crStng.isVertical) ? 1 : 0;
+    let heightConstant = 1 + verticalConstant;
+    let widthConstant = 2 * (1 -  verticalConstant);
 
     //Attach the components to the grid.
     if (crStng.mode == 0 || crStng.mode == 1) {
@@ -202,31 +206,31 @@ function initNs() {
         nsLayout.attach(tsLabel, 1, 1, 1, 1);
 
         if (crStng.showTotalDwnld) {
-            nsLayout.attach(tdIcon,  2 - 2*verticalConstant, 1 + verticalConstant, 1, 1);
-            nsLayout.attach(tdLabel, 3 - 2*verticalConstant, 1 + verticalConstant, 1, 1);
+            nsLayout.attach(tdIcon, widthConstant, heightConstant, 1, 1);
+            nsLayout.attach(tdLabel, 1 + widthConstant, heightConstant, 1, 1);
         }
     }
     else if (crStng.mode == 2 || crStng.mode == 3) {
         if (crStng.revIndicator) {
-            nsLayout.attach(usIcon,  0, 1, 1, 1);
+            nsLayout.attach(usIcon, 0, 1, 1, 1);
             nsLayout.attach(usLabel, 1, 1, 1, 1);
-            nsLayout.attach(dsIcon,  2 - 2*verticalConstant, 1 + verticalConstant, 1, 1); 
-            nsLayout.attach(dsLabel, 3 - 2*verticalConstant, 1 + verticalConstant, 1, 1);
+            nsLayout.attach(dsIcon, widthConstant, heightConstant, 1, 1);
+            nsLayout.attach(dsLabel, 1 + widthConstant, heightConstant, 1, 1);
         }
         else {
-            nsLayout.attach(dsIcon,  0, 1, 1, 1);
+            nsLayout.attach(dsIcon, 0, 1, 1, 1);
             nsLayout.attach(dsLabel, 1, 1, 1, 1);
-            nsLayout.attach(usIcon,  2 - 2*verticalConstant, 1 + verticalConstant, 1, 1); 
-            nsLayout.attach(usLabel, 3 - 2*verticalConstant, 1 + verticalConstant, 1, 1);
+            nsLayout.attach(usIcon, widthConstant, heightConstant, 1, 1);
+            nsLayout.attach(usLabel, 1 + widthConstant, heightConstant, 1, 1);
         }
 
         if (crStng.showTotalDwnld) {
-            nsLayout.attach(tdIcon,  5 - 2*verticalConstant, 1 + verticalConstant, 1, 1); 
-            nsLayout.attach(tdLabel, 6 - 2*verticalConstant, 1 + verticalConstant, 1, 1);
+            nsLayout.attach(tdIcon, 2 + widthConstant, heightConstant, 1, 1);
+            nsLayout.attach(tdLabel, 3 + widthConstant, heightConstant, 1, 1);
         }
     }
     else {
-        nsLayout.attach(tdIcon,  0, 1, 1, 1);
+        nsLayout.attach(tdIcon, 0, 1, 1, 1);
         nsLayout.attach(tdLabel, 1, 1, 1, 1);
     }
 
@@ -252,27 +256,25 @@ function mouseEventHandler(widget, event) {
         if (crStng.mode == 4)
             resetNextCount = true; // right click: reset downloaded sum
         else
-          crStng.showTotalDwnld = !(crStng.showTotalDwnld); // right click on other modes brings total downloaded sum
+            crStng.showTotalDwnld = !(crStng.showTotalDwnld); // right click on other modes brings total downloaded sum
 
-       // Logic to toggle crStng.isVertical after rCConstant consequent right clicks.
-       if (startTime == null) {
-           startTime = new Date();
-       }
+        // Logic to toggle crStng.isVertical after rCConstant consequent right clicks.
+        if (startTime == null) {
+            startTime = new Date();
+        }
 
-       if (((new Date() - startTime) / 1000) <= crStng.refreshTime * 2) {
-           if (rClickCount == rCConst - 1) {
-               crStng.isVertical = !(crStng.isVertical);
-               startTime = null;
-               rClickCount = 0;
-           }
-           else {
-               rClickCount++;
-           }
-       }
-       else {
-           startTime = new Date();
-           rClickCount = 1;
-       }
+        if (((new Date() - startTime) / 1000) <= crStng.refreshTime * 2) {
+            if (rClickCount == rCConst - 1) {
+                crStng.isVertical = !(crStng.isVertical);
+                startTime = null;
+                rClickCount = 0;
+            }
+            else rClickCount++;
+        }
+        else {
+            startTime = new Date();
+            rClickCount = 1;
+        }
     }
     else if (event.get_button() == 2) { // change font
         crStng.fontmode++;
@@ -296,22 +298,22 @@ function parseStat() {
         let count = 0;
         let countUp = 0;
         let line;
-        
+
         while (line = dstream.read_line(null)) {
             line = String(line);
             line = line.trim();
             let fields = line.split(/\W+/);
-            if (fields.length<=2) break;
+            if (fields.length <= 2) break;
 
-            if (fields[0] != "lo" && 
+            if (fields[0] != "lo" &&
                 !fields[0].match(/^virbr[0-9]+/) &&
                 !fields[0].match(/^br[0-9]+/) &&
                 !fields[0].match(/^vnet[0-9]+/) &&
                 !fields[0].match(/^tun[0-9]+/) &&
                 !fields[0].match(/^tap[0-9]+/) &&
                 !isNaN(parseInt(fields[1]))) {
-                    count = count + parseInt(fields[1]) + parseInt(fields[9]);
-                    countUp = countUp + parseInt(fields[9]);
+                count = count + parseInt(fields[1]) + parseInt(fields[9]);
+                countUp = countUp + parseInt(fields[9]);
             }
         }
         fstream.close(null);
@@ -325,16 +327,16 @@ function parseStat() {
             resetNextCount = false;
             resetCount = count;
         }
-        
+
         (speed || speedUp) ? hideCount = 0 : hideCount <= 8 ? hideCount++ : null
 
-        if(hideCount<=8) {
+        if (hideCount <= 8) {
             nsButton == null ? initNs() : null
 
             updateNsLabels(" " + speedToString(speedUp),
-            " " + speedToString(speed - speedUp),
-            " " + speedToString(speed),
-            " " + speedToString(count - resetCount, 1));
+                " " + speedToString(speed - speedUp),
+                " " + speedToString(speed),
+                " " + speedToString(count - resetCount, 1));
         }
         else {
             if (crStng.hideInd) {
@@ -363,16 +365,17 @@ function init() {
     settings = Convenience.getSettings(schema);
 }
 
-function _settingsChanged(){
+function _settingsChanged() {
     settings.set_boolean('restartextension', false);
     disable();
     enable();
+    parseStat();
 }
 
 function enable() {
 
     fetchSettings(); // Automatically creates the netSpeed Button.
-    
+
     //Run infinite loop.
     timeout = Mainloop.timeout_add_seconds(crStng.refreshTime, parseStat);
 }
