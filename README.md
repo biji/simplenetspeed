@@ -5,7 +5,7 @@
 <a href="https://github.com/prateekmedia/netspeedsimplified/releases"><img alt="GitHub release" src="https://img.shields.io/github/v/release/prateekmedia/netspeedsimplified"/></a> <a href="LICENSE"><img alt="License" src="https://img.shields.io/github/license/prateekmedia/netspeedsimplified?color=blue"/></a>
 </p>
 
-[<img src="https://raw.githubusercontent.com/andyholmes/gnome-shell-extensions-badge/master/get-it-on-ego.svg?sanitize=true" height="100" alt="Get it on GNOME Extensions">](https://extensions.gnome.org/extension/3724/net-speed-simplified/) or [Install Manually](#installing-manually)
+[<img src="https://raw.githubusercontent.com/andyholmes/gnome-shell-extensions-badge/master/get-it-on-ego.svg?sanitize=true" height="100" alt="Get it on GNOME Extensions">](https://extensions.gnome.org/extension/3724/net-speed-simplified/) or <a href="#installing-manually"><img alt="Install Manually" src="https://img.shields.io/badge/Install Manually-2 ways-blue"/></a>
 
 <p align="center"><img src='https://extensions.gnome.org/extension-data/screenshots/screenshot_3724.gif' width="500px"  alt="Screenshot"/>
 </p>
@@ -48,9 +48,9 @@ If you faced an **issue** then you can **[file an issue here](https://github.com
 
 #### Mouse Events
 - **Left click**: Cycle through the [modes](#modes).
-- **Right click(in first four modes)**: Toggle the visibility of total downloaded.
-- **Right click(in fifth mode)**: Reset total downloaded.
-- **Right Click(Four consecutive times)**: Toggle through horizantal/vertical alignment.
+- **Right click(in 1-4 modes)**: Toggle the visibility of total downloaded.
+- **Right click(in 5th mode)**: Reset total downloaded.
+- **Right Click(Four consecutive times)**: Toggle through horizontal/vertical alignment.
 - **Middle click**: Cycle through the font sizes.
 
 #### *Special Thanks to*
@@ -62,23 +62,26 @@ If you faced an **issue** then you can **[file an issue here](https://github.com
   
 ### Quick install
 For quick install use below command:
-
-    $ bash -c "$(curl -sL https://git.io/Jk28b)"
-
+```bash
+bash -c "$(curl -sL https://git.io/Jk28b)"
+```
 
 ### Installing using Make
 * Step 1 : Getting the sources from repository
-
-      $ git clone https://github.com/prateekmedia/netspeedsimplified.git
-
+```bash
+git clone "https://github.com/prateekmedia/netspeedsimplified.git"
+```
 * Step 2 : Running make (install)
-
-      $ make install
-
-Likewise extension can be removed  
-```$ make remove```  
-OR reinstalled  
-```$ make reinstall```  
-
+```bash
+make install
+```
+Likewise extension can be removed using
+```bash
+make remove
+```  
+OR reinstalled using
+```bash
+make reinstall
+```  
 
 You can manage the extension using extensions app or [website](https://extensions.gnome.org/local)
