@@ -27,7 +27,7 @@ function init() {
     settings = Convenience.getSettings(PREFS_SCHEMA);
 
     mode = settings.get_int('mode'); // default mode using bit (bps, kbps)
-    fontmode = settings.get_int('fontmode'); 
+    fontmode = settings.get_int('fontmode');
 
     button = new St.Bin({
         style_class: 'panel-button',
@@ -95,11 +95,11 @@ function chooseLabel() {
     else { // 2 , 3
         styleName = 'simplenetspeed-label-w';
     }
-    
+
     if (fontmode > 0) {
         styleName = styleName + '-' + fontmode;
-    } 
-    
+    }
+
     ioSpeed.set_style_class_name(styleName);
     return ioSpeed;
 }
@@ -119,7 +119,9 @@ function parseStat() {
             let fields = line.split(/\W+/);
             if (fields.length<=2) break;
 
-            if (fields[0] != "lo" && 
+            if (fields[0] != "lo" &&
+                !fields[0].match(/^ifb[0-9]+/) && // created by python-based bandwidth manager "traffictoll"
+                !fields[0].match(/^lxdbr[0-9]+/) && // created by lxd container manager
                 !fields[0].match(/^virbr[0-9]+/) &&
                 !fields[0].match(/^br[0-9]+/) &&
                 !fields[0].match(/^vnet[0-9]+/) &&
@@ -216,7 +218,7 @@ function speedToString(amount) {
         digits = 0;
     else if (amount >= 10) // 10MB 10.2
         digits = 1;
-    else 
+    else
         digits = 2;
     return String(amount.toFixed(digits)) + speed_map[unit];
 }
