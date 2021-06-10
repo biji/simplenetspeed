@@ -1,0 +1,2 @@
+geu build
+geu publish
