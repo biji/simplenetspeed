@@ -3,15 +3,14 @@ const St = imports.gi.St;
 const Main = imports.ui.main;
 // const Tweener = imports.ui.tweener;
 const Gio = imports.gi.Gio;
-const Mainloop = imports.mainloop;
-// const GLib = imports.gi.GLib;
+const GLib = imports.gi.GLib;
 
 const ExtensionUtils = imports.misc.extensionUtils;
 const Me = ExtensionUtils.getCurrentExtension();
 const Convenience = Me.imports.convenience;
 
 const PREFS_SCHEMA = 'org.gnome.shell.extensions.simplenetspeed';
-const refreshTime = 3.0;
+const refreshTime = 3;
 
 let settings;
 let button, timeout;
@@ -25,40 +24,6 @@ let resetNextCount = false, resetCount = 0;
 function init() {
 
     settings = Convenience.getSettings(PREFS_SCHEMA);
-
-    mode = settings.get_int('mode'); // default mode using bit (bps, kbps)
-    fontmode = settings.get_int('fontmode');
-
-    button = new St.Bin({
-        style_class: 'panel-button',
-        reactive: true,
-        can_focus: true,
-        x_expand: true,
-        y_expand: false,
-        track_hover: true
-    });
-
-    /*
-    icon = new St.Icon({
-        gicon: Gio.icon_new_for_string(Me.path + "/icons/harddisk.svg")
-    });
-    iconDark = new St.Icon({
-        gicon: Gio.icon_new_for_string(Me.path + "/icons/harddisk-dark.svg")
-    });*/
-
-    ioSpeed = new St.Label({
-        text: '---',
-        y_align: Clutter.ActorAlign.CENTER,
-        style_class: 'simplenetspeed-label'
-    });
-
-    // ioSpeedStaticIcon = new St.Label({
-    //     text: '💾',
-    //     style_class: 'simplenetspeed-static-icon'
-    // });
-
-    button.set_child(chooseLabel());
-    button.connect('button-press-event', changeMode);
 }
 
 function changeMode(widget, event) {
@@ -187,7 +152,7 @@ function parseStat() {
         diskstats = curDiskstats;
     }*/
 
-    return true;
+    return GLib.SOURCE_CONTINUE;
 }
 
 function speedToString(amount) {
@@ -224,11 +189,50 @@ function speedToString(amount) {
 }
 
 function enable() {
+    mode = settings.get_int('mode'); // default mode using bit (bps, kbps)
+    fontmode = settings.get_int('fontmode');
+
+    button = new St.Bin({
+        style_class: 'panel-button',
+        reactive: true,
+        can_focus: true,
+        x_expand: true,
+        y_expand: false,
+        track_hover: true
+    });
+
+    /*
+    icon = new St.Icon({
+        gicon: Gio.icon_new_for_string(Me.path + "/icons/harddisk.svg")
+    });
+    iconDark = new St.Icon({
+        gicon: Gio.icon_new_for_string(Me.path + "/icons/harddisk-dark.svg")
+    });*/
+
+    ioSpeed = new St.Label({
+        text: '---',
+        y_align: Clutter.ActorAlign.CENTER,
+        style_class: 'simplenetspeed-label'
+    });
+
+    // ioSpeedStaticIcon = new St.Label({
+    //     text: '💾',
+    //     style_class: 'simplenetspeed-static-icon'
+    // });
+
+    button.set_child(chooseLabel());
+    button.connect('button-press-event', changeMode);
+
     Main.panel._rightBox.insert_child_at_index(button, 0);
-    timeout = Mainloop.timeout_add_seconds(refreshTime, parseStat);
+    timeout = GLib.timeout_add_seconds(GLib.PRIORITY_DEFAULT, refreshTime, () => {
+        return parseStat();
+    });
 }
 
 function disable() {
-    Mainloop.source_remove(timeout);
-    Main.panel._rightBox.remove_child(button);
+    if (timeout) {
+        GLib.source_remove(timeout);
+        timeout = null;
+        Main.panel._rightBox.remove_child(button);
+    }
 }

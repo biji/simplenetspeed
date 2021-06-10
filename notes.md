@@ -1,2 +1,0 @@
-geu build
-geu publish
