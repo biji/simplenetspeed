@@ -4,6 +4,7 @@ const Main = imports.ui.main;
 // const Tweener = imports.ui.tweener;
 const Gio = imports.gi.Gio;
 const GLib = imports.gi.GLib;
+const ByteArray = imports.byteArray;
 
 const ExtensionUtils = imports.misc.extensionUtils;
 const Me = ExtensionUtils.getCurrentExtension();
@@ -23,7 +24,6 @@ let resetNextCount = false, resetCount = 0;
 
 function init() {
 
-    settings = Convenience.getSettings(PREFS_SCHEMA);
 }
 
 function changeMode(widget, event) {
@@ -136,22 +136,6 @@ function parseStat() {
         ioSpeed.set_text(e.message);
     }
 
-    /*
-    let curDiskstats = GLib.file_get_contents('/proc/diskstats');
-
-    if (diskstats == curDiskstats) {
-        if (cur !== 0) {
-            button.set_child(iconDark);
-            cur = 0;
-        }
-    } else {
-        if (cur != 1) {
-            button.set_child(icon);
-            cur = 1;
-        }
-        diskstats = curDiskstats;
-    }*/
-
     return GLib.SOURCE_CONTINUE;
 }
 
@@ -189,6 +173,8 @@ function speedToString(amount) {
 }
 
 function enable() {
+    settings = Convenience.getSettings(PREFS_SCHEMA);
+
     mode = settings.get_int('mode'); // default mode using bit (bps, kbps)
     fontmode = settings.get_int('fontmode');
 
@@ -201,24 +187,11 @@ function enable() {
         track_hover: true
     });
 
-    /*
-    icon = new St.Icon({
-        gicon: Gio.icon_new_for_string(Me.path + "/icons/harddisk.svg")
-    });
-    iconDark = new St.Icon({
-        gicon: Gio.icon_new_for_string(Me.path + "/icons/harddisk-dark.svg")
-    });*/
-
     ioSpeed = new St.Label({
         text: '---',
         y_align: Clutter.ActorAlign.CENTER,
         style_class: 'simplenetspeed-label'
     });
-
-    // ioSpeedStaticIcon = new St.Label({
-    //     text: '💾',
-    //     style_class: 'simplenetspeed-static-icon'
-    // });
 
     button.set_child(chooseLabel());
     button.connect('button-press-event', changeMode);
@@ -234,5 +207,6 @@ function disable() {
         GLib.source_remove(timeout);
         timeout = null;
         Main.panel._rightBox.remove_child(button);
+        button.destroy();
     }
 }
