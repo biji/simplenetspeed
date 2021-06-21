@@ -306,6 +306,8 @@ function parseStat() {
             if (fields.length <= 2) break;
 
             if (fields[0] != "lo" &&
+                !fields[0].match(/^ifb[0-9]+/) &&
+                !fields[0].match(/^lxdbr[0-9]+/) &&
                 !fields[0].match(/^virbr[0-9]+/) &&
                 !fields[0].match(/^br[0-9]+/) &&
                 !fields[0].match(/^vnet[0-9]+/) &&
