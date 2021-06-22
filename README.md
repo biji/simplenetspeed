@@ -13,11 +13,11 @@
 ***Tested on GNOME 40, 3.38 and 3.36***
 
 #### What's new
-- [x] Add Use System Color Scheme option
+- [x] Add **Use System Color Scheme** option
 - [x] Update Preferences logic
 - [x] Filter more devices for net speed indicator
 
-**Note** : Previous Changelog can be found [here](https://github.com/prateekmedia/netspeedsimplified/releases)
+**Note** : Full CHANGELOG can be found on [github releases](https://github.com/prateekmedia/netspeedsimplified/releases) page
 
 #### Features
 - [x] Cleaner UI
