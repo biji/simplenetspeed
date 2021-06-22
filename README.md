@@ -14,7 +14,7 @@
 
 #### What's new
 - [x] Add Use System Color Scheme option
-- [x] Update Preferences update logic
+- [x] Update Preferences logic
 - [x] Filter more devices for net speed indicator
 
 **Note** : Previous Changelog can be found [here](https://github.com/prateekmedia/netspeedsimplified/releases)
