@@ -114,7 +114,7 @@ function initNsLabels() {
         text: '--',
         y_align: Clutter.ActorAlign.CENTER,
         style_class: getStyle(),
-        style: extraLabelInfo + (crStng.systemColr ? "color: " + crStng.usColor : "")
+        style: extraLabelInfo + (crStng.systemColr ? "" : "color: " + crStng.usColor)
     });
 
     dsLabel = new St.Label({
