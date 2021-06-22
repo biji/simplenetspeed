@@ -14,11 +14,10 @@
 
 #### What's new
 - [x] Add Use System Color Scheme option
-- [x] Make Preferences more fluent with speed indicator
-- [x] Add Limit Unit option
-- [x] Add Gnome 40 Support
-- [x] Fix a bug where refresh time was getting reset to 6.5
-- [x] Used Min Width 3.0 by default
+- [x] Mpdate Preferences update logic
+- [x] Filter more devices for net speed indicator
+
+**Note** : Previous Changelog can be found [here](https://github.com/prateekmedia/netspeedsimplified/releases)
 
 #### Features
 - [x] Cleaner UI
@@ -28,23 +27,24 @@
 - [x] *Two Icon sets* for Indicators
 
 #### Feature Highlights for Preferences
-- [x] *Lock Mouse Actions* button to Freeze [Mouse Events](#mouse-events)
-- [x] *Advance Position* options to pinpoint where to place the indicator on the Panel
-- [x] *Refresh time* field by which you can change refresh rate value between 1.0 sec to 10.0 sec
-- [x] Show Upload First button to show upload speed first
-- [x] Color Customizations to make the extension your own
-- [x] *Hide when Disconnected* button in Preference
-- [x] *Use Shorten Units* button in Preference
+- [x] **Lock Mouse Actions** option to Freeze [Mouse Events](#mouse-events)
+- [x] **Advance Position** options to pinpoint where to place the indicator on the Panel
+- [x] **Refresh time** field by which you can change refresh rate value between 1.0 sec to 10.0 sec
+- [x] **Show Upload First** option to show upload speed first
+- [x] **Color Customizations** for speed indicators
+- [x] **Hide when Disconnected** option
+- [x] **Use Shorten Units** option 
+- [x] **Limit Unit** option
 and more...
 
 If you faced an **issue** then you can **[file an issue here](https://github.com/prateekmedia/netspeedsimplified/issues)**
  
 #### Modes
-1. `Total net speed in b/s, kb/s, ...`
-1. `Total net speed in B/s, KB/s, ...`
-1. `Up & down speed in b/s, kb/s, ...`
-1. `Up & down speed in B/s, KB/s, ...`
-1. `Total downloads in B, KB, ... (Right click to reset counter)`
+- **Total net speed** in b/s, kb/s, ...
+- **Total net speed** in B/s, KB/s, ...
+- **Up & down speed** in b/s, kb/s, ...
+- **Up & down speed** in B/s, KB/s, ...
+- **Total downloads** in B, KB, ... (Right click to reset counter)
 
 #### Mouse Events
 - **Left click**: Cycle through the [modes](#modes).
@@ -67,19 +67,19 @@ bash -c "$(curl -sL https://git.io/Jk28b)"
 ```
 
 ### Installing using Make
-* Step 1 : Getting the sources from repository
+- **Step 1** : Getting the sources from repository
 ```bash
 git clone "https://github.com/prateekmedia/netspeedsimplified.git"
 ```
-* Step 2 : Running make (install)
+- **Step 2** : Running make (install)
 ```bash
 make install
 ```
-Likewise extension can be removed using
+Likewise extension can be **removed** using
 ```bash
 make remove
 ```  
-OR reinstalled using
+OR **reinstalled** using
 ```bash
 make reinstall
 ```  
