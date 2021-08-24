@@ -12,8 +12,11 @@ const Clutter = imports.gi.Clutter,
     rCConst = 4; //Right Click 4 times to toggle Vertical Alignment
 
 let settings, timeout,
-    lastCount = 0, lastSpeed = 0, lastCountUp = 0,
-    resetNextCount = false, resetCount = 0,
+    lastCount = 0,
+    lastSpeed = 0,
+    lastCountUp = 0,
+    resetNextCount = false,
+    resetCount = 0,
     hideCount = 8,
     B_UNITS;
 
@@ -32,6 +35,8 @@ function fetchSettings() {
         revIndicator: settings.get_boolean('reverseindicators'),
         lckMuseAct: settings.get_boolean('lockmouseactions'),
         minWidth: settings.get_double('minwidth'),
+        iconsToRight: settings.get_boolean('iconstoright'),
+        textAlign: settings.get_int('textalign'),
         cusFont: settings.get_string('customfont'),
         hideInd: settings.get_boolean('hideindicator'),
         shortenUnits: settings.get_boolean('shortenunits'),
@@ -60,7 +65,11 @@ function pushSettings() {
 
 //Helper Functions
 function DIcons(iNum) {
-    return [["⬇", "⬆"], ["🡳", "🡱"], ["↓", "↑"]][crStng.chooseIconSet][iNum];
+    return [
+        ["⬇", "⬆"],
+        ["🡳", "🡱"],
+        ["↓", "↑"]
+    ][crStng.chooseIconSet][iNum];
 }
 
 function nsPos() {
@@ -75,10 +84,10 @@ function speedToString(amount, rMode = 0) {
 
     let speed_map = B_UNITS.map(
         (rMode == 1 && (crStng.mode == 1 || crStng.mode == 3 || crStng.mode == 4)) ? v => v : //KB
-            (rMode == 1 && (crStng.mode == 0 || crStng.mode == 2)) ? v => v.toLowerCase() : //kb
-                (crStng.mode == 0 || crStng.mode == 2) ? v => v.toLowerCase() + "/s" : //kb/s
-                    (crStng.mode == 1 || crStng.mode == 3) ? v => v + "/s" :  //KB/s
-                        v => v); // Others
+        (rMode == 1 && (crStng.mode == 0 || crStng.mode == 2)) ? v => v.toLowerCase() : //kb
+        (crStng.mode == 0 || crStng.mode == 2) ? v => v.toLowerCase() + "/s" : //kb/s
+        (crStng.mode == 1 || crStng.mode == 3) ? v => v + "/s" : //KB/s
+        v => v); // Others
 
     if (amount === 0) return "  0.0 " + speed_map[0];
     if (crStng.mode == 0 || crStng.mode == 2) amount = amount * 8;
@@ -106,9 +115,12 @@ var usLabel, dsLabel, tsLabel, tdLabel, usIcon, dsIcon, tsIcon, tdIcon;
 function getStyle(isIcon = false) {
     return (isIcon) ? 'size-' + (String(crStng.fontmode)) : ('forall size-' + String(crStng.fontmode))
 }
+
 function initNsLabels() {
     let extraInfo = crStng.cusFont ? "font-family: " + crStng.cusFont + "; " : "";
     let extraLabelInfo = extraInfo + "min-width: " + crStng.minWidth + "em; ";
+    extraLabelInfo += "text-align: " + ["left", "right", "center"][crStng.textAlign] + "; ";
+
 
     usLabel = new St.Label({
         text: '--',
@@ -174,7 +186,9 @@ function updateNsLabels(up, down, up_down, total) {
 }
 
 // Initalize NetSpeed
-var nsButton = null, nsActor = null, nsLayout = null;
+var nsButton = null,
+    nsActor = null,
+    nsLayout = null;
 
 function initNs() {
 
@@ -202,42 +216,39 @@ function initNs() {
 
     //Attach the components to the grid.
     if (crStng.mode == 0 || crStng.mode == 1) {
-        nsLayout.attach(tsIcon, 0, 1, 1, 1);
-        nsLayout.attach(tsLabel, 1, 1, 1, 1);
+        nsLayout.attach(!crStng.iconsToRight ? tsIcon : tsLabel, 0, 1, 1, 1);
+        nsLayout.attach(!crStng.iconsToRight ? tsLabel : tsIcon, 1, 1, 1, 1);
 
         if (crStng.showTotalDwnld) {
-            nsLayout.attach(tdIcon, widthConstant, heightConstant, 1, 1);
-            nsLayout.attach(tdLabel, 1 + widthConstant, heightConstant, 1, 1);
+            nsLayout.attach(!crStng.iconsToRight ? tdIcon : tdLabel, widthConstant, heightConstant, 1, 1);
+            nsLayout.attach(!crStng.iconsToRight ? tdLabel : tdIcon, 1 + widthConstant, heightConstant, 1, 1);
         }
-    }
-    else if (crStng.mode == 2 || crStng.mode == 3) {
+    } else if (crStng.mode == 2 || crStng.mode == 3) {
         if (crStng.revIndicator) {
-            nsLayout.attach(usIcon, 0, 1, 1, 1);
-            nsLayout.attach(usLabel, 1, 1, 1, 1);
-            nsLayout.attach(dsIcon, widthConstant, heightConstant, 1, 1);
-            nsLayout.attach(dsLabel, 1 + widthConstant, heightConstant, 1, 1);
-        }
-        else {
-            nsLayout.attach(dsIcon, 0, 1, 1, 1);
-            nsLayout.attach(dsLabel, 1, 1, 1, 1);
-            nsLayout.attach(usIcon, widthConstant, heightConstant, 1, 1);
-            nsLayout.attach(usLabel, 1 + widthConstant, heightConstant, 1, 1);
+            nsLayout.attach(!crStng.iconsToRight ? usIcon : usLabel, 0, 1, 1, 1);
+            nsLayout.attach(!crStng.iconsToRight ? usLabel : usIcon, 1, 1, 1, 1);
+            nsLayout.attach(!crStng.iconsToRight ? dsIcon : dsLabel, widthConstant, heightConstant, 1, 1);
+            nsLayout.attach(!crStng.iconsToRight ? dsLabel : dsIcon, 1 + widthConstant, heightConstant, 1, 1);
+        } else {
+            nsLayout.attach(!crStng.iconsToRight ? dsIcon : dsLabel, 0, 1, 1, 1);
+            nsLayout.attach(!crStng.iconsToRight ? dsLabel : dsIcon, 1, 1, 1, 1);
+            nsLayout.attach(!crStng.iconsToRight ? usIcon : usLabel, widthConstant, heightConstant, 1, 1);
+            nsLayout.attach(!crStng.iconsToRight ? usLabel : usIcon, 1 + widthConstant, heightConstant, 1, 1);
         }
 
         if (crStng.showTotalDwnld) {
-            nsLayout.attach(tdIcon, 2 + widthConstant, heightConstant, 1, 1);
-            nsLayout.attach(tdLabel, 3 + widthConstant, heightConstant, 1, 1);
+            nsLayout.attach(!crStng.iconsToRight ? tdIcon : tdLabel, 2 + widthConstant, heightConstant, 1, 1);
+            nsLayout.attach(!crStng.iconsToRight ? tdLabel : tdIcon, 3 + widthConstant, heightConstant, 1, 1);
         }
-    }
-    else {
-        nsLayout.attach(tdIcon, 0, 1, 1, 1);
-        nsLayout.attach(tdLabel, 1, 1, 1, 1);
+    } else {
+        nsLayout.attach(!crStng.iconsToRight ? tdIcon : tdLabel, 0, 1, 1, 1);
+        nsLayout.attach(!crStng.iconsToRight ? tdLabel : tdIcon, 1, 1, 1, 1);
     }
 
     //Create the button and add to Main.panel
     nsButton = new PanelMenu.Button(0.0, ButtonName);
 
-    (!crStng.lckMuseAct) ? nsButton.connect('button-press-event', mouseEventHandler) : null;
+    (!crStng.lckMuseAct) ? nsButton.connect('button-press-event', mouseEventHandler): null;
     nsButton.add_child(nsActor);
 
     Main.panel.addToStatusArea(ButtonName, nsButton, nsPosAdv(), nsPos());
@@ -249,7 +260,8 @@ function nsDestroy() {
 }
 
 // Mouse Event Handler
-var startTime = null, rClickCount = 0;
+var startTime = null,
+    rClickCount = 0;
 
 function mouseEventHandler(widget, event) {
     if (event.get_button() == 3) {
@@ -268,19 +280,15 @@ function mouseEventHandler(widget, event) {
                 crStng.isVertical = !(crStng.isVertical);
                 startTime = null;
                 rClickCount = 0;
-            }
-            else rClickCount++;
-        }
-        else {
+            } else rClickCount++;
+        } else {
             startTime = new Date();
             rClickCount = 1;
         }
-    }
-    else if (event.get_button() == 2) { // change font
+    } else if (event.get_button() == 2) { // change font
         crStng.fontmode++;
         if (crStng.fontmode > 4) crStng.fontmode = 0;
-    }
-    else if (event.get_button() == 1) {
+    } else if (event.get_button() == 1) {
         crStng.mode++;
         if (crStng.mode > 4) crStng.mode = 0;
     }
@@ -323,14 +331,15 @@ function parseStat() {
         if (lastCount === 0) lastCount = count;
         if (lastCountUp === 0) lastCountUp = countUp;
 
-        let speed = (count - lastCount) / crStng.refreshTime, speedUp = (countUp - lastCountUp) / crStng.refreshTime;
+        let speed = (count - lastCount) / crStng.refreshTime,
+            speedUp = (countUp - lastCountUp) / crStng.refreshTime;
 
         if (resetNextCount == true) {
             resetNextCount = false;
             resetCount = count;
         }
 
-        (speed || speedUp) ? hideCount = 0 : hideCount <= 8 ? hideCount++ : null
+        (speed || speedUp) ? hideCount = 0: hideCount <= 8 ? hideCount++ : null
 
         if (hideCount <= 8) {
             nsButton == null ? initNs() : null
@@ -339,12 +348,10 @@ function parseStat() {
                 " " + speedToString(speed - speedUp),
                 " " + speedToString(speed),
                 " " + speedToString(count - resetCount, 1));
-        }
-        else {
+        } else {
             if (crStng.hideInd) {
                 nsDestroy();
-            }
-            else {
+            } else {
                 nsButton == null ? initNs() : null
                 updateNsLabels('--', '--', '--', speedToString(count - resetCount, 1));
             }

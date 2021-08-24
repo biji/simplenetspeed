@@ -21,6 +21,12 @@
         <range min="1.0" max="10.0" />
         <default>1.5</default>
       </key>
+      <key name="iconstoright" type="b">
+        <default>false</default>
+      </key>
+      <key name="textalign" type="i">
+        <default>1</default>
+      </key>
       <key name="togglebool" type="b">
         <default>false</default>
       </key>
