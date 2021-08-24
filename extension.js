@@ -60,7 +60,7 @@ function pushSettings() {
 
 //Helper Functions
 function DIcons(iNum) {
-    return [["🡳", "🡱", "Σ"], ["↓", "↑", "∑"]][crStng.chooseIconSet][iNum];
+    return [["⬇", "⬆"], ["🡳", "🡱"], ["↓", "↑"]][crStng.chooseIconSet][iNum];
 }
 
 function nsPos() {
@@ -159,7 +159,7 @@ function initNsLabels() {
     });
 
     tdIcon = new St.Label({
-        text: DIcons(2),
+        text: "Σ",
         y_align: Clutter.ActorAlign.CENTER,
         style_class: getStyle(true),
         style: extraInfo + (crStng.systemColr ? "" : "color: " + crStng.tdColor)

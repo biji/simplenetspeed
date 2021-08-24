@@ -225,7 +225,7 @@ Prefs.prototype =
 
 		//For Toggling Old Icons
 		let hboxIconset = newGtkBox()
-		vBoxAddSeleCt("chooseiconset", hboxIconset, "Choose Icons Set", [" 🡳,  🡱,  Σ ", " ↓,  ↑,  ∑ "], "Choose which icon set to display")
+		vBoxAddSeleCt("chooseiconset", hboxIconset, "Choose Icons Set", [" ⬇,  ⬆", " 🡳,  🡱", " ↓,  ↑"], "Choose which icon set to display")
 
 		//For Limiting upper limit of speed
 		let hboxLimitUnit = newGtkBox()
