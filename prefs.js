@@ -251,7 +251,7 @@ Prefs.prototype = {
                 thset.set_boolean(boolArray[l], thset.get_default_value(boolArray[l]).unpack())
             }
             thset.set_boolean('restartextension', true)
-            window.destroy()
+            frame.destroy()
         })
 
         addIt(vbox, label)
