@@ -3,7 +3,7 @@
   <schema path="/org/gnome/shell/extensions/netspeedsimplified/" id="org.gnome.shell.extensions.netspeedsimplified">
       <key name="mode" type="i">
         <range min="0" max="4" />
-        <default>0</default>
+        <default>1</default>
       </key>
       <key name="fontmode" type="i">
         <range min="0" max="4" />
@@ -28,7 +28,7 @@
         <default>1</default>
       </key>
       <key name="togglebool" type="b">
-        <default>false</default>
+        <default>true</default>
       </key>
       <key name="isvertical" type="b">
         <default>false</default>
