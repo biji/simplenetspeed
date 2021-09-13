@@ -1,14 +1,34 @@
 <p align="center"><a href="https://extensions.gnome.org/extension/3724/net-speed-simplified/"><img src="https://raw.githubusercontent.com/prateekmedia/netspeedsimplified/main/images/icon.png" height=80px alt="NSS Logo"/></a></p>
 <h1 align="center">Net speed Simplified</h1>
-<p align="center"><i><b>A Net Speed extension With Loads of Customization.</b></i></p>
+<p align="center"><b>A Net Speed monitor With Loads of Customization.</b></p>
 <p align="center">
-<a href="https://github.com/prateekmedia/netspeedsimplified/releases"><img alt="GitHub release" src="https://img.shields.io/github/v/release/prateekmedia/netspeedsimplified"/></a> <a href="LICENSE"><img alt="License" src="https://img.shields.io/github/license/prateekmedia/netspeedsimplified?color=blue"/></a>
+<a href="https://github.com/prateekmedia/netspeedsimplified/releases">
+ <img alt="GitHub release" src="https://img.shields.io/github/v/release/prateekmedia/netspeedsimplified"/></a> <a href="LICENSE"><img alt="License" src="https://img.shields.io/github/license/prateekmedia/netspeedsimplified?color=blue"/></a>
 </p>
-
-[<img src="https://raw.githubusercontent.com/andyholmes/gnome-shell-extensions-badge/master/get-it-on-ego.svg?sanitize=true" height="100" alt="Get it on GNOME Extensions">](https://extensions.gnome.org/extension/3724/net-speed-simplified/) or <a href="#installing-manually"><img alt="Install Manually" src="https://img.shields.io/badge/Install Manually-2 ways-blue"/></a>
-
-<p align="center"><img src='https://extensions.gnome.org/extension-data/screenshots/screenshot_3724.gif' width="500px"  alt="Screenshot"/>
+<p align="center">
+ <img src='https://extensions.gnome.org/extension-data/screenshots/screenshot_3724.gif' width="500px"  alt="Screenshot"/>
 </p>
+<table>
+ <th colspan=2>
+  <h6>Download options</h6>
+ </th>
+ <tr>
+  <td>
+   <a href="https://extensions.gnome.org/extension/3724/net-speed-simplified/">
+    <img src="https://raw.githubusercontent.com/andyholmes/gnome-shell-extensions-badge/master/get-it-on-ego.svg?sanitize=true" height="100" alt="Get it on GNOME Extensions">
+   </a>
+  </td>
+  <td>
+   <a href="#installing-manually">
+    <img alt="Install Manually" src="https://img.shields.io/badge/Install Manually-2 ways-blue"/>
+   </a>
+  </td>
+ </tr>
+ <tr>
+  <td colspan=10>
+ </tr>
+ </td>
+</table>
 
 ***Tested on GNOME 40, 3.38 and 3.36***
 
