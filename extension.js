@@ -8,7 +8,6 @@ const ByteArray = imports.byteArray;
 
 const ExtensionUtils = imports.misc.extensionUtils;
 const Me = ExtensionUtils.getCurrentExtension();
-const Convenience = Me.imports.convenience;
 
 const PREFS_SCHEMA = 'org.gnome.shell.extensions.simplenetspeed';
 const refreshTime = 3;
@@ -38,7 +37,7 @@ function changeMode(widget, event) {
             fontmode=0;
         }
         settings.set_int('fontmode', fontmode);
-        button.set_child(chooseLabel());
+        chooseLabel();
         parseStat();
     }
     else if (event.get_button() == 1) {
@@ -47,7 +46,7 @@ function changeMode(widget, event) {
             mode = 0;
         }
         settings.set_int('mode', mode);
-        button.set_child(chooseLabel());
+        chooseLabel();
         parseStat();
     }
     log('mode:' + mode + ' font:' + fontmode);
@@ -173,7 +172,7 @@ function speedToString(amount) {
 }
 
 function enable() {
-    settings = Convenience.getSettings(PREFS_SCHEMA);
+    settings = ExtensionUtils.getSettings(PREFS_SCHEMA);
 
     mode = settings.get_int('mode'); // default mode using bit (bps, kbps)
     fontmode = settings.get_int('fontmode');
@@ -208,5 +207,6 @@ function disable() {
         timeout = null;
         Main.panel._rightBox.remove_child(button);
         button.destroy();
+        settings = button = ioSpeed = null;
     }
 }
