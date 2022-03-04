@@ -205,8 +205,8 @@ function disable() {
     if (timeout) {
         GLib.source_remove(timeout);
         timeout = null;
-        Main.panel._rightBox.remove_child(button);
-        button.destroy();
-        settings = button = ioSpeed = null;
     }
+    Main.panel._rightBox.remove_child(button);
+    button.destroy();
+    settings = button = ioSpeed = null;
 }
