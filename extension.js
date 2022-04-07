@@ -20,6 +20,16 @@ let lastCount = 0, lastSpeed = 0, lastCountUp = 0;
 let mode; // 0: kbps 1: K/s 2: U:kbps D:kbps 3: U:K/s D:K/s 4: Total KB
 let fontmode;
 let resetNextCount = false, resetCount = 0;
+let byteArrayToString;
+
+if (global.TextDecoder) {
+    // available in gjs >= 1.70 (GNOME Shell >= 42)
+    byteArrayToString = (new TextDecoder().decode);
+}
+else {
+    // gjs-specific
+    byteArrayToString = imports.byteArray.toString;
+}
 
 function init() {
 
@@ -77,8 +87,8 @@ function parseStat() {
         let count = 0;
         let countUp = 0;
         let line;
-        while (line = dstream.read_line(null)) {
-            line = String(line);
+        while (([line, len] = dstream.read_line(null)) != null && line != null) {
+            line = byteArrayToString(line);
             line = line.trim();
             let fields = line.split(/\W+/);
             if (fields.length<=2) break;
