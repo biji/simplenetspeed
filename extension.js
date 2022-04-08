@@ -20,15 +20,13 @@ let lastCount = 0, lastSpeed = 0, lastCountUp = 0;
 let mode; // 0: kbps 1: K/s 2: U:kbps D:kbps 3: U:K/s D:K/s 4: Total KB
 let fontmode;
 let resetNextCount = false, resetCount = 0;
-let byteArrayToString;
 
-if (global.TextDecoder) {
-    // available in gjs >= 1.70 (GNOME Shell >= 42)
-    byteArrayToString = (new TextDecoder().decode);
-}
-else {
-    // gjs-specific
-    byteArrayToString = imports.byteArray.toString;
+function byteArrayToString(bytes) {
+    if (global.TextDecoder) {
+        return new TextDecoder().decode(bytes);
+    }
+
+    return imports.byteArray.toString(bytes);
 }
 
 function init() {
