@@ -226,7 +226,8 @@ Prefs.prototype = {
         let vbox = new Gtk.Box({
             orientation: Gtk.Orientation.VERTICAL,
             margin_start: 25,
-            margin_end: 25
+            margin_end: 25,
+            vexpand: true,
         })
         let resetBtn = new Gtk.Button({
             label: "Restore Defaults",
@@ -251,7 +252,7 @@ Prefs.prototype = {
                 thset.set_boolean(boolArray[l], thset.get_default_value(boolArray[l]).unpack())
             }
             thset.set_boolean('restartextension', true)
-            frame.destroy()
+            window.destroy()
         })
 
         addIt(vbox, label)

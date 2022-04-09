@@ -12,14 +12,15 @@
     "3.26",
     "3.28",
     "3.30",
-    "3.32",
     "3.34",
+    "3.32",
     "3.36",
     "3.38",
     "40",
-    "41"
+    "41",
+    "42"
   ],
   "url": "https://github.com/prateekmedia/netspeedsimplified",
   "uuid": "netspeedsimplified@prateekmedia.extension",
-  "version": 33
+  "version": 34
 }

@@ -384,7 +384,7 @@ function enable() {
     settings = Convenience.getSettings(schema);
 
     fetchSettings(); // Automatically creates the netSpeed Button.
-    this._settingsChangedId = this.settings.connect('changed', this._settingsChanged);
+    this._settingsChangedId = settings.connect('changed', this._settingsChanged);
     parseStat();
 
     //Run infinite loop.
