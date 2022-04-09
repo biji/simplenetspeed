@@ -392,6 +392,9 @@ function enable() {
 }
 
 function disable() {
+    crStng = null;
+    settings = null;
+    
     Mainloop.source_remove(timeout);
     nsDestroy();
 }
