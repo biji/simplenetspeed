@@ -5,7 +5,7 @@ const Config = imports.misc.config
 const ShellVersion = parseFloat(Config.PACKAGE_VERSION)
 
 const Me = imports.misc.extensionUtils.getCurrentExtension(),
-    Convenience = Me.imports.convenience,
+    ExtensionUtils = imports.misc.extensionUtils,
     schema = "org.gnome.shell.extensions.netspeedsimplified"
 
 function init() { }
@@ -23,11 +23,11 @@ function Prefs(schema) {
 Prefs.prototype = {
     settings: null,
     init: function (schema) {
-        let settings = new Convenience.getSettings(schema)
+        let settings = ExtensionUtils.getSettings(schema)
         this.settings = settings
     },
 
-    _buildPrefsWidget: function () {
+    buildPrefsWidget: function () {
         let settings = this.settings
         let isGnome40 = ShellVersion >= 40
         let crStng
@@ -407,11 +407,5 @@ Prefs.prototype = {
         }
 
         return frame
-    },
-    get buildPrefsWidget() {
-        return this._buildPrefsWidget
-    },
-    set buildPrefsWidget(value) {
-        this._buildPrefsWidget = value
     },
 }
