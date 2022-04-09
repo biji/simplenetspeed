@@ -6,7 +6,7 @@ const Clutter = imports.gi.Clutter,
     PanelMenu = imports.ui.panelMenu,
     Mainloop = imports.mainloop,
     Me = imports.misc.extensionUtils.getCurrentExtension(),
-    Convenience = Me.imports.convenience,
+    ExtensionUtils = imports.misc.extensionUtils,
     schema = 'org.gnome.shell.extensions.netspeedsimplified',
     ButtonName = "ShowNetSpeedButton",
     rCConst = 4; //Right Click 4 times to toggle Vertical Alignment
@@ -84,10 +84,10 @@ function speedToString(amount, rMode = 0) {
 
     let speed_map = B_UNITS.map(
         (rMode == 1 && (crStng.mode == 1 || crStng.mode == 3 || crStng.mode == 4)) ? v => v : //KB
-        (rMode == 1 && (crStng.mode == 0 || crStng.mode == 2)) ? v => v.toLowerCase() : //kb
-        (crStng.mode == 0 || crStng.mode == 2) ? v => v.toLowerCase() + "/s" : //kb/s
-        (crStng.mode == 1 || crStng.mode == 3) ? v => v + "/s" : //KB/s
-        v => v); // Others
+            (rMode == 1 && (crStng.mode == 0 || crStng.mode == 2)) ? v => v.toLowerCase() : //kb
+                (crStng.mode == 0 || crStng.mode == 2) ? v => v.toLowerCase() + "/s" : //kb/s
+                    (crStng.mode == 1 || crStng.mode == 3) ? v => v + "/s" : //KB/s
+                        v => v); // Others
 
     if (amount === 0) return "  0.0 " + speed_map[0];
     if (crStng.mode == 0 || crStng.mode == 2) amount = amount * 8;
@@ -248,7 +248,7 @@ function initNs() {
     //Create the button and add to Main.panel
     nsButton = new PanelMenu.Button(0.0, ButtonName);
 
-    (!crStng.lckMuseAct) ? nsButton.connect('button-press-event', mouseEventHandler): null;
+    (!crStng.lckMuseAct) ? nsButton.connect('button-press-event', mouseEventHandler) : null;
     nsButton.add_child(nsActor);
 
     Main.panel.addToStatusArea(ButtonName, nsButton, nsPosAdv(), nsPos());
@@ -339,7 +339,7 @@ function parseStat() {
             resetCount = count;
         }
 
-        (speed || speedUp) ? hideCount = 0: hideCount <= 8 ? hideCount++ : null
+        (speed || speedUp) ? hideCount = 0 : hideCount <= 8 ? hideCount++ : null
 
         if (hideCount <= 8) {
             nsButton == null ? initNs() : null
@@ -378,13 +378,13 @@ function _settingsChanged() {
     }
 }
 
-function init() {}
+function init() { }
 
 function enable() {
-    settings = Convenience.getSettings(schema);
+    settings = ExtensionUtils.getSettings(schema);
 
     fetchSettings(); // Automatically creates the netSpeed Button.
-    this._settingsChangedId = this.settings.connect('changed', this._settingsChanged);
+    this._settingsChangedId = settings.connect('changed', this._settingsChanged);
     parseStat();
 
     //Run infinite loop.
