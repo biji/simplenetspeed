@@ -29,7 +29,6 @@ Prefs.prototype = {
 
     buildPrefsWidget: function () {
         let settings = this.settings
-        let isGnome40 = ShellVersion >= 40
         let crStng
 
         function fetchSettings() {
@@ -62,10 +61,7 @@ Prefs.prototype = {
         fetchSettings()
 
         function addIt(element, child) {
-            if (isGnome40)
-                element.append(child)
-            else
-                element.add(child)
+            element.append(child)
         }
 
         function newGtkBox() {
@@ -398,13 +394,7 @@ Prefs.prototype = {
         new NssColorBtn(tdColorButton, "Total Download Color", "tdcolor", "Select the total download color")
 
         addIt(vbox, resetBtn)
-        if (isGnome40)
-            frame.child = vbox
-        else {
-            frame.add(vbox)
-            frame.show_all()
-            frame.connect('destroy', Gtk.main_quit)
-        }
+        frame.child = vbox
 
         return frame
     },
