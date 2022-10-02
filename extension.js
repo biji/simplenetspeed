@@ -116,6 +116,14 @@ function getStyle(isIcon = false) {
     return (isIcon) ? 'size-' + (String(crStng.fontmode)) : ('forall size-' + String(crStng.fontmode))
 }
 
+function byteArrayToString(bytes) {
+    if (global.TextDecoder) {
+        return new TextDecoder().decode(bytes);
+    }
+
+    return imports.byteArray.toString(bytes);
+}
+
 function initNsLabels() {
     let extraInfo = crStng.cusFont ? "font-family: " + crStng.cusFont + "; " : "";
     let extraLabelInfo = extraInfo + "min-width: " + crStng.minWidth + "em; ";
@@ -300,15 +308,16 @@ function mouseEventHandler(widget, event) {
 function parseStat() {
     try {
         let input_file = Gio.file_new_for_path('/proc/net/dev');
-        let fstream = input_file.read(null);
-        let dstream = Gio.DataInputStream.new(fstream);
+        let [, contents, etag] = input_file.load_contents(null);
+        contents = byteArrayToString(contents);
+        let lines = contents.split('\n');
 
         let count = 0;
         let countUp = 0;
         let line;
 
-        while (line = dstream.read_line(null)) {
-            line = String(line);
+        for (let i=0;i<lines.length;i++) {
+            line = lines[i];
             line = line.trim();
             let fields = line.split(/\W+/);
             if (fields.length <= 2) break;
@@ -326,7 +335,6 @@ function parseStat() {
                 countUp = countUp + parseInt(fields[9]);
             }
         }
-        fstream.close(null);
 
         if (lastCount === 0) lastCount = count;
         if (lastCountUp === 0) lastCountUp = countUp;
