@@ -19,7 +19,7 @@
       </key>
       <key name="refreshtime" type="d">
         <range min="1.0" max="10.0" />
-        <default>1.5</default>
+        <default>2.0</default>
       </key>
       <key name="iconstoright" type="b">
         <default>false</default>
