@@ -30,12 +30,7 @@
  </td>
 </table>
 
-***Tested on GNOME 40, 3.38 and 3.36***
-
-#### What's new
-- [x] Add **Use System Color Scheme** option
-- [x] Update Preferences logic
-- [x] Filter more devices for net speed indicator
+***Tested on GNOME 40 and above till 43, for Gnome shell < 40 you can use the previous versions***
 
 **Note** : Full CHANGELOG can be found on [github releases](https://github.com/prateekmedia/netspeedsimplified/releases) page
 
@@ -49,7 +44,7 @@
 #### Feature Highlights for Preferences
 - [x] **Lock Mouse Actions** option to Freeze [Mouse Events](#mouse-events)
 - [x] **Advance Position** options to pinpoint where to place the indicator on the Panel
-- [x] **Refresh time** field by which you can change refresh rate value between 1.0 sec to 10.0 sec
+- [x] **Refresh time** field by which you can change refresh rate value between 1 and 10 seconds
 - [x] **Show Upload First** option to show upload speed first
 - [x] **Color Customizations** for speed indicators
 - [x] **Hide when Disconnected** option
@@ -60,16 +55,16 @@ and more...
 If you faced an **issue** then you can **[file an issue here](https://github.com/prateekmedia/netspeedsimplified/issues)**
  
 #### Modes
-- **Total net speed** in b/s, kb/s, ...
-- **Total net speed** in B/s, KB/s, ...
-- **Up & down speed** in b/s, kb/s, ...
-- **Up & down speed** in B/s, KB/s, ...
-- **Total downloads** in B, KB, ... (Right click to reset counter)
+1. **Total net speed** in terms of bits per second
+1. **Total net speed** in terms of bytes per second
+1. **Up & down speed** in terms of bits per second
+1. **Up & down speed** in terms of bytes per second
+1. **Total downloads** in terms of bytes (Right click to reset counter)
 
 #### Mouse Events
 - **Left click**: Cycle through the [modes](#modes).
-- **Right click(in 1-4 modes)**: Toggle the visibility of total downloaded.
-- **Right click(in 5th mode)**: Reset total downloaded.
+- **Right click(in 1-4 modes)**: Toggle the visibility of total transfer data.
+- **Right click(in 5th mode)**: Reset total transfer data
 - **Right Click(Four consecutive times)**: Toggle through horizontal/vertical alignment.
 - **Middle click**: Cycle through the font sizes.
 
