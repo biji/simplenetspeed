@@ -30,7 +30,7 @@
  </td>
 </table>
 
-***Tested on GNOME 40 and above till 43, for Gnome shell < 40 you can use the previous versions***
+***Supports GNOME 43, for GNOME SHELL < 40 you can use the previous versions of this extension***
 
 **Note** : Full CHANGELOG can be found on [github releases](https://github.com/prateekmedia/netspeedsimplified/releases) page
 
