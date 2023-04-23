@@ -2,7 +2,7 @@ EXT_HOME=~/.local/share/gnome-shell/extensions/netspeedsimplified@prateekmedia.e
 
 all: install
 
-install: convenience.js extension.js metadata.json prefs.js stylesheet.css schemas/gschemas.compiled
+install: extension.js metadata.json prefs.js stylesheet.css schemas/gschemas.compiled
 	#Remove old files(if any)
 	rm -rf ${EXT_HOME}
 	#Create directory structure
@@ -10,7 +10,7 @@ install: convenience.js extension.js metadata.json prefs.js stylesheet.css schem
 	mkdir -p ${EXT_HOME}/schemas
 
 	#Copy compulsory files
-	cp convenience.js extension.js metadata.json prefs.js stylesheet.css ${EXT_HOME}
+	cp extension.js metadata.json prefs.js stylesheet.css ${EXT_HOME}
 	cp schemas/gschemas.compiled ${EXT_HOME}/schemas
 
 	#Optional files
