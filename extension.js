@@ -116,11 +116,7 @@ function getStyle(isIcon = false) {
 }
 
 function byteArrayToString(bytes) {
-    if (global.TextDecoder) {
-        return new TextDecoder().decode(bytes);
-    }
-
-    return imports.byteArray.toString(bytes);
+    return new TextDecoder().decode(bytes);
 }
 
 function initNsLabels() {
@@ -405,6 +401,15 @@ export default class NetSpeedSimplifiedExtension extends Extension {
     disable() {
         currentSettings = null;
         settings = null;
+        
+        usLabel = null;
+        dsLabel = null;
+        tsLabel = null;
+        tdLabel = null;
+        usIcon = null;
+        dsIcon = null;
+        tsIcon = null;
+        tdIcon = null;
 
         GLib.source_remove(timeout);
         nsDestroy();
