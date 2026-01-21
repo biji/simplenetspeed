@@ -12,7 +12,7 @@ import {Extension} from 'resource:///org/gnome/shell/extensions/extension.js';
 // @ts-ignore
 import * as Main from 'resource:///org/gnome/shell/ui/main.js';
 
-const REFRESH_TIME = 3;
+const REFRESH_TIME = 0.5;
 
 let lastCount = 0, lastSpeed = 0, lastCountUp = 0;
 let resetNextCount = false, resetCount = 0;
