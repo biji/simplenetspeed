@@ -5,9 +5,10 @@
   "shell-version": [
     "47",
     "48",
-    "49"
+    "49",
+    "50"
   ],
   "url": "https://github.com/biji/simplenetspeed",
   "uuid": "simplenetspeed@biji.extension",
-  "version": 34
+  "version": 35
 }
